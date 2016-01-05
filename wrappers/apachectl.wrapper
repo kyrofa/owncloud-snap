@@ -1,0 +1,7 @@
+#!/bin/sh
+
+export APACHE_ENVVARS=$SNAP_APP_PATH/etc/apache2/envvars
+
+mkdir -p $SNAP_APP_DATA_PATH/apache2/lock
+
+exec "$SNAP_APP_PATH/usr/sbin/apache2ctl" $*

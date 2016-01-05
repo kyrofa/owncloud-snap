@@ -1,0 +1,21 @@
+name: owncloud
+version: 8.2.2
+vendor: Kyle Fazzari <kyle@canonical.com>
+summary: Owncloud
+description: Owncloud running on Apache.
+icon: icon.svg
+
+services:
+  apache2:
+    start: ./apachectl.wrapper start
+    stop: ./apachectl.wrapper stop
+    description: Apache2 daemon
+
+parts:
+  apache:
+    plugin: copy
+    files:
+      wrappers/apachectl.wrapper: apachectl.wrapper
+      config/apache2/envvars: etc/apache2/envvars
+    stage-packages:
+      - apache2

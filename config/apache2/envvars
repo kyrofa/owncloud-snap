@@ -1,0 +1,28 @@
+# envvars - default environment variables for apache2ctl
+
+# this won't be correct after changing uid
+unset HOME
+
+# We don't have permission to do this anyway
+unset APACHE_ULIMIT_MAX_FILES
+
+export APACHE_CONFDIR=$SNAP_APP_PATH/etc/apache2
+export APACHE_HTTPD=$SNAP_APP_PATH/usr/sbin/apache2
+
+# Since there is no sane way to get the parsed apache2 config in scripts, some
+# settings are defined via environment variables and then used in apache2ctl,
+# /etc/init.d/apache2, /etc/logrotate.d/apache2, etc.
+export APACHE_RUN_USER=www-data
+export APACHE_RUN_GROUP=www-data
+
+export APACHE_RUN_DIR=$SNAP_APP_DATA_PATH/apache2/run
+export APACHE_PID_FILE=APACHE_RUN_DIR/apache2.pid
+export APACHE_LOCK_DIR=$SNAP_APP_DATA_PATH/apache2/lock
+export APACHE_LOG_DIR=$SNAP_APP_DATA_PATH/apache2/log
+
+## The locale used by some modules like mod_dav
+export LANG=C
+## Uncomment the following line to use the system default locale instead:
+#. /etc/default/locale
+
+export LANG
