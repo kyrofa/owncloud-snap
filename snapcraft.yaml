@@ -6,16 +6,19 @@ description: Owncloud running on Apache.
 icon: icon.svg
 
 services:
-  apache2:
-    start: ./apachectl.wrapper start
-    stop: ./apachectl.wrapper stop
-    description: Apache2 daemon
+  apache:
+    start: apachectl start -DFOREGROUND
+    stop: apachectl stop
 
 parts:
   apache:
-    plugin: copy
-    files:
-      wrappers/apachectl.wrapper: apachectl.wrapper
-      config/apache2/envvars: etc/apache2/envvars
+    plugin: make
+    source: src
     stage-packages:
-      - apache2
+      - libapr1
+      - libaprutil1
+      - libpcre3
+    build-packages:
+      - libapr1-dev
+      - libaprutil1-dev
+      - libpcre3-dev

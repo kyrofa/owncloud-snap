@@ -1,0 +1,1341 @@
+diff -rc foo_orig/REPLACEME/bin/apachectl foo/REPLACEME/bin/apachectl
+*** foo_orig/REPLACEME/bin/apachectl	2016-01-11 18:02:58.936185219 +0000
+--- foo/REPLACEME/bin/apachectl	2016-01-11 19:04:06.304041789 +0000
+***************
+*** 42,52 ****
+  # --------------------                              --------------------
+  # 
+  # the path to your httpd binary, including options if necessary
+! HTTPD='/REPLACEME/bin/httpd'
+  #
+  # pick up any necessary environment variables
+! if test -f /REPLACEME/bin/envvars; then
+!   . /REPLACEME/bin/envvars
+  fi
+  #
+  # a command that outputs a formatted text version of the HTML at the
+--- 42,52 ----
+  # --------------------                              --------------------
+  # 
+  # the path to your httpd binary, including options if necessary
+! HTTPD=${SNAP_APP_PATH}/bin/httpd
+  #
+  # pick up any necessary environment variables
+! if test -f ${SNAP_APP_PATH}/bin/envvars; then
+!   . ${SNAP_APP_PATH}/bin/envvars
+  fi
+  #
+  # a command that outputs a formatted text version of the HTML at the
+***************
+*** 78,84 ****
+  
+  case $ACMD in
+  start|stop|restart|graceful|graceful-stop)
+!     $HTTPD -k $ARGV
+      ERROR=$?
+      ;;
+  startssl|sslstart|start-SSL)
+--- 78,84 ----
+  
+  case $ACMD in
+  start|stop|restart|graceful|graceful-stop)
+!     $HTTPD -d ${SNAP_APP_PATH} -k $ARGV
+      ERROR=$?
+      ;;
+  startssl|sslstart|start-SSL)
+***************
+*** 88,94 ****
+      ERROR=2
+      ;;
+  configtest)
+!     $HTTPD -t
+      ERROR=$?
+      ;;
+  status)
+--- 88,94 ----
+      ERROR=2
+      ;;
+  configtest)
+!     $HTTPD -d ${SNAP_APP_PATH} -t
+      ERROR=$?
+      ;;
+  status)
+***************
+*** 98,104 ****
+      $LYNX $STATUSURL
+      ;;
+  *)
+!     $HTTPD "$@"
+      ERROR=$?
+  esac
+  
+--- 98,104 ----
+      $LYNX $STATUSURL
+      ;;
+  *)
+!     $HTTPD -d ${SNAP_APP_PATH} "$@"
+      ERROR=$?
+  esac
+  
+diff -rc foo_orig/REPLACEME/bin/apxs foo/REPLACEME/bin/apxs
+*** foo_orig/REPLACEME/bin/apxs	2016-01-11 18:02:58.936185219 +0000
+--- foo/REPLACEME/bin/apxs	2016-01-11 18:22:45.312138820 +0000
+***************
+*** 25,31 ****
+  
+  my %config_vars = ();
+  
+! my $installbuilddir = "/REPLACEME/build";
+  get_config_vars("$installbuilddir/config_vars.mk",\%config_vars);
+  
+  # read the configuration variables once
+--- 25,31 ----
+  
+  my %config_vars = ();
+  
+! my $installbuilddir = "${SNAP_APP_PATH}/build";
+  get_config_vars("$installbuilddir/config_vars.mk",\%config_vars);
+  
+  # read the configuration variables once
+diff -rc foo_orig/REPLACEME/bin/envvars foo/REPLACEME/bin/envvars
+*** foo_orig/REPLACEME/bin/envvars	2016-01-11 18:02:58.936185219 +0000
+--- foo/REPLACEME/bin/envvars	2016-01-11 18:22:45.280138821 +0000
+***************
+*** 19,27 ****
+  # This file is generated from envvars-std.in
+  #
+  if test "x$LD_LIBRARY_PATH" != "x" ; then
+!   LD_LIBRARY_PATH="/REPLACEME/lib:$LD_LIBRARY_PATH"
+  else
+!   LD_LIBRARY_PATH="/REPLACEME/lib"
+  fi
+  export LD_LIBRARY_PATH
+  #
+--- 19,27 ----
+  # This file is generated from envvars-std.in
+  #
+  if test "x$LD_LIBRARY_PATH" != "x" ; then
+!   LD_LIBRARY_PATH="${SNAP_APP_PATH}/lib:$LD_LIBRARY_PATH"
+  else
+!   LD_LIBRARY_PATH="${SNAP_APP_PATH}/lib"
+  fi
+  export LD_LIBRARY_PATH
+  #
+diff -rc foo_orig/REPLACEME/bin/envvars-std foo/REPLACEME/bin/envvars-std
+*** foo_orig/REPLACEME/bin/envvars-std	2016-01-11 18:02:58.936185219 +0000
+--- foo/REPLACEME/bin/envvars-std	2016-01-11 18:22:45.304138821 +0000
+***************
+*** 19,27 ****
+  # This file is generated from envvars-std.in
+  #
+  if test "x$LD_LIBRARY_PATH" != "x" ; then
+!   LD_LIBRARY_PATH="/REPLACEME/lib:$LD_LIBRARY_PATH"
+  else
+!   LD_LIBRARY_PATH="/REPLACEME/lib"
+  fi
+  export LD_LIBRARY_PATH
+  #
+--- 19,27 ----
+  # This file is generated from envvars-std.in
+  #
+  if test "x$LD_LIBRARY_PATH" != "x" ; then
+!   LD_LIBRARY_PATH="${SNAP_APP_PATH}/lib:$LD_LIBRARY_PATH"
+  else
+!   LD_LIBRARY_PATH="${SNAP_APP_PATH}/lib"
+  fi
+  export LD_LIBRARY_PATH
+  #
+Binary files foo_orig/REPLACEME/bin/httpd and foo/REPLACEME/bin/httpd differ
+diff -rc foo_orig/REPLACEME/build/config_vars.mk foo/REPLACEME/build/config_vars.mk
+*** foo_orig/REPLACEME/build/config_vars.mk	2016-01-11 18:02:58.972185218 +0000
+--- foo/REPLACEME/build/config_vars.mk	2016-01-11 18:22:45.104138828 +0000
+***************
+*** 1,28 ****
+! exp_exec_prefix = /REPLACEME
+! exp_bindir = /REPLACEME/bin
+! exp_sbindir = /REPLACEME/bin
+! exp_libdir = /REPLACEME/lib
+! exp_libexecdir = /REPLACEME/modules
+! exp_mandir = /REPLACEME/man
+! exp_sysconfdir = /REPLACEME/conf
+! exp_datadir = /REPLACEME
+! exp_installbuilddir = /REPLACEME/build
+! exp_errordir = /REPLACEME/error
+! exp_iconsdir = /REPLACEME/icons
+! exp_htdocsdir = /REPLACEME/htdocs
+! exp_manualdir = /REPLACEME/manual
+! exp_cgidir = /REPLACEME/cgi-bin
+! exp_includedir = /REPLACEME/include
+! exp_localstatedir = /REPLACEME
+! exp_runtimedir = /REPLACEME/logs
+! exp_logfiledir = /REPLACEME/logs
+! exp_proxycachedir = /REPLACEME/proxy
+  EGREP = /bin/grep -E
+  PCRE_LIBS = -lpcre
+  SHLTCFLAGS = -prefer-pic
+  LTCFLAGS = -prefer-non-pic -static
+! MKINSTALLDIRS = /REPLACEME/build/mkdir.sh
+! INSTALL = $(LIBTOOL) --mode=install /REPLACEME/build/install.sh -c
+  MATH_LIBS = -lm
+  CRYPT_LIBS = -lcrypt
+  DTRACE = true
+--- 1,28 ----
+! exp_exec_prefix = ${SNAP_APP_PATH}
+! exp_bindir = ${SNAP_APP_PATH}/bin
+! exp_sbindir = ${SNAP_APP_PATH}/bin
+! exp_libdir = ${SNAP_APP_PATH}/lib
+! exp_libexecdir = ${SNAP_APP_PATH}/modules
+! exp_mandir = ${SNAP_APP_PATH}/man
+! exp_sysconfdir = ${SNAP_APP_PATH}/conf
+! exp_datadir = ${SNAP_APP_PATH}
+! exp_installbuilddir = ${SNAP_APP_PATH}/build
+! exp_errordir = ${SNAP_APP_PATH}/error
+! exp_iconsdir = ${SNAP_APP_PATH}/icons
+! exp_htdocsdir = ${SNAP_APP_PATH}/htdocs
+! exp_manualdir = ${SNAP_APP_PATH}/manual
+! exp_cgidir = ${SNAP_APP_PATH}/cgi-bin
+! exp_includedir = ${SNAP_APP_PATH}/include
+! exp_localstatedir = ${SNAP_APP_PATH}
+! exp_runtimedir = ${SNAP_APP_PATH}/logs
+! exp_logfiledir = ${SNAP_APP_PATH}/logs
+! exp_proxycachedir = ${SNAP_APP_PATH}/proxy
+  EGREP = /bin/grep -E
+  PCRE_LIBS = -lpcre
+  SHLTCFLAGS = -prefer-pic
+  LTCFLAGS = -prefer-non-pic -static
+! MKINSTALLDIRS = ${SNAP_APP_PATH}/build/mkdir.sh
+! INSTALL = $(LIBTOOL) --mode=install ${SNAP_APP_PATH}/build/install.sh -c
+  MATH_LIBS = -lm
+  CRYPT_LIBS = -lcrypt
+  DTRACE = true
+***************
+*** 58,64 ****
+  proxycachedir = ${localstatedir}/proxy
+  other_targets =
+  progname = httpd
+! prefix = /REPLACEME
+  AWK = mawk
+  CC = x86_64-linux-gnu-gcc
+  CPP = x86_64-linux-gnu-gcc -E
+--- 58,64 ----
+  proxycachedir = ${localstatedir}/proxy
+  other_targets =
+  progname = httpd
+! prefix = ${SNAP_APP_PATH}
+  AWK = mawk
+  CC = x86_64-linux-gnu-gcc
+  CPP = x86_64-linux-gnu-gcc -E
+diff -rc foo_orig/REPLACEME/conf/extra/httpd-autoindex.conf foo/REPLACEME/conf/extra/httpd-autoindex.conf
+*** foo_orig/REPLACEME/conf/extra/httpd-autoindex.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/extra/httpd-autoindex.conf	2016-01-11 18:22:45.096138829 +0000
+***************
+*** 18,26 ****
+  # We include the /icons/ alias for FancyIndexed directory listings.  If
+  # you do not use FancyIndexing, you may comment this out.
+  #
+! Alias /icons/ "/REPLACEME/icons/"
+  
+! <Directory "/REPLACEME/icons">
+      Options Indexes MultiViews
+      AllowOverride None
+      Require all granted
+--- 18,26 ----
+  # We include the /icons/ alias for FancyIndexed directory listings.  If
+  # you do not use FancyIndexing, you may comment this out.
+  #
+! Alias /icons/ "${SNAP_APP_PATH}/icons/"
+  
+! <Directory "${SNAP_APP_PATH}/icons">
+      Options Indexes MultiViews
+      AllowOverride None
+      Require all granted
+diff -rc foo_orig/REPLACEME/conf/extra/httpd-dav.conf foo/REPLACEME/conf/extra/httpd-dav.conf
+*** foo_orig/REPLACEME/conf/extra/httpd-dav.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/extra/httpd-dav.conf	2016-01-11 18:22:45.096138829 +0000
+***************
+*** 12,29 ****
+  # on the directory where the DavLockDB is placed and on any directory where
+  # "Dav On" is specified.
+  
+! DavLockDB "/REPLACEME/var/DavLock"
+  
+! Alias /uploads "/REPLACEME/uploads"
+  
+! <Directory "/REPLACEME/uploads">
+      Dav On
+  
+      AuthType Digest
+      AuthName DAV-upload
+      # You can use the htdigest program to create the password database:
+!     #   htdigest -c "/REPLACEME/user.passwd" DAV-upload admin
+!     AuthUserFile "/REPLACEME/user.passwd"
+      AuthDigestProvider file
+  
+      # Allow universal read-access, but writes are restricted
+--- 12,29 ----
+  # on the directory where the DavLockDB is placed and on any directory where
+  # "Dav On" is specified.
+  
+! DavLockDB "${SNAP_APP_PATH}/var/DavLock"
+  
+! Alias /uploads "${SNAP_APP_PATH}/uploads"
+  
+! <Directory "${SNAP_APP_PATH}/uploads">
+      Dav On
+  
+      AuthType Digest
+      AuthName DAV-upload
+      # You can use the htdigest program to create the password database:
+!     #   htdigest -c "${SNAP_APP_PATH}/user.passwd" DAV-upload admin
+!     AuthUserFile "${SNAP_APP_PATH}/user.passwd"
+      AuthDigestProvider file
+  
+      # Allow universal read-access, but writes are restricted
+diff -rc foo_orig/REPLACEME/conf/extra/httpd-manual.conf foo/REPLACEME/conf/extra/httpd-manual.conf
+*** foo_orig/REPLACEME/conf/extra/httpd-manual.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/extra/httpd-manual.conf	2016-01-11 18:22:45.100138829 +0000
+***************
+*** 8,16 ****
+  #                   mod_setenvif, mod_negotiation
+  #
+  
+! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "/REPLACEME/manual$1"
+  
+! <Directory "/REPLACEME/manual">
+      Options Indexes
+      AllowOverride None
+      Require all granted
+--- 8,16 ----
+  #                   mod_setenvif, mod_negotiation
+  #
+  
+! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "${SNAP_APP_PATH}/manual$1"
+  
+! <Directory "${SNAP_APP_PATH}/manual">
+      Options Indexes
+      AllowOverride None
+      Require all granted
+diff -rc foo_orig/REPLACEME/conf/extra/httpd-mpm.conf foo/REPLACEME/conf/extra/httpd-mpm.conf
+*** foo_orig/REPLACEME/conf/extra/httpd-mpm.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/extra/httpd-mpm.conf	2016-01-11 19:16:36.832012436 +0000
+***************
+*** 9,15 ****
+  # Note that this is the default PidFile for most MPMs.
+  #
+  <IfModule !mpm_netware_module>
+!     PidFile "logs/httpd.pid"
+  </IfModule>
+  
+  #
+--- 9,15 ----
+  # Note that this is the default PidFile for most MPMs.
+  #
+  <IfModule !mpm_netware_module>
+!     PidFile "${SNAP_APP_DATA_PATH}/httpd.pid"
+  </IfModule>
+  
+  #
+diff -rc foo_orig/REPLACEME/conf/extra/httpd-multilang-errordoc.conf foo/REPLACEME/conf/extra/httpd-multilang-errordoc.conf
+*** foo_orig/REPLACEME/conf/extra/httpd-multilang-errordoc.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/extra/httpd-multilang-errordoc.conf	2016-01-11 18:22:45.096138829 +0000
+***************
+*** 15,28 ****
+  #   Alias /error/include/ "/your/include/path/"
+  #
+  # which allows you to create your own set of files by starting with the
+! # /REPLACEME/error/include/ files and copying them to /your/include/path/, 
+  # even on a per-VirtualHost basis.  The default include files will display
+  # your Apache version number and your ServerAdmin email address regardless
+  # of the setting of ServerSignature.
+  
+! Alias /error/ "/REPLACEME/error/"
+  
+! <Directory "/REPLACEME/error">
+      AllowOverride None
+      Options IncludesNoExec
+      AddOutputFilter Includes html
+--- 15,28 ----
+  #   Alias /error/include/ "/your/include/path/"
+  #
+  # which allows you to create your own set of files by starting with the
+! # ${SNAP_APP_PATH}/error/include/ files and copying them to /your/include/path/, 
+  # even on a per-VirtualHost basis.  The default include files will display
+  # your Apache version number and your ServerAdmin email address regardless
+  # of the setting of ServerSignature.
+  
+! Alias /error/ "${SNAP_APP_PATH}/error/"
+  
+! <Directory "${SNAP_APP_PATH}/error">
+      AllowOverride None
+      Options IncludesNoExec
+      AddOutputFilter Includes html
+diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/httpd-ssl.conf
+*** foo_orig/REPLACEME/conf/extra/httpd-ssl.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/extra/httpd-ssl.conf	2016-01-11 19:16:19.556013112 +0000
+***************
+*** 88,95 ****
+  #   Inter-Process Session Cache:
+  #   Configure the SSL Session Cache: First the mechanism 
+  #   to use and second the expiring timeout (in seconds).
+! #SSLSessionCache         "dbm:/REPLACEME/logs/ssl_scache"
+! SSLSessionCache        "shmcb:/REPLACEME/logs/ssl_scache(512000)"
+  SSLSessionCacheTimeout  300
+  
+  #   OCSP Stapling (requires OpenSSL 0.9.8h or later)
+--- 88,95 ----
+  #   Inter-Process Session Cache:
+  #   Configure the SSL Session Cache: First the mechanism 
+  #   to use and second the expiring timeout (in seconds).
+! #SSLSessionCache         "dbm:${SNAP_APP_DATA_PATH}/ssl_scache"
+! SSLSessionCache        "shmcb:${SNAP_APP_DATA_PATH}/ssl_scache(512000)"
+  SSLSessionCacheTimeout  300
+  
+  #   OCSP Stapling (requires OpenSSL 0.9.8h or later)
+***************
+*** 106,112 ****
+  #   the same mechanism that is used for the SSL session cache
+  #   above.  If stapling is used with more than a few certificates,
+  #   the size may need to be increased.  (AH01929 will be logged.)
+! #SSLStaplingCache "shmcb:/REPLACEME/logs/ssl_stapling(32768)"
+  
+  #   Seconds before valid OCSP responses are expired from the cache
+  #SSLStaplingStandardCacheTimeout 3600
+--- 106,112 ----
+  #   the same mechanism that is used for the SSL session cache
+  #   above.  If stapling is used with more than a few certificates,
+  #   the size may need to be increased.  (AH01929 will be logged.)
+! #SSLStaplingCache "shmcb:${SNAP_APP_DATA_PATH}/ssl_stapling(32768)"
+  
+  #   Seconds before valid OCSP responses are expired from the cache
+  #SSLStaplingStandardCacheTimeout 3600
+***************
+*** 121,131 ****
+  <VirtualHost _default_:443>
+  
+  #   General setup for the virtual host
+! DocumentRoot "/REPLACEME/htdocs"
+  ServerName www.example.com:443
+  ServerAdmin you@example.com
+! ErrorLog "/REPLACEME/logs/error_log"
+! TransferLog "/REPLACEME/logs/access_log"
+  
+  #   SSL Engine Switch:
+  #   Enable/Disable SSL for this virtual host.
+--- 121,131 ----
+  <VirtualHost _default_:443>
+  
+  #   General setup for the virtual host
+! DocumentRoot "${SNAP_APP_PATH}/htdocs"
+  ServerName www.example.com:443
+  ServerAdmin you@example.com
+! ErrorLog "${SNAP_APP_DATA_PATH}/error_log"
+! TransferLog "${SNAP_APP_DATA_PATH}/access_log"
+  
+  #   SSL Engine Switch:
+  #   Enable/Disable SSL for this virtual host.
+***************
+*** 141,149 ****
+  #   Some ECC cipher suites (http://www.ietf.org/rfc/rfc4492.txt)
+  #   require an ECC certificate which can also be configured in
+  #   parallel.
+! SSLCertificateFile "/REPLACEME/conf/server.crt"
+! #SSLCertificateFile "/REPLACEME/conf/server-dsa.crt"
+! #SSLCertificateFile "/REPLACEME/conf/server-ecc.crt"
+  
+  #   Server Private Key:
+  #   If the key is not combined with the certificate, use this
+--- 141,149 ----
+  #   Some ECC cipher suites (http://www.ietf.org/rfc/rfc4492.txt)
+  #   require an ECC certificate which can also be configured in
+  #   parallel.
+! SSLCertificateFile "${SNAP_APP_PATH}/conf/server.crt"
+! #SSLCertificateFile "${SNAP_APP_PATH}/conf/server-dsa.crt"
+! #SSLCertificateFile "${SNAP_APP_PATH}/conf/server-ecc.crt"
+  
+  #   Server Private Key:
+  #   If the key is not combined with the certificate, use this
+***************
+*** 151,159 ****
+  #   you've both a RSA and a DSA private key you can configure
+  #   both in parallel (to also allow the use of DSA ciphers, etc.)
+  #   ECC keys, when in use, can also be configured in parallel
+! SSLCertificateKeyFile "/REPLACEME/conf/server.key"
+! #SSLCertificateKeyFile "/REPLACEME/conf/server-dsa.key"
+! #SSLCertificateKeyFile "/REPLACEME/conf/server-ecc.key"
+  
+  #   Server Certificate Chain:
+  #   Point SSLCertificateChainFile at a file containing the
+--- 151,159 ----
+  #   you've both a RSA and a DSA private key you can configure
+  #   both in parallel (to also allow the use of DSA ciphers, etc.)
+  #   ECC keys, when in use, can also be configured in parallel
+! SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server.key"
+! #SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server-dsa.key"
+! #SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server-ecc.key"
+  
+  #   Server Certificate Chain:
+  #   Point SSLCertificateChainFile at a file containing the
+***************
+*** 162,168 ****
+  #   the referenced file can be the same as SSLCertificateFile
+  #   when the CA certificates are directly appended to the server
+  #   certificate for convenience.
+! #SSLCertificateChainFile "/REPLACEME/conf/server-ca.crt"
+  
+  #   Certificate Authority (CA):
+  #   Set the CA certificate verification path where to find CA
+--- 162,168 ----
+  #   the referenced file can be the same as SSLCertificateFile
+  #   when the CA certificates are directly appended to the server
+  #   certificate for convenience.
+! #SSLCertificateChainFile "${SNAP_APP_PATH}/conf/server-ca.crt"
+  
+  #   Certificate Authority (CA):
+  #   Set the CA certificate verification path where to find CA
+***************
+*** 171,178 ****
+  #   Note: Inside SSLCACertificatePath you need hash symlinks
+  #         to point to the certificate files. Use the provided
+  #         Makefile to update the hash symlinks after changes.
+! #SSLCACertificatePath "/REPLACEME/conf/ssl.crt"
+! #SSLCACertificateFile "/REPLACEME/conf/ssl.crt/ca-bundle.crt"
+  
+  #   Certificate Revocation Lists (CRL):
+  #   Set the CA revocation path where to find CA CRLs for client
+--- 171,178 ----
+  #   Note: Inside SSLCACertificatePath you need hash symlinks
+  #         to point to the certificate files. Use the provided
+  #         Makefile to update the hash symlinks after changes.
+! #SSLCACertificatePath "${SNAP_APP_PATH}/conf/ssl.crt"
+! #SSLCACertificateFile "${SNAP_APP_PATH}/conf/ssl.crt/ca-bundle.crt"
+  
+  #   Certificate Revocation Lists (CRL):
+  #   Set the CA revocation path where to find CA CRLs for client
+***************
+*** 183,190 ****
+  #   Note: Inside SSLCARevocationPath you need hash symlinks
+  #         to point to the certificate files. Use the provided
+  #         Makefile to update the hash symlinks after changes.
+! #SSLCARevocationPath "/REPLACEME/conf/ssl.crl"
+! #SSLCARevocationFile "/REPLACEME/conf/ssl.crl/ca-bundle.crl"
+  #SSLCARevocationCheck chain
+  
+  #   Client Authentication (Type):
+--- 183,190 ----
+  #   Note: Inside SSLCARevocationPath you need hash symlinks
+  #         to point to the certificate files. Use the provided
+  #         Makefile to update the hash symlinks after changes.
+! #SSLCARevocationPath "${SNAP_APP_PATH}/conf/ssl.crl"
+! #SSLCARevocationFile "${SNAP_APP_PATH}/conf/ssl.crl/ca-bundle.crl"
+  #SSLCARevocationCheck chain
+  
+  #   Client Authentication (Type):
+***************
+*** 200,207 ****
+  #   file (containing login information for SRP user accounts). 
+  #   Requires OpenSSL 1.0.1 or newer. See the mod_ssl FAQ for
+  #   detailed instructions on creating this file. Example:
+! #   "openssl srp -srpvfile /REPLACEME/conf/passwd.srpv -add username"
+! #SSLSRPVerifierFile "/REPLACEME/conf/passwd.srpv"
+  
+  #   Access Control:
+  #   With SSLRequire you can do per-directory access control based
+--- 200,207 ----
+  #   file (containing login information for SRP user accounts). 
+  #   Requires OpenSSL 1.0.1 or newer. See the mod_ssl FAQ for
+  #   detailed instructions on creating this file. Example:
+! #   "openssl srp -srpvfile ${SNAP_APP_PATH}/conf/passwd.srpv -add username"
+! #SSLSRPVerifierFile "${SNAP_APP_PATH}/conf/passwd.srpv"
+  
+  #   Access Control:
+  #   With SSLRequire you can do per-directory access control based
+***************
+*** 249,255 ****
+  <FilesMatch "\.(cgi|shtml|phtml|php)$">
+      SSLOptions +StdEnvVars
+  </FilesMatch>
+! <Directory "/REPLACEME/cgi-bin">
+      SSLOptions +StdEnvVars
+  </Directory>
+  
+--- 249,255 ----
+  <FilesMatch "\.(cgi|shtml|phtml|php)$">
+      SSLOptions +StdEnvVars
+  </FilesMatch>
+! <Directory "${SNAP_APP_PATH}/cgi-bin">
+      SSLOptions +StdEnvVars
+  </Directory>
+  
+***************
+*** 284,290 ****
+  #   Per-Server Logging:
+  #   The home of a custom SSL log file. Use this when you want a
+  #   compact non-error SSL logfile on a virtual host basis.
+! CustomLog "/REPLACEME/logs/ssl_request_log" \
+            "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+  
+  </VirtualHost>                                  
+--- 284,290 ----
+  #   Per-Server Logging:
+  #   The home of a custom SSL log file. Use this when you want a
+  #   compact non-error SSL logfile on a virtual host basis.
+! CustomLog "${SNAP_APP_DATA_PATH}/ssl_request_log" \
+            "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+  
+  </VirtualHost>                                  
+diff -rc foo_orig/REPLACEME/conf/extra/httpd-vhosts.conf foo/REPLACEME/conf/extra/httpd-vhosts.conf
+*** foo_orig/REPLACEME/conf/extra/httpd-vhosts.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/extra/httpd-vhosts.conf	2016-01-11 19:17:06.616011271 +0000
+***************
+*** 22,40 ****
+  #
+  <VirtualHost *:80>
+      ServerAdmin webmaster@dummy-host.example.com
+!     DocumentRoot "/REPLACEME/docs/dummy-host.example.com"
+      ServerName dummy-host.example.com
+      ServerAlias www.dummy-host.example.com
+!     ErrorLog "logs/dummy-host.example.com-error_log"
+!     CustomLog "logs/dummy-host.example.com-access_log" common
+  </VirtualHost>
+  
+  <VirtualHost *:80>
+      ServerAdmin webmaster@dummy-host2.example.com
+!     DocumentRoot "/REPLACEME/docs/dummy-host2.example.com"
+      ServerName dummy-host2.example.com
+!     ErrorLog "logs/dummy-host2.example.com-error_log"
+!     CustomLog "logs/dummy-host2.example.com-access_log" common
+  </VirtualHost>
+  
+  
+--- 22,40 ----
+  #
+  <VirtualHost *:80>
+      ServerAdmin webmaster@dummy-host.example.com
+!     DocumentRoot "${SNAP_APP_PATH}/docs/dummy-host.example.com"
+      ServerName dummy-host.example.com
+      ServerAlias www.dummy-host.example.com
+!     ErrorLog "${SNAP_APP_DATA_PATH}/dummy-host.example.com-error_log"
+!     CustomLog "${SNAP_APP_DATA_PATH}/dummy-host.example.com-access_log" common
+  </VirtualHost>
+  
+  <VirtualHost *:80>
+      ServerAdmin webmaster@dummy-host2.example.com
+!     DocumentRoot "${SNAP_APP_PATH}/docs/dummy-host2.example.com"
+      ServerName dummy-host2.example.com
+!     ErrorLog "${SNAP_APP_DATA_PATH}/dummy-host2.example.com-error_log"
+!     CustomLog "${SNAP_APP_DATA_PATH}/dummy-host2.example.com-access_log" common
+  </VirtualHost>
+  
+  
+diff -rc foo_orig/REPLACEME/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
+*** foo_orig/REPLACEME/conf/httpd.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/httpd.conf	2016-01-11 20:59:42.259770524 +0000
+***************
+*** 28,34 ****
+  # same ServerRoot for multiple httpd daemons, you will need to change at
+  # least PidFile.
+  #
+! ServerRoot "/REPLACEME"
+  
+  #
+  # Mutex: Allows you to set the mutex mechanism and mutex file directory
+--- 28,36 ----
+  # same ServerRoot for multiple httpd daemons, you will need to change at
+  # least PidFile.
+  #
+! ServerRoot "${SNAP_APP_PATH}"
+! 
+! PidFile "${SNAP_APP_DATA_PATH}/httpd.pid"
+  
+  #
+  # Mutex: Allows you to set the mutex mechanism and mutex file directory
+***************
+*** 157,164 ****
+  # It is usually good practice to create a dedicated user and group for
+  # running httpd, as with most system services.
+  #
+! User daemon
+! Group daemon
+  
+  </IfModule>
+  
+--- 159,166 ----
+  # It is usually good practice to create a dedicated user and group for
+  # running httpd, as with most system services.
+  #
+! #User daemon
+! #Group daemon
+  
+  </IfModule>
+  
+***************
+*** 212,219 ****
+  # documents. By default, all requests are taken from this directory, but
+  # symbolic links and aliases may be used to point to other locations.
+  #
+! DocumentRoot "/REPLACEME/htdocs"
+! <Directory "/REPLACEME/htdocs">
+      #
+      # Possible values for the Options directive are "None", "All",
+      # or any combination of:
+--- 214,221 ----
+  # documents. By default, all requests are taken from this directory, but
+  # symbolic links and aliases may be used to point to other locations.
+  #
+! DocumentRoot "${SNAP_APP_PATH}/htdocs"
+! <Directory "${SNAP_APP_PATH}/htdocs">
+      #
+      # Possible values for the Options directive are "None", "All",
+      # or any combination of:
+***************
+*** 264,270 ****
+  # logged here.  If you *do* define an error logfile for a <VirtualHost>
+  # container, that host's errors will be logged there and not here.
+  #
+! ErrorLog "logs/error_log"
+  
+  #
+  # LogLevel: Control the number of messages logged to the error_log.
+--- 266,272 ----
+  # logged here.  If you *do* define an error logfile for a <VirtualHost>
+  # container, that host's errors will be logged there and not here.
+  #
+! ErrorLog "${SNAP_APP_DATA_PATH}/error_log"
+  
+  #
+  # LogLevel: Control the number of messages logged to the error_log.
+***************
+*** 293,305 ****
+      # define per-<VirtualHost> access logfiles, transactions will be
+      # logged therein and *not* in this file.
+      #
+!     CustomLog "logs/access_log" common
+  
+      #
+      # If you prefer a logfile with access, agent, and referer information
+      # (Combined Logfile Format) you can use the following directive.
+      #
+!     #CustomLog "logs/access_log" combined
+  </IfModule>
+  
+  <IfModule alias_module>
+--- 295,307 ----
+      # define per-<VirtualHost> access logfiles, transactions will be
+      # logged therein and *not* in this file.
+      #
+!     CustomLog "${SNAP_APP_DATA_PATH}/access_log" common
+  
+      #
+      # If you prefer a logfile with access, agent, and referer information
+      # (Combined Logfile Format) you can use the following directive.
+      #
+!     #CustomLog "${SNAP_APP_DATA_PATH}/access_log" combined
+  </IfModule>
+  
+  <IfModule alias_module>
+***************
+*** 329,335 ****
+      # client.  The same rules about trailing "/" apply to ScriptAlias
+      # directives as to Alias.
+      #
+!     ScriptAlias /cgi-bin/ "/REPLACEME/cgi-bin/"
+  
+  </IfModule>
+  
+--- 331,337 ----
+      # client.  The same rules about trailing "/" apply to ScriptAlias
+      # directives as to Alias.
+      #
+!     ScriptAlias /cgi-bin/ "${SNAP_APP_PATH}/cgi-bin/"
+  
+  </IfModule>
+  
+***************
+*** 342,351 ****
+  </IfModule>
+  
+  #
+! # "/REPLACEME/cgi-bin" should be changed to whatever your ScriptAliased
+  # CGI directory exists, if you have that configured.
+  #
+! <Directory "/REPLACEME/cgi-bin">
+      AllowOverride None
+      Options None
+      Require all granted
+--- 344,353 ----
+  </IfModule>
+  
+  #
+! # "${SNAP_APP_PATH}/cgi-bin" should be changed to whatever your ScriptAliased
+  # CGI directory exists, if you have that configured.
+  #
+! <Directory "${SNAP_APP_PATH}/cgi-bin">
+      AllowOverride None
+      Options None
+      Require all granted
+diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-autoindex.conf foo/REPLACEME/conf/original/extra/httpd-autoindex.conf
+*** foo_orig/REPLACEME/conf/original/extra/httpd-autoindex.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/original/extra/httpd-autoindex.conf	2016-01-11 18:22:45.084138829 +0000
+***************
+*** 18,26 ****
+  # We include the /icons/ alias for FancyIndexed directory listings.  If
+  # you do not use FancyIndexing, you may comment this out.
+  #
+! Alias /icons/ "/REPLACEME/icons/"
+  
+! <Directory "/REPLACEME/icons">
+      Options Indexes MultiViews
+      AllowOverride None
+      Require all granted
+--- 18,26 ----
+  # We include the /icons/ alias for FancyIndexed directory listings.  If
+  # you do not use FancyIndexing, you may comment this out.
+  #
+! Alias /icons/ "${SNAP_APP_PATH}/icons/"
+  
+! <Directory "${SNAP_APP_PATH}/icons">
+      Options Indexes MultiViews
+      AllowOverride None
+      Require all granted
+diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-dav.conf foo/REPLACEME/conf/original/extra/httpd-dav.conf
+*** foo_orig/REPLACEME/conf/original/extra/httpd-dav.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/original/extra/httpd-dav.conf	2016-01-11 18:22:45.084138829 +0000
+***************
+*** 12,29 ****
+  # on the directory where the DavLockDB is placed and on any directory where
+  # "Dav On" is specified.
+  
+! DavLockDB "/REPLACEME/var/DavLock"
+  
+! Alias /uploads "/REPLACEME/uploads"
+  
+! <Directory "/REPLACEME/uploads">
+      Dav On
+  
+      AuthType Digest
+      AuthName DAV-upload
+      # You can use the htdigest program to create the password database:
+!     #   htdigest -c "/REPLACEME/user.passwd" DAV-upload admin
+!     AuthUserFile "/REPLACEME/user.passwd"
+      AuthDigestProvider file
+  
+      # Allow universal read-access, but writes are restricted
+--- 12,29 ----
+  # on the directory where the DavLockDB is placed and on any directory where
+  # "Dav On" is specified.
+  
+! DavLockDB "${SNAP_APP_PATH}/var/DavLock"
+  
+! Alias /uploads "${SNAP_APP_PATH}/uploads"
+  
+! <Directory "${SNAP_APP_PATH}/uploads">
+      Dav On
+  
+      AuthType Digest
+      AuthName DAV-upload
+      # You can use the htdigest program to create the password database:
+!     #   htdigest -c "${SNAP_APP_PATH}/user.passwd" DAV-upload admin
+!     AuthUserFile "${SNAP_APP_PATH}/user.passwd"
+      AuthDigestProvider file
+  
+      # Allow universal read-access, but writes are restricted
+diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-manual.conf foo/REPLACEME/conf/original/extra/httpd-manual.conf
+*** foo_orig/REPLACEME/conf/original/extra/httpd-manual.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/original/extra/httpd-manual.conf	2016-01-11 18:22:45.084138829 +0000
+***************
+*** 8,16 ****
+  #                   mod_setenvif, mod_negotiation
+  #
+  
+! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "/REPLACEME/manual$1"
+  
+! <Directory "/REPLACEME/manual">
+      Options Indexes
+      AllowOverride None
+      Require all granted
+--- 8,16 ----
+  #                   mod_setenvif, mod_negotiation
+  #
+  
+! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "${SNAP_APP_PATH}/manual$1"
+  
+! <Directory "${SNAP_APP_PATH}/manual">
+      Options Indexes
+      AllowOverride None
+      Require all granted
+diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-multilang-errordoc.conf foo/REPLACEME/conf/original/extra/httpd-multilang-errordoc.conf
+*** foo_orig/REPLACEME/conf/original/extra/httpd-multilang-errordoc.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/original/extra/httpd-multilang-errordoc.conf	2016-01-11 18:22:45.080138829 +0000
+***************
+*** 15,28 ****
+  #   Alias /error/include/ "/your/include/path/"
+  #
+  # which allows you to create your own set of files by starting with the
+! # /REPLACEME/error/include/ files and copying them to /your/include/path/, 
+  # even on a per-VirtualHost basis.  The default include files will display
+  # your Apache version number and your ServerAdmin email address regardless
+  # of the setting of ServerSignature.
+  
+! Alias /error/ "/REPLACEME/error/"
+  
+! <Directory "/REPLACEME/error">
+      AllowOverride None
+      Options IncludesNoExec
+      AddOutputFilter Includes html
+--- 15,28 ----
+  #   Alias /error/include/ "/your/include/path/"
+  #
+  # which allows you to create your own set of files by starting with the
+! # ${SNAP_APP_PATH}/error/include/ files and copying them to /your/include/path/, 
+  # even on a per-VirtualHost basis.  The default include files will display
+  # your Apache version number and your ServerAdmin email address regardless
+  # of the setting of ServerSignature.
+  
+! Alias /error/ "${SNAP_APP_PATH}/error/"
+  
+! <Directory "${SNAP_APP_PATH}/error">
+      AllowOverride None
+      Options IncludesNoExec
+      AddOutputFilter Includes html
+diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/conf/original/extra/httpd-ssl.conf
+*** foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/original/extra/httpd-ssl.conf	2016-01-11 18:22:45.080138829 +0000
+***************
+*** 88,95 ****
+  #   Inter-Process Session Cache:
+  #   Configure the SSL Session Cache: First the mechanism 
+  #   to use and second the expiring timeout (in seconds).
+! #SSLSessionCache         "dbm:/REPLACEME/logs/ssl_scache"
+! SSLSessionCache        "shmcb:/REPLACEME/logs/ssl_scache(512000)"
+  SSLSessionCacheTimeout  300
+  
+  #   OCSP Stapling (requires OpenSSL 0.9.8h or later)
+--- 88,95 ----
+  #   Inter-Process Session Cache:
+  #   Configure the SSL Session Cache: First the mechanism 
+  #   to use and second the expiring timeout (in seconds).
+! #SSLSessionCache         "dbm:${SNAP_APP_PATH}/logs/ssl_scache"
+! SSLSessionCache        "shmcb:${SNAP_APP_PATH}/logs/ssl_scache(512000)"
+  SSLSessionCacheTimeout  300
+  
+  #   OCSP Stapling (requires OpenSSL 0.9.8h or later)
+***************
+*** 106,112 ****
+  #   the same mechanism that is used for the SSL session cache
+  #   above.  If stapling is used with more than a few certificates,
+  #   the size may need to be increased.  (AH01929 will be logged.)
+! #SSLStaplingCache "shmcb:/REPLACEME/logs/ssl_stapling(32768)"
+  
+  #   Seconds before valid OCSP responses are expired from the cache
+  #SSLStaplingStandardCacheTimeout 3600
+--- 106,112 ----
+  #   the same mechanism that is used for the SSL session cache
+  #   above.  If stapling is used with more than a few certificates,
+  #   the size may need to be increased.  (AH01929 will be logged.)
+! #SSLStaplingCache "shmcb:${SNAP_APP_PATH}/logs/ssl_stapling(32768)"
+  
+  #   Seconds before valid OCSP responses are expired from the cache
+  #SSLStaplingStandardCacheTimeout 3600
+***************
+*** 121,131 ****
+  <VirtualHost _default_:443>
+  
+  #   General setup for the virtual host
+! DocumentRoot "/REPLACEME/htdocs"
+  ServerName www.example.com:443
+  ServerAdmin you@example.com
+! ErrorLog "/REPLACEME/logs/error_log"
+! TransferLog "/REPLACEME/logs/access_log"
+  
+  #   SSL Engine Switch:
+  #   Enable/Disable SSL for this virtual host.
+--- 121,131 ----
+  <VirtualHost _default_:443>
+  
+  #   General setup for the virtual host
+! DocumentRoot "${SNAP_APP_PATH}/htdocs"
+  ServerName www.example.com:443
+  ServerAdmin you@example.com
+! ErrorLog "${SNAP_APP_PATH}/logs/error_log"
+! TransferLog "${SNAP_APP_PATH}/logs/access_log"
+  
+  #   SSL Engine Switch:
+  #   Enable/Disable SSL for this virtual host.
+***************
+*** 141,149 ****
+  #   Some ECC cipher suites (http://www.ietf.org/rfc/rfc4492.txt)
+  #   require an ECC certificate which can also be configured in
+  #   parallel.
+! SSLCertificateFile "/REPLACEME/conf/server.crt"
+! #SSLCertificateFile "/REPLACEME/conf/server-dsa.crt"
+! #SSLCertificateFile "/REPLACEME/conf/server-ecc.crt"
+  
+  #   Server Private Key:
+  #   If the key is not combined with the certificate, use this
+--- 141,149 ----
+  #   Some ECC cipher suites (http://www.ietf.org/rfc/rfc4492.txt)
+  #   require an ECC certificate which can also be configured in
+  #   parallel.
+! SSLCertificateFile "${SNAP_APP_PATH}/conf/server.crt"
+! #SSLCertificateFile "${SNAP_APP_PATH}/conf/server-dsa.crt"
+! #SSLCertificateFile "${SNAP_APP_PATH}/conf/server-ecc.crt"
+  
+  #   Server Private Key:
+  #   If the key is not combined with the certificate, use this
+***************
+*** 151,159 ****
+  #   you've both a RSA and a DSA private key you can configure
+  #   both in parallel (to also allow the use of DSA ciphers, etc.)
+  #   ECC keys, when in use, can also be configured in parallel
+! SSLCertificateKeyFile "/REPLACEME/conf/server.key"
+! #SSLCertificateKeyFile "/REPLACEME/conf/server-dsa.key"
+! #SSLCertificateKeyFile "/REPLACEME/conf/server-ecc.key"
+  
+  #   Server Certificate Chain:
+  #   Point SSLCertificateChainFile at a file containing the
+--- 151,159 ----
+  #   you've both a RSA and a DSA private key you can configure
+  #   both in parallel (to also allow the use of DSA ciphers, etc.)
+  #   ECC keys, when in use, can also be configured in parallel
+! SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server.key"
+! #SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server-dsa.key"
+! #SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server-ecc.key"
+  
+  #   Server Certificate Chain:
+  #   Point SSLCertificateChainFile at a file containing the
+***************
+*** 162,168 ****
+  #   the referenced file can be the same as SSLCertificateFile
+  #   when the CA certificates are directly appended to the server
+  #   certificate for convenience.
+! #SSLCertificateChainFile "/REPLACEME/conf/server-ca.crt"
+  
+  #   Certificate Authority (CA):
+  #   Set the CA certificate verification path where to find CA
+--- 162,168 ----
+  #   the referenced file can be the same as SSLCertificateFile
+  #   when the CA certificates are directly appended to the server
+  #   certificate for convenience.
+! #SSLCertificateChainFile "${SNAP_APP_PATH}/conf/server-ca.crt"
+  
+  #   Certificate Authority (CA):
+  #   Set the CA certificate verification path where to find CA
+***************
+*** 171,178 ****
+  #   Note: Inside SSLCACertificatePath you need hash symlinks
+  #         to point to the certificate files. Use the provided
+  #         Makefile to update the hash symlinks after changes.
+! #SSLCACertificatePath "/REPLACEME/conf/ssl.crt"
+! #SSLCACertificateFile "/REPLACEME/conf/ssl.crt/ca-bundle.crt"
+  
+  #   Certificate Revocation Lists (CRL):
+  #   Set the CA revocation path where to find CA CRLs for client
+--- 171,178 ----
+  #   Note: Inside SSLCACertificatePath you need hash symlinks
+  #         to point to the certificate files. Use the provided
+  #         Makefile to update the hash symlinks after changes.
+! #SSLCACertificatePath "${SNAP_APP_PATH}/conf/ssl.crt"
+! #SSLCACertificateFile "${SNAP_APP_PATH}/conf/ssl.crt/ca-bundle.crt"
+  
+  #   Certificate Revocation Lists (CRL):
+  #   Set the CA revocation path where to find CA CRLs for client
+***************
+*** 183,190 ****
+  #   Note: Inside SSLCARevocationPath you need hash symlinks
+  #         to point to the certificate files. Use the provided
+  #         Makefile to update the hash symlinks after changes.
+! #SSLCARevocationPath "/REPLACEME/conf/ssl.crl"
+! #SSLCARevocationFile "/REPLACEME/conf/ssl.crl/ca-bundle.crl"
+  #SSLCARevocationCheck chain
+  
+  #   Client Authentication (Type):
+--- 183,190 ----
+  #   Note: Inside SSLCARevocationPath you need hash symlinks
+  #         to point to the certificate files. Use the provided
+  #         Makefile to update the hash symlinks after changes.
+! #SSLCARevocationPath "${SNAP_APP_PATH}/conf/ssl.crl"
+! #SSLCARevocationFile "${SNAP_APP_PATH}/conf/ssl.crl/ca-bundle.crl"
+  #SSLCARevocationCheck chain
+  
+  #   Client Authentication (Type):
+***************
+*** 200,207 ****
+  #   file (containing login information for SRP user accounts). 
+  #   Requires OpenSSL 1.0.1 or newer. See the mod_ssl FAQ for
+  #   detailed instructions on creating this file. Example:
+! #   "openssl srp -srpvfile /REPLACEME/conf/passwd.srpv -add username"
+! #SSLSRPVerifierFile "/REPLACEME/conf/passwd.srpv"
+  
+  #   Access Control:
+  #   With SSLRequire you can do per-directory access control based
+--- 200,207 ----
+  #   file (containing login information for SRP user accounts). 
+  #   Requires OpenSSL 1.0.1 or newer. See the mod_ssl FAQ for
+  #   detailed instructions on creating this file. Example:
+! #   "openssl srp -srpvfile ${SNAP_APP_PATH}/conf/passwd.srpv -add username"
+! #SSLSRPVerifierFile "${SNAP_APP_PATH}/conf/passwd.srpv"
+  
+  #   Access Control:
+  #   With SSLRequire you can do per-directory access control based
+***************
+*** 249,255 ****
+  <FilesMatch "\.(cgi|shtml|phtml|php)$">
+      SSLOptions +StdEnvVars
+  </FilesMatch>
+! <Directory "/REPLACEME/cgi-bin">
+      SSLOptions +StdEnvVars
+  </Directory>
+  
+--- 249,255 ----
+  <FilesMatch "\.(cgi|shtml|phtml|php)$">
+      SSLOptions +StdEnvVars
+  </FilesMatch>
+! <Directory "${SNAP_APP_PATH}/cgi-bin">
+      SSLOptions +StdEnvVars
+  </Directory>
+  
+***************
+*** 284,290 ****
+  #   Per-Server Logging:
+  #   The home of a custom SSL log file. Use this when you want a
+  #   compact non-error SSL logfile on a virtual host basis.
+! CustomLog "/REPLACEME/logs/ssl_request_log" \
+            "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+  
+  </VirtualHost>                                  
+--- 284,290 ----
+  #   Per-Server Logging:
+  #   The home of a custom SSL log file. Use this when you want a
+  #   compact non-error SSL logfile on a virtual host basis.
+! CustomLog "${SNAP_APP_PATH}/logs/ssl_request_log" \
+            "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+  
+  </VirtualHost>                                  
+diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-vhosts.conf foo/REPLACEME/conf/original/extra/httpd-vhosts.conf
+*** foo_orig/REPLACEME/conf/original/extra/httpd-vhosts.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/original/extra/httpd-vhosts.conf	2016-01-11 18:22:45.084138829 +0000
+***************
+*** 22,28 ****
+  #
+  <VirtualHost *:80>
+      ServerAdmin webmaster@dummy-host.example.com
+!     DocumentRoot "/REPLACEME/docs/dummy-host.example.com"
+      ServerName dummy-host.example.com
+      ServerAlias www.dummy-host.example.com
+      ErrorLog "logs/dummy-host.example.com-error_log"
+--- 22,28 ----
+  #
+  <VirtualHost *:80>
+      ServerAdmin webmaster@dummy-host.example.com
+!     DocumentRoot "${SNAP_APP_PATH}/docs/dummy-host.example.com"
+      ServerName dummy-host.example.com
+      ServerAlias www.dummy-host.example.com
+      ErrorLog "logs/dummy-host.example.com-error_log"
+***************
+*** 31,37 ****
+  
+  <VirtualHost *:80>
+      ServerAdmin webmaster@dummy-host2.example.com
+!     DocumentRoot "/REPLACEME/docs/dummy-host2.example.com"
+      ServerName dummy-host2.example.com
+      ErrorLog "logs/dummy-host2.example.com-error_log"
+      CustomLog "logs/dummy-host2.example.com-access_log" common
+--- 31,37 ----
+  
+  <VirtualHost *:80>
+      ServerAdmin webmaster@dummy-host2.example.com
+!     DocumentRoot "${SNAP_APP_PATH}/docs/dummy-host2.example.com"
+      ServerName dummy-host2.example.com
+      ErrorLog "logs/dummy-host2.example.com-error_log"
+      CustomLog "logs/dummy-host2.example.com-access_log" common
+diff -rc foo_orig/REPLACEME/conf/original/httpd.conf foo/REPLACEME/conf/original/httpd.conf
+*** foo_orig/REPLACEME/conf/original/httpd.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/REPLACEME/conf/original/httpd.conf	2016-01-11 18:22:45.072138830 +0000
+***************
+*** 28,34 ****
+  # same ServerRoot for multiple httpd daemons, you will need to change at
+  # least PidFile.
+  #
+! ServerRoot "/REPLACEME"
+  
+  #
+  # Mutex: Allows you to set the mutex mechanism and mutex file directory
+--- 28,34 ----
+  # same ServerRoot for multiple httpd daemons, you will need to change at
+  # least PidFile.
+  #
+! ServerRoot "${SNAP_APP_PATH}"
+  
+  #
+  # Mutex: Allows you to set the mutex mechanism and mutex file directory
+***************
+*** 212,219 ****
+  # documents. By default, all requests are taken from this directory, but
+  # symbolic links and aliases may be used to point to other locations.
+  #
+! DocumentRoot "/REPLACEME/htdocs"
+! <Directory "/REPLACEME/htdocs">
+      #
+      # Possible values for the Options directive are "None", "All",
+      # or any combination of:
+--- 212,219 ----
+  # documents. By default, all requests are taken from this directory, but
+  # symbolic links and aliases may be used to point to other locations.
+  #
+! DocumentRoot "${SNAP_APP_PATH}/htdocs"
+! <Directory "${SNAP_APP_PATH}/htdocs">
+      #
+      # Possible values for the Options directive are "None", "All",
+      # or any combination of:
+***************
+*** 329,335 ****
+      # client.  The same rules about trailing "/" apply to ScriptAlias
+      # directives as to Alias.
+      #
+!     ScriptAlias /cgi-bin/ "/REPLACEME/cgi-bin/"
+  
+  </IfModule>
+  
+--- 329,335 ----
+      # client.  The same rules about trailing "/" apply to ScriptAlias
+      # directives as to Alias.
+      #
+!     ScriptAlias /cgi-bin/ "${SNAP_APP_PATH}/cgi-bin/"
+  
+  </IfModule>
+  
+***************
+*** 342,351 ****
+  </IfModule>
+  
+  #
+! # "/REPLACEME/cgi-bin" should be changed to whatever your ScriptAliased
+  # CGI directory exists, if you have that configured.
+  #
+! <Directory "/REPLACEME/cgi-bin">
+      AllowOverride None
+      Options None
+      Require all granted
+--- 342,351 ----
+  </IfModule>
+  
+  #
+! # "${SNAP_APP_PATH}/cgi-bin" should be changed to whatever your ScriptAliased
+  # CGI directory exists, if you have that configured.
+  #
+! <Directory "${SNAP_APP_PATH}/cgi-bin">
+      AllowOverride None
+      Options None
+      Require all granted
+diff -rc foo_orig/REPLACEME/include/ap_config_auto.h foo/REPLACEME/include/ap_config_auto.h
+*** foo_orig/REPLACEME/include/ap_config_auto.h	2016-01-11 18:02:58.964185218 +0000
+--- foo/REPLACEME/include/ap_config_auto.h	2016-01-11 18:22:45.320138820 +0000
+***************
+*** 223,229 ****
+  #define HAVE_UNISTD_H 1
+  
+  /* Root directory of the Apache install area */
+! #define HTTPD_ROOT "/REPLACEME"
+  
+  /* Define to the address where bug reports for this package should be sent. */
+  #define PACKAGE_BUGREPORT ""
+--- 223,229 ----
+  #define HAVE_UNISTD_H 1
+  
+  /* Root directory of the Apache install area */
+! #define HTTPD_ROOT "${SNAP_APP_PATH}"
+  
+  /* Define to the address where bug reports for this package should be sent. */
+  #define PACKAGE_BUGREPORT ""
+diff -rc foo_orig/REPLACEME/include/ap_config_layout.h foo/REPLACEME/include/ap_config_layout.h
+*** foo_orig/REPLACEME/include/ap_config_layout.h	2016-01-11 18:02:58.964185218 +0000
+--- foo/REPLACEME/include/ap_config_layout.h	2016-01-11 18:22:45.420138816 +0000
+***************
+*** 23,64 ****
+  #define AP_CONFIG_LAYOUT_H
+  
+  /* Configured Apache directory layout */
+! #define DEFAULT_PREFIX "/REPLACEME"
+! #define DEFAULT_EXP_EXEC_PREFIX "/REPLACEME"
+  #define DEFAULT_REL_EXEC_PREFIX ""
+! #define DEFAULT_EXP_BINDIR "/REPLACEME/bin"
+  #define DEFAULT_REL_BINDIR "bin"
+! #define DEFAULT_EXP_SBINDIR "/REPLACEME/bin"
+  #define DEFAULT_REL_SBINDIR "bin"
+! #define DEFAULT_EXP_LIBEXECDIR "/REPLACEME/modules"
+  #define DEFAULT_REL_LIBEXECDIR "modules"
+! #define DEFAULT_EXP_MANDIR "/REPLACEME/man"
+  #define DEFAULT_REL_MANDIR "man"
+! #define DEFAULT_EXP_SYSCONFDIR "/REPLACEME/conf"
+  #define DEFAULT_REL_SYSCONFDIR "conf"
+! #define DEFAULT_EXP_DATADIR "/REPLACEME"
+  #define DEFAULT_REL_DATADIR ""
+! #define DEFAULT_EXP_INSTALLBUILDDIR "/REPLACEME/build"
+  #define DEFAULT_REL_INSTALLBUILDDIR "build"
+! #define DEFAULT_EXP_ERRORDIR "/REPLACEME/error"
+  #define DEFAULT_REL_ERRORDIR "error"
+! #define DEFAULT_EXP_ICONSDIR "/REPLACEME/icons"
+  #define DEFAULT_REL_ICONSDIR "icons"
+! #define DEFAULT_EXP_HTDOCSDIR "/REPLACEME/htdocs"
+  #define DEFAULT_REL_HTDOCSDIR "htdocs"
+! #define DEFAULT_EXP_MANUALDIR "/REPLACEME/manual"
+  #define DEFAULT_REL_MANUALDIR "manual"
+! #define DEFAULT_EXP_CGIDIR "/REPLACEME/cgi-bin"
+  #define DEFAULT_REL_CGIDIR "cgi-bin"
+! #define DEFAULT_EXP_INCLUDEDIR "/REPLACEME/include"
+  #define DEFAULT_REL_INCLUDEDIR "include"
+! #define DEFAULT_EXP_LOCALSTATEDIR "/REPLACEME"
+  #define DEFAULT_REL_LOCALSTATEDIR ""
+! #define DEFAULT_EXP_RUNTIMEDIR "/REPLACEME/logs"
+  #define DEFAULT_REL_RUNTIMEDIR "logs"
+! #define DEFAULT_EXP_LOGFILEDIR "/REPLACEME/logs"
+  #define DEFAULT_REL_LOGFILEDIR "logs"
+! #define DEFAULT_EXP_PROXYCACHEDIR "/REPLACEME/proxy"
+  #define DEFAULT_REL_PROXYCACHEDIR "proxy"
+  
+  #endif /* AP_CONFIG_LAYOUT_H */
+--- 23,64 ----
+  #define AP_CONFIG_LAYOUT_H
+  
+  /* Configured Apache directory layout */
+! #define DEFAULT_PREFIX "${SNAP_APP_PATH}"
+! #define DEFAULT_EXP_EXEC_PREFIX "${SNAP_APP_PATH}"
+  #define DEFAULT_REL_EXEC_PREFIX ""
+! #define DEFAULT_EXP_BINDIR "${SNAP_APP_PATH}/bin"
+  #define DEFAULT_REL_BINDIR "bin"
+! #define DEFAULT_EXP_SBINDIR "${SNAP_APP_PATH}/bin"
+  #define DEFAULT_REL_SBINDIR "bin"
+! #define DEFAULT_EXP_LIBEXECDIR "${SNAP_APP_PATH}/modules"
+  #define DEFAULT_REL_LIBEXECDIR "modules"
+! #define DEFAULT_EXP_MANDIR "${SNAP_APP_PATH}/man"
+  #define DEFAULT_REL_MANDIR "man"
+! #define DEFAULT_EXP_SYSCONFDIR "${SNAP_APP_PATH}/conf"
+  #define DEFAULT_REL_SYSCONFDIR "conf"
+! #define DEFAULT_EXP_DATADIR "${SNAP_APP_PATH}"
+  #define DEFAULT_REL_DATADIR ""
+! #define DEFAULT_EXP_INSTALLBUILDDIR "${SNAP_APP_PATH}/build"
+  #define DEFAULT_REL_INSTALLBUILDDIR "build"
+! #define DEFAULT_EXP_ERRORDIR "${SNAP_APP_PATH}/error"
+  #define DEFAULT_REL_ERRORDIR "error"
+! #define DEFAULT_EXP_ICONSDIR "${SNAP_APP_PATH}/icons"
+  #define DEFAULT_REL_ICONSDIR "icons"
+! #define DEFAULT_EXP_HTDOCSDIR "${SNAP_APP_PATH}/htdocs"
+  #define DEFAULT_REL_HTDOCSDIR "htdocs"
+! #define DEFAULT_EXP_MANUALDIR "${SNAP_APP_PATH}/manual"
+  #define DEFAULT_REL_MANUALDIR "manual"
+! #define DEFAULT_EXP_CGIDIR "${SNAP_APP_PATH}/cgi-bin"
+  #define DEFAULT_REL_CGIDIR "cgi-bin"
+! #define DEFAULT_EXP_INCLUDEDIR "${SNAP_APP_PATH}/include"
+  #define DEFAULT_REL_INCLUDEDIR "include"
+! #define DEFAULT_EXP_LOCALSTATEDIR "${SNAP_APP_PATH}"
+  #define DEFAULT_REL_LOCALSTATEDIR ""
+! #define DEFAULT_EXP_RUNTIMEDIR "${SNAP_APP_PATH}/logs"
+  #define DEFAULT_REL_RUNTIMEDIR "logs"
+! #define DEFAULT_EXP_LOGFILEDIR "${SNAP_APP_PATH}/logs"
+  #define DEFAULT_REL_LOGFILEDIR "logs"
+! #define DEFAULT_EXP_PROXYCACHEDIR "${SNAP_APP_PATH}/proxy"
+  #define DEFAULT_REL_PROXYCACHEDIR "proxy"
+  
+  #endif /* AP_CONFIG_LAYOUT_H */
+Binary files foo_orig/REPLACEME/modules/mod_info.so and foo/REPLACEME/modules/mod_info.so differ
+Binary files foo_orig/REPLACEME/modules/mod_unixd.so and foo/REPLACEME/modules/mod_unixd.so differ
