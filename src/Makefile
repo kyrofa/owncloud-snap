@@ -35,7 +35,8 @@ install: install_apache
 	@mv $(DESTDIR)/REPLACEME/* $(DESTDIR)/
 	@rmdir $(DESTDIR)/REPLACEME/
 	@patch -p2 -d $(DESTDIR) < installation.patch
+	@sed -i 's|/REPLACEME|$(DESTDIR)|' $(DESTDIR)/bin/apxs
 	@touch install
 
 clean:
-	@rm -rf http* extract_apache customize_apache apache install_apache install
+	@rm -rf http* extract_apache php* extract_php apache install_apache install
