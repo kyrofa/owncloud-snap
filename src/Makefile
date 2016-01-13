@@ -36,6 +36,7 @@ install: install_apache
 	@rmdir $(DESTDIR)/REPLACEME/
 	@patch -p2 -d $(DESTDIR) < installation.patch
 	@sed -i 's|/REPLACEME|$(DESTDIR)|' $(DESTDIR)/bin/apxs
+	@find $(DESTDIR)/build -type f -print0 | xargs -0 sed -i 's|/REPLACEME|$(DESTDIR)|'
 	@touch install
 
 clean:
