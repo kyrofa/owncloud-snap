@@ -44,6 +44,8 @@ install_php: php
 	@touch install_php
 
 install: install_apache install_php
+	@rm $(DESTDIR)/htdocs/index.html
+	@cp index.php $(DESTDIR)/htdocs/
 	@touch install
 
 clean:
