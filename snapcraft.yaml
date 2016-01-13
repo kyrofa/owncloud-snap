@@ -15,10 +15,18 @@ parts:
     plugin: make
     source: src
     stage-packages:
+      # Apache dependencies
       - libapr1
       - libaprutil1
       - libpcre3
+
+      # PHP dependencies
+      - libxml2
     build-packages:
+      # Apache dependencies
       - libapr1-dev
       - libaprutil1-dev
       - libpcre3-dev
+
+      # PHP dependencies
+      - libxml2-dev

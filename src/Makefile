@@ -20,23 +20,30 @@ extract_php: php.tar.gz
 
 # Build apache
 apache: extract_apache
-	cd httpd*/ && ./configure --prefix=/REPLACEME
+	@cd httpd*/ && ./configure --prefix=/CUSTOM_PREFIX
 	@$(MAKE) -C httpd*/
 	@touch apache
 
-# Build php
-php: extract_php
-
 install_apache: apache
 	@$(MAKE) -C httpd*/ install
+	@mv $(DESTDIR)/CUSTOM_PREFIX/* $(DESTDIR)/
+	@rmdir $(DESTDIR)/CUSTOM_PREFIX/
+	@patch -p2 -d $(DESTDIR) < installation.patch
+	@sed -i 's|/CUSTOM_PREFIX|$(DESTDIR)|' $(DESTDIR)/bin/apxs
+	@find $(DESTDIR)/build -type f -print0 | xargs -0 sed -i 's|/CUSTOM_PREFIX|$(DESTDIR)|'
 	@touch install_apache
 
-install: install_apache
-	@mv $(DESTDIR)/REPLACEME/* $(DESTDIR)/
-	@rmdir $(DESTDIR)/REPLACEME/
-	@patch -p2 -d $(DESTDIR) < installation.patch
-	@sed -i 's|/REPLACEME|$(DESTDIR)|' $(DESTDIR)/bin/apxs
-	@find $(DESTDIR)/build -type f -print0 | xargs -0 sed -i 's|/REPLACEME|$(DESTDIR)|'
+# Build php
+php: extract_php install_apache
+	@cd php*/ && ./configure --with-apxs2=$(DESTDIR)/bin/apxs --prefix=$(DESTDIR)
+	@$(MAKE) -C php*/
+	@touch php
+
+install_php: php
+	@$(MAKE) -C php*/ install DESTDIR=
+	@touch install_php
+
+install: install_apache install_php
 	@touch install
 
 clean:

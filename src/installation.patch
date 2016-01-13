@@ -1,16 +1,16 @@
-diff -rc foo_orig/REPLACEME/bin/apachectl foo/REPLACEME/bin/apachectl
-*** foo_orig/REPLACEME/bin/apachectl	2016-01-11 18:02:58.936185219 +0000
---- foo/REPLACEME/bin/apachectl	2016-01-11 19:04:06.304041789 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/bin/apachectl foo/REPLACEME/bin/apachectl
+*** foo_orig/CUSTOM_PREFIX/bin/apachectl	2016-01-11 18:02:58.936185219 +0000
+--- foo/CUSTOM_PREFIX/bin/apachectl	2016-01-11 19:04:06.304041789 +0000
 ***************
 *** 42,52 ****
   # --------------------                              --------------------
   # 
   # the path to your httpd binary, including options if necessary
-! HTTPD='/REPLACEME/bin/httpd'
+! HTTPD='/CUSTOM_PREFIX/bin/httpd'
   #
   # pick up any necessary environment variables
-! if test -f /REPLACEME/bin/envvars; then
-!   . /REPLACEME/bin/envvars
+! if test -f /CUSTOM_PREFIX/bin/envvars; then
+!   . /CUSTOM_PREFIX/bin/envvars
   fi
   #
   # a command that outputs a formatted text version of the HTML at the
@@ -77,17 +77,17 @@ diff -rc foo_orig/REPLACEME/bin/apachectl foo/REPLACEME/bin/apachectl
       ERROR=$?
   esac
   
-diff -rc foo_orig/REPLACEME/bin/envvars foo/REPLACEME/bin/envvars
-*** foo_orig/REPLACEME/bin/envvars	2016-01-11 18:02:58.936185219 +0000
---- foo/REPLACEME/bin/envvars	2016-01-11 18:22:45.280138821 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/bin/envvars foo/REPLACEME/bin/envvars
+*** foo_orig/CUSTOM_PREFIX/bin/envvars	2016-01-11 18:02:58.936185219 +0000
+--- foo/CUSTOM_PREFIX/bin/envvars	2016-01-11 18:22:45.280138821 +0000
 ***************
 *** 19,27 ****
   # This file is generated from envvars-std.in
   #
   if test "x$LD_LIBRARY_PATH" != "x" ; then
-!   LD_LIBRARY_PATH="/REPLACEME/lib:$LD_LIBRARY_PATH"
+!   LD_LIBRARY_PATH="/CUSTOM_PREFIX/lib:$LD_LIBRARY_PATH"
   else
-!   LD_LIBRARY_PATH="/REPLACEME/lib"
+!   LD_LIBRARY_PATH="/CUSTOM_PREFIX/lib"
   fi
   export LD_LIBRARY_PATH
   #
@@ -101,17 +101,17 @@ diff -rc foo_orig/REPLACEME/bin/envvars foo/REPLACEME/bin/envvars
   fi
   export LD_LIBRARY_PATH
   #
-diff -rc foo_orig/REPLACEME/bin/envvars-std foo/REPLACEME/bin/envvars-std
-*** foo_orig/REPLACEME/bin/envvars-std	2016-01-11 18:02:58.936185219 +0000
---- foo/REPLACEME/bin/envvars-std	2016-01-11 18:22:45.304138821 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/bin/envvars-std foo/REPLACEME/bin/envvars-std
+*** foo_orig/CUSTOM_PREFIX/bin/envvars-std	2016-01-11 18:02:58.936185219 +0000
+--- foo/CUSTOM_PREFIX/bin/envvars-std	2016-01-11 18:22:45.304138821 +0000
 ***************
 *** 19,27 ****
   # This file is generated from envvars-std.in
   #
   if test "x$LD_LIBRARY_PATH" != "x" ; then
-!   LD_LIBRARY_PATH="/REPLACEME/lib:$LD_LIBRARY_PATH"
+!   LD_LIBRARY_PATH="/CUSTOM_PREFIX/lib:$LD_LIBRARY_PATH"
   else
-!   LD_LIBRARY_PATH="/REPLACEME/lib"
+!   LD_LIBRARY_PATH="/CUSTOM_PREFIX/lib"
   fi
   export LD_LIBRARY_PATH
   #
@@ -125,18 +125,18 @@ diff -rc foo_orig/REPLACEME/bin/envvars-std foo/REPLACEME/bin/envvars-std
   fi
   export LD_LIBRARY_PATH
   #
-Binary files foo_orig/REPLACEME/bin/httpd and foo/REPLACEME/bin/httpd differ
-diff -rc foo_orig/REPLACEME/conf/extra/httpd-autoindex.conf foo/REPLACEME/conf/extra/httpd-autoindex.conf
-*** foo_orig/REPLACEME/conf/extra/httpd-autoindex.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/extra/httpd-autoindex.conf	2016-01-11 18:22:45.096138829 +0000
+Binary files foo_orig/CUSTOM_PREFIX/bin/httpd and foo/REPLACEME/bin/httpd differ
+diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-autoindex.conf foo/REPLACEME/conf/extra/httpd-autoindex.conf
+*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-autoindex.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/extra/httpd-autoindex.conf	2016-01-11 18:22:45.096138829 +0000
 ***************
 *** 18,26 ****
   # We include the /icons/ alias for FancyIndexed directory listings.  If
   # you do not use FancyIndexing, you may comment this out.
   #
-! Alias /icons/ "/REPLACEME/icons/"
+! Alias /icons/ "/CUSTOM_PREFIX/icons/"
   
-! <Directory "/REPLACEME/icons">
+! <Directory "/CUSTOM_PREFIX/icons">
       Options Indexes MultiViews
       AllowOverride None
       Require all granted
@@ -150,26 +150,26 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-autoindex.conf foo/REPLACEME/conf/e
       Options Indexes MultiViews
       AllowOverride None
       Require all granted
-diff -rc foo_orig/REPLACEME/conf/extra/httpd-dav.conf foo/REPLACEME/conf/extra/httpd-dav.conf
-*** foo_orig/REPLACEME/conf/extra/httpd-dav.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/extra/httpd-dav.conf	2016-01-11 18:22:45.096138829 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-dav.conf foo/REPLACEME/conf/extra/httpd-dav.conf
+*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-dav.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/extra/httpd-dav.conf	2016-01-11 18:22:45.096138829 +0000
 ***************
 *** 12,29 ****
   # on the directory where the DavLockDB is placed and on any directory where
   # "Dav On" is specified.
   
-! DavLockDB "/REPLACEME/var/DavLock"
+! DavLockDB "/CUSTOM_PREFIX/var/DavLock"
   
-! Alias /uploads "/REPLACEME/uploads"
+! Alias /uploads "/CUSTOM_PREFIX/uploads"
   
-! <Directory "/REPLACEME/uploads">
+! <Directory "/CUSTOM_PREFIX/uploads">
       Dav On
   
       AuthType Digest
       AuthName DAV-upload
       # You can use the htdigest program to create the password database:
-!     #   htdigest -c "/REPLACEME/user.passwd" DAV-upload admin
-!     AuthUserFile "/REPLACEME/user.passwd"
+!     #   htdigest -c "/CUSTOM_PREFIX/user.passwd" DAV-upload admin
+!     AuthUserFile "/CUSTOM_PREFIX/user.passwd"
       AuthDigestProvider file
   
       # Allow universal read-access, but writes are restricted
@@ -192,17 +192,17 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-dav.conf foo/REPLACEME/conf/extra/h
       AuthDigestProvider file
   
       # Allow universal read-access, but writes are restricted
-diff -rc foo_orig/REPLACEME/conf/extra/httpd-manual.conf foo/REPLACEME/conf/extra/httpd-manual.conf
-*** foo_orig/REPLACEME/conf/extra/httpd-manual.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/extra/httpd-manual.conf	2016-01-11 18:22:45.100138829 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-manual.conf foo/REPLACEME/conf/extra/httpd-manual.conf
+*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-manual.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/extra/httpd-manual.conf	2016-01-11 18:22:45.100138829 +0000
 ***************
 *** 8,16 ****
   #                   mod_setenvif, mod_negotiation
   #
   
-! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "/REPLACEME/manual$1"
+! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "/CUSTOM_PREFIX/manual$1"
   
-! <Directory "/REPLACEME/manual">
+! <Directory "/CUSTOM_PREFIX/manual">
       Options Indexes
       AllowOverride None
       Require all granted
@@ -216,9 +216,9 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-manual.conf foo/REPLACEME/conf/extr
       Options Indexes
       AllowOverride None
       Require all granted
-diff -rc foo_orig/REPLACEME/conf/extra/httpd-mpm.conf foo/REPLACEME/conf/extra/httpd-mpm.conf
-*** foo_orig/REPLACEME/conf/extra/httpd-mpm.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/extra/httpd-mpm.conf	2016-01-11 19:16:36.832012436 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-mpm.conf foo/REPLACEME/conf/extra/httpd-mpm.conf
+*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-mpm.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/extra/httpd-mpm.conf	2016-01-11 19:16:36.832012436 +0000
 ***************
 *** 9,15 ****
   # Note that this is the default PidFile for most MPMs.
@@ -236,22 +236,22 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-mpm.conf foo/REPLACEME/conf/extra/h
   </IfModule>
   
   #
-diff -rc foo_orig/REPLACEME/conf/extra/httpd-multilang-errordoc.conf foo/REPLACEME/conf/extra/httpd-multilang-errordoc.conf
-*** foo_orig/REPLACEME/conf/extra/httpd-multilang-errordoc.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/extra/httpd-multilang-errordoc.conf	2016-01-11 18:22:45.096138829 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-multilang-errordoc.conf foo/REPLACEME/conf/extra/httpd-multilang-errordoc.conf
+*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-multilang-errordoc.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/extra/httpd-multilang-errordoc.conf	2016-01-11 18:22:45.096138829 +0000
 ***************
 *** 15,28 ****
   #   Alias /error/include/ "/your/include/path/"
   #
   # which allows you to create your own set of files by starting with the
-! # /REPLACEME/error/include/ files and copying them to /your/include/path/, 
+! # /CUSTOM_PREFIX/error/include/ files and copying them to /your/include/path/, 
   # even on a per-VirtualHost basis.  The default include files will display
   # your Apache version number and your ServerAdmin email address regardless
   # of the setting of ServerSignature.
   
-! Alias /error/ "/REPLACEME/error/"
+! Alias /error/ "/CUSTOM_PREFIX/error/"
   
-! <Directory "/REPLACEME/error">
+! <Directory "/CUSTOM_PREFIX/error">
       AllowOverride None
       Options IncludesNoExec
       AddOutputFilter Includes html
@@ -270,16 +270,16 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-multilang-errordoc.conf foo/REPLACE
       AllowOverride None
       Options IncludesNoExec
       AddOutputFilter Includes html
-diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/httpd-ssl.conf
-*** foo_orig/REPLACEME/conf/extra/httpd-ssl.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/extra/httpd-ssl.conf	2016-01-11 19:16:19.556013112 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/httpd-ssl.conf
+*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-ssl.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/extra/httpd-ssl.conf	2016-01-11 19:16:19.556013112 +0000
 ***************
 *** 88,95 ****
   #   Inter-Process Session Cache:
   #   Configure the SSL Session Cache: First the mechanism 
   #   to use and second the expiring timeout (in seconds).
-! #SSLSessionCache         "dbm:/REPLACEME/logs/ssl_scache"
-! SSLSessionCache        "shmcb:/REPLACEME/logs/ssl_scache(512000)"
+! #SSLSessionCache         "dbm:/CUSTOM_PREFIX/logs/ssl_scache"
+! SSLSessionCache        "shmcb:/CUSTOM_PREFIX/logs/ssl_scache(512000)"
   SSLSessionCacheTimeout  300
   
   #   OCSP Stapling (requires OpenSSL 0.9.8h or later)
@@ -297,7 +297,7 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/h
   #   the same mechanism that is used for the SSL session cache
   #   above.  If stapling is used with more than a few certificates,
   #   the size may need to be increased.  (AH01929 will be logged.)
-! #SSLStaplingCache "shmcb:/REPLACEME/logs/ssl_stapling(32768)"
+! #SSLStaplingCache "shmcb:/CUSTOM_PREFIX/logs/ssl_stapling(32768)"
   
   #   Seconds before valid OCSP responses are expired from the cache
   #SSLStaplingStandardCacheTimeout 3600
@@ -314,11 +314,11 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/h
   <VirtualHost _default_:443>
   
   #   General setup for the virtual host
-! DocumentRoot "/REPLACEME/htdocs"
+! DocumentRoot "/CUSTOM_PREFIX/htdocs"
   ServerName www.example.com:443
   ServerAdmin you@example.com
-! ErrorLog "/REPLACEME/logs/error_log"
-! TransferLog "/REPLACEME/logs/access_log"
+! ErrorLog "/CUSTOM_PREFIX/logs/error_log"
+! TransferLog "/CUSTOM_PREFIX/logs/access_log"
   
   #   SSL Engine Switch:
   #   Enable/Disable SSL for this virtual host.
@@ -339,9 +339,9 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/h
   #   Some ECC cipher suites (http://www.ietf.org/rfc/rfc4492.txt)
   #   require an ECC certificate which can also be configured in
   #   parallel.
-! SSLCertificateFile "/REPLACEME/conf/server.crt"
-! #SSLCertificateFile "/REPLACEME/conf/server-dsa.crt"
-! #SSLCertificateFile "/REPLACEME/conf/server-ecc.crt"
+! SSLCertificateFile "/CUSTOM_PREFIX/conf/server.crt"
+! #SSLCertificateFile "/CUSTOM_PREFIX/conf/server-dsa.crt"
+! #SSLCertificateFile "/CUSTOM_PREFIX/conf/server-ecc.crt"
   
   #   Server Private Key:
   #   If the key is not combined with the certificate, use this
@@ -360,9 +360,9 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/h
   #   you've both a RSA and a DSA private key you can configure
   #   both in parallel (to also allow the use of DSA ciphers, etc.)
   #   ECC keys, when in use, can also be configured in parallel
-! SSLCertificateKeyFile "/REPLACEME/conf/server.key"
-! #SSLCertificateKeyFile "/REPLACEME/conf/server-dsa.key"
-! #SSLCertificateKeyFile "/REPLACEME/conf/server-ecc.key"
+! SSLCertificateKeyFile "/CUSTOM_PREFIX/conf/server.key"
+! #SSLCertificateKeyFile "/CUSTOM_PREFIX/conf/server-dsa.key"
+! #SSLCertificateKeyFile "/CUSTOM_PREFIX/conf/server-ecc.key"
   
   #   Server Certificate Chain:
   #   Point SSLCertificateChainFile at a file containing the
@@ -381,7 +381,7 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/h
   #   the referenced file can be the same as SSLCertificateFile
   #   when the CA certificates are directly appended to the server
   #   certificate for convenience.
-! #SSLCertificateChainFile "/REPLACEME/conf/server-ca.crt"
+! #SSLCertificateChainFile "/CUSTOM_PREFIX/conf/server-ca.crt"
   
   #   Certificate Authority (CA):
   #   Set the CA certificate verification path where to find CA
@@ -398,8 +398,8 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/h
   #   Note: Inside SSLCACertificatePath you need hash symlinks
   #         to point to the certificate files. Use the provided
   #         Makefile to update the hash symlinks after changes.
-! #SSLCACertificatePath "/REPLACEME/conf/ssl.crt"
-! #SSLCACertificateFile "/REPLACEME/conf/ssl.crt/ca-bundle.crt"
+! #SSLCACertificatePath "/CUSTOM_PREFIX/conf/ssl.crt"
+! #SSLCACertificateFile "/CUSTOM_PREFIX/conf/ssl.crt/ca-bundle.crt"
   
   #   Certificate Revocation Lists (CRL):
   #   Set the CA revocation path where to find CA CRLs for client
@@ -417,8 +417,8 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/h
   #   Note: Inside SSLCARevocationPath you need hash symlinks
   #         to point to the certificate files. Use the provided
   #         Makefile to update the hash symlinks after changes.
-! #SSLCARevocationPath "/REPLACEME/conf/ssl.crl"
-! #SSLCARevocationFile "/REPLACEME/conf/ssl.crl/ca-bundle.crl"
+! #SSLCARevocationPath "/CUSTOM_PREFIX/conf/ssl.crl"
+! #SSLCARevocationFile "/CUSTOM_PREFIX/conf/ssl.crl/ca-bundle.crl"
   #SSLCARevocationCheck chain
   
   #   Client Authentication (Type):
@@ -436,8 +436,8 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/h
   #   file (containing login information for SRP user accounts). 
   #   Requires OpenSSL 1.0.1 or newer. See the mod_ssl FAQ for
   #   detailed instructions on creating this file. Example:
-! #   "openssl srp -srpvfile /REPLACEME/conf/passwd.srpv -add username"
-! #SSLSRPVerifierFile "/REPLACEME/conf/passwd.srpv"
+! #   "openssl srp -srpvfile /CUSTOM_PREFIX/conf/passwd.srpv -add username"
+! #SSLSRPVerifierFile "/CUSTOM_PREFIX/conf/passwd.srpv"
   
   #   Access Control:
   #   With SSLRequire you can do per-directory access control based
@@ -455,7 +455,7 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/h
   <FilesMatch "\.(cgi|shtml|phtml|php)$">
       SSLOptions +StdEnvVars
   </FilesMatch>
-! <Directory "/REPLACEME/cgi-bin">
+! <Directory "/CUSTOM_PREFIX/cgi-bin">
       SSLOptions +StdEnvVars
   </Directory>
   
@@ -472,7 +472,7 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/h
   #   Per-Server Logging:
   #   The home of a custom SSL log file. Use this when you want a
   #   compact non-error SSL logfile on a virtual host basis.
-! CustomLog "/REPLACEME/logs/ssl_request_log" \
+! CustomLog "/CUSTOM_PREFIX/logs/ssl_request_log" \
             "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
   
   </VirtualHost>                                  
@@ -484,15 +484,15 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/h
             "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
   
   </VirtualHost>                                  
-diff -rc foo_orig/REPLACEME/conf/extra/httpd-vhosts.conf foo/REPLACEME/conf/extra/httpd-vhosts.conf
-*** foo_orig/REPLACEME/conf/extra/httpd-vhosts.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/extra/httpd-vhosts.conf	2016-01-11 19:17:06.616011271 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-vhosts.conf foo/REPLACEME/conf/extra/httpd-vhosts.conf
+*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-vhosts.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/extra/httpd-vhosts.conf	2016-01-11 19:17:06.616011271 +0000
 ***************
 *** 22,40 ****
   #
   <VirtualHost *:80>
       ServerAdmin webmaster@dummy-host.example.com
-!     DocumentRoot "/REPLACEME/docs/dummy-host.example.com"
+!     DocumentRoot "/CUSTOM_PREFIX/docs/dummy-host.example.com"
       ServerName dummy-host.example.com
       ServerAlias www.dummy-host.example.com
 !     ErrorLog "logs/dummy-host.example.com-error_log"
@@ -501,7 +501,7 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-vhosts.conf foo/REPLACEME/conf/extr
   
   <VirtualHost *:80>
       ServerAdmin webmaster@dummy-host2.example.com
-!     DocumentRoot "/REPLACEME/docs/dummy-host2.example.com"
+!     DocumentRoot "/CUSTOM_PREFIX/docs/dummy-host2.example.com"
       ServerName dummy-host2.example.com
 !     ErrorLog "logs/dummy-host2.example.com-error_log"
 !     CustomLog "logs/dummy-host2.example.com-access_log" common
@@ -528,15 +528,15 @@ diff -rc foo_orig/REPLACEME/conf/extra/httpd-vhosts.conf foo/REPLACEME/conf/extr
   </VirtualHost>
   
   
-diff -rc foo_orig/REPLACEME/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
-*** foo_orig/REPLACEME/conf/httpd.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/httpd.conf	2016-01-11 20:59:42.259770524 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
+*** foo_orig/CUSTOM_PREFIX/conf/httpd.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/httpd.conf	2016-01-11 20:59:42.259770524 +0000
 ***************
 *** 28,34 ****
   # same ServerRoot for multiple httpd daemons, you will need to change at
   # least PidFile.
   #
-! ServerRoot "/REPLACEME"
+! ServerRoot "/CUSTOM_PREFIX"
   
   #
   # Mutex: Allows you to set the mutex mechanism and mutex file directory
@@ -574,8 +574,8 @@ diff -rc foo_orig/REPLACEME/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
   # documents. By default, all requests are taken from this directory, but
   # symbolic links and aliases may be used to point to other locations.
   #
-! DocumentRoot "/REPLACEME/htdocs"
-! <Directory "/REPLACEME/htdocs">
+! DocumentRoot "/CUSTOM_PREFIX/htdocs"
+! <Directory "/CUSTOM_PREFIX/htdocs">
       #
       # Possible values for the Options directive are "None", "All",
       # or any combination of:
@@ -639,7 +639,7 @@ diff -rc foo_orig/REPLACEME/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
       # client.  The same rules about trailing "/" apply to ScriptAlias
       # directives as to Alias.
       #
-!     ScriptAlias /cgi-bin/ "/REPLACEME/cgi-bin/"
+!     ScriptAlias /cgi-bin/ "/CUSTOM_PREFIX/cgi-bin/"
   
   </IfModule>
   
@@ -656,10 +656,10 @@ diff -rc foo_orig/REPLACEME/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
   </IfModule>
   
   #
-! # "/REPLACEME/cgi-bin" should be changed to whatever your ScriptAliased
+! # "/CUSTOM_PREFIX/cgi-bin" should be changed to whatever your ScriptAliased
   # CGI directory exists, if you have that configured.
   #
-! <Directory "/REPLACEME/cgi-bin">
+! <Directory "/CUSTOM_PREFIX/cgi-bin">
       AllowOverride None
       Options None
       Require all granted
@@ -674,17 +674,17 @@ diff -rc foo_orig/REPLACEME/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
       AllowOverride None
       Options None
       Require all granted
-diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-autoindex.conf foo/REPLACEME/conf/original/extra/httpd-autoindex.conf
-*** foo_orig/REPLACEME/conf/original/extra/httpd-autoindex.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/original/extra/httpd-autoindex.conf	2016-01-11 18:22:45.084138829 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-autoindex.conf foo/REPLACEME/conf/original/extra/httpd-autoindex.conf
+*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-autoindex.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/original/extra/httpd-autoindex.conf	2016-01-11 18:22:45.084138829 +0000
 ***************
 *** 18,26 ****
   # We include the /icons/ alias for FancyIndexed directory listings.  If
   # you do not use FancyIndexing, you may comment this out.
   #
-! Alias /icons/ "/REPLACEME/icons/"
+! Alias /icons/ "/CUSTOM_PREFIX/icons/"
   
-! <Directory "/REPLACEME/icons">
+! <Directory "/CUSTOM_PREFIX/icons">
       Options Indexes MultiViews
       AllowOverride None
       Require all granted
@@ -698,26 +698,26 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-autoindex.conf foo/REPLACE
       Options Indexes MultiViews
       AllowOverride None
       Require all granted
-diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-dav.conf foo/REPLACEME/conf/original/extra/httpd-dav.conf
-*** foo_orig/REPLACEME/conf/original/extra/httpd-dav.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/original/extra/httpd-dav.conf	2016-01-11 18:22:45.084138829 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-dav.conf foo/REPLACEME/conf/original/extra/httpd-dav.conf
+*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-dav.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/original/extra/httpd-dav.conf	2016-01-11 18:22:45.084138829 +0000
 ***************
 *** 12,29 ****
   # on the directory where the DavLockDB is placed and on any directory where
   # "Dav On" is specified.
   
-! DavLockDB "/REPLACEME/var/DavLock"
+! DavLockDB "/CUSTOM_PREFIX/var/DavLock"
   
-! Alias /uploads "/REPLACEME/uploads"
+! Alias /uploads "/CUSTOM_PREFIX/uploads"
   
-! <Directory "/REPLACEME/uploads">
+! <Directory "/CUSTOM_PREFIX/uploads">
       Dav On
   
       AuthType Digest
       AuthName DAV-upload
       # You can use the htdigest program to create the password database:
-!     #   htdigest -c "/REPLACEME/user.passwd" DAV-upload admin
-!     AuthUserFile "/REPLACEME/user.passwd"
+!     #   htdigest -c "/CUSTOM_PREFIX/user.passwd" DAV-upload admin
+!     AuthUserFile "/CUSTOM_PREFIX/user.passwd"
       AuthDigestProvider file
   
       # Allow universal read-access, but writes are restricted
@@ -740,17 +740,17 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-dav.conf foo/REPLACEME/con
       AuthDigestProvider file
   
       # Allow universal read-access, but writes are restricted
-diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-manual.conf foo/REPLACEME/conf/original/extra/httpd-manual.conf
-*** foo_orig/REPLACEME/conf/original/extra/httpd-manual.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/original/extra/httpd-manual.conf	2016-01-11 18:22:45.084138829 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-manual.conf foo/REPLACEME/conf/original/extra/httpd-manual.conf
+*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-manual.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/original/extra/httpd-manual.conf	2016-01-11 18:22:45.084138829 +0000
 ***************
 *** 8,16 ****
   #                   mod_setenvif, mod_negotiation
   #
   
-! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "/REPLACEME/manual$1"
+! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "/CUSTOM_PREFIX/manual$1"
   
-! <Directory "/REPLACEME/manual">
+! <Directory "/CUSTOM_PREFIX/manual">
       Options Indexes
       AllowOverride None
       Require all granted
@@ -764,22 +764,22 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-manual.conf foo/REPLACEME/
       Options Indexes
       AllowOverride None
       Require all granted
-diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-multilang-errordoc.conf foo/REPLACEME/conf/original/extra/httpd-multilang-errordoc.conf
-*** foo_orig/REPLACEME/conf/original/extra/httpd-multilang-errordoc.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/original/extra/httpd-multilang-errordoc.conf	2016-01-11 18:22:45.080138829 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-multilang-errordoc.conf foo/REPLACEME/conf/original/extra/httpd-multilang-errordoc.conf
+*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-multilang-errordoc.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/original/extra/httpd-multilang-errordoc.conf	2016-01-11 18:22:45.080138829 +0000
 ***************
 *** 15,28 ****
   #   Alias /error/include/ "/your/include/path/"
   #
   # which allows you to create your own set of files by starting with the
-! # /REPLACEME/error/include/ files and copying them to /your/include/path/, 
+! # /CUSTOM_PREFIX/error/include/ files and copying them to /your/include/path/, 
   # even on a per-VirtualHost basis.  The default include files will display
   # your Apache version number and your ServerAdmin email address regardless
   # of the setting of ServerSignature.
   
-! Alias /error/ "/REPLACEME/error/"
+! Alias /error/ "/CUSTOM_PREFIX/error/"
   
-! <Directory "/REPLACEME/error">
+! <Directory "/CUSTOM_PREFIX/error">
       AllowOverride None
       Options IncludesNoExec
       AddOutputFilter Includes html
@@ -798,16 +798,16 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-multilang-errordoc.conf fo
       AllowOverride None
       Options IncludesNoExec
       AddOutputFilter Includes html
-diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/conf/original/extra/httpd-ssl.conf
-*** foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/original/extra/httpd-ssl.conf	2016-01-11 18:22:45.080138829 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-ssl.conf foo/REPLACEME/conf/original/extra/httpd-ssl.conf
+*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-ssl.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/original/extra/httpd-ssl.conf	2016-01-11 18:22:45.080138829 +0000
 ***************
 *** 88,95 ****
   #   Inter-Process Session Cache:
   #   Configure the SSL Session Cache: First the mechanism 
   #   to use and second the expiring timeout (in seconds).
-! #SSLSessionCache         "dbm:/REPLACEME/logs/ssl_scache"
-! SSLSessionCache        "shmcb:/REPLACEME/logs/ssl_scache(512000)"
+! #SSLSessionCache         "dbm:/CUSTOM_PREFIX/logs/ssl_scache"
+! SSLSessionCache        "shmcb:/CUSTOM_PREFIX/logs/ssl_scache(512000)"
   SSLSessionCacheTimeout  300
   
   #   OCSP Stapling (requires OpenSSL 0.9.8h or later)
@@ -825,7 +825,7 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/con
   #   the same mechanism that is used for the SSL session cache
   #   above.  If stapling is used with more than a few certificates,
   #   the size may need to be increased.  (AH01929 will be logged.)
-! #SSLStaplingCache "shmcb:/REPLACEME/logs/ssl_stapling(32768)"
+! #SSLStaplingCache "shmcb:/CUSTOM_PREFIX/logs/ssl_stapling(32768)"
   
   #   Seconds before valid OCSP responses are expired from the cache
   #SSLStaplingStandardCacheTimeout 3600
@@ -842,11 +842,11 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/con
   <VirtualHost _default_:443>
   
   #   General setup for the virtual host
-! DocumentRoot "/REPLACEME/htdocs"
+! DocumentRoot "/CUSTOM_PREFIX/htdocs"
   ServerName www.example.com:443
   ServerAdmin you@example.com
-! ErrorLog "/REPLACEME/logs/error_log"
-! TransferLog "/REPLACEME/logs/access_log"
+! ErrorLog "/CUSTOM_PREFIX/logs/error_log"
+! TransferLog "/CUSTOM_PREFIX/logs/access_log"
   
   #   SSL Engine Switch:
   #   Enable/Disable SSL for this virtual host.
@@ -867,9 +867,9 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/con
   #   Some ECC cipher suites (http://www.ietf.org/rfc/rfc4492.txt)
   #   require an ECC certificate which can also be configured in
   #   parallel.
-! SSLCertificateFile "/REPLACEME/conf/server.crt"
-! #SSLCertificateFile "/REPLACEME/conf/server-dsa.crt"
-! #SSLCertificateFile "/REPLACEME/conf/server-ecc.crt"
+! SSLCertificateFile "/CUSTOM_PREFIX/conf/server.crt"
+! #SSLCertificateFile "/CUSTOM_PREFIX/conf/server-dsa.crt"
+! #SSLCertificateFile "/CUSTOM_PREFIX/conf/server-ecc.crt"
   
   #   Server Private Key:
   #   If the key is not combined with the certificate, use this
@@ -888,9 +888,9 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/con
   #   you've both a RSA and a DSA private key you can configure
   #   both in parallel (to also allow the use of DSA ciphers, etc.)
   #   ECC keys, when in use, can also be configured in parallel
-! SSLCertificateKeyFile "/REPLACEME/conf/server.key"
-! #SSLCertificateKeyFile "/REPLACEME/conf/server-dsa.key"
-! #SSLCertificateKeyFile "/REPLACEME/conf/server-ecc.key"
+! SSLCertificateKeyFile "/CUSTOM_PREFIX/conf/server.key"
+! #SSLCertificateKeyFile "/CUSTOM_PREFIX/conf/server-dsa.key"
+! #SSLCertificateKeyFile "/CUSTOM_PREFIX/conf/server-ecc.key"
   
   #   Server Certificate Chain:
   #   Point SSLCertificateChainFile at a file containing the
@@ -909,7 +909,7 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/con
   #   the referenced file can be the same as SSLCertificateFile
   #   when the CA certificates are directly appended to the server
   #   certificate for convenience.
-! #SSLCertificateChainFile "/REPLACEME/conf/server-ca.crt"
+! #SSLCertificateChainFile "/CUSTOM_PREFIX/conf/server-ca.crt"
   
   #   Certificate Authority (CA):
   #   Set the CA certificate verification path where to find CA
@@ -926,8 +926,8 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/con
   #   Note: Inside SSLCACertificatePath you need hash symlinks
   #         to point to the certificate files. Use the provided
   #         Makefile to update the hash symlinks after changes.
-! #SSLCACertificatePath "/REPLACEME/conf/ssl.crt"
-! #SSLCACertificateFile "/REPLACEME/conf/ssl.crt/ca-bundle.crt"
+! #SSLCACertificatePath "/CUSTOM_PREFIX/conf/ssl.crt"
+! #SSLCACertificateFile "/CUSTOM_PREFIX/conf/ssl.crt/ca-bundle.crt"
   
   #   Certificate Revocation Lists (CRL):
   #   Set the CA revocation path where to find CA CRLs for client
@@ -945,8 +945,8 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/con
   #   Note: Inside SSLCARevocationPath you need hash symlinks
   #         to point to the certificate files. Use the provided
   #         Makefile to update the hash symlinks after changes.
-! #SSLCARevocationPath "/REPLACEME/conf/ssl.crl"
-! #SSLCARevocationFile "/REPLACEME/conf/ssl.crl/ca-bundle.crl"
+! #SSLCARevocationPath "/CUSTOM_PREFIX/conf/ssl.crl"
+! #SSLCARevocationFile "/CUSTOM_PREFIX/conf/ssl.crl/ca-bundle.crl"
   #SSLCARevocationCheck chain
   
   #   Client Authentication (Type):
@@ -964,8 +964,8 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/con
   #   file (containing login information for SRP user accounts). 
   #   Requires OpenSSL 1.0.1 or newer. See the mod_ssl FAQ for
   #   detailed instructions on creating this file. Example:
-! #   "openssl srp -srpvfile /REPLACEME/conf/passwd.srpv -add username"
-! #SSLSRPVerifierFile "/REPLACEME/conf/passwd.srpv"
+! #   "openssl srp -srpvfile /CUSTOM_PREFIX/conf/passwd.srpv -add username"
+! #SSLSRPVerifierFile "/CUSTOM_PREFIX/conf/passwd.srpv"
   
   #   Access Control:
   #   With SSLRequire you can do per-directory access control based
@@ -983,7 +983,7 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/con
   <FilesMatch "\.(cgi|shtml|phtml|php)$">
       SSLOptions +StdEnvVars
   </FilesMatch>
-! <Directory "/REPLACEME/cgi-bin">
+! <Directory "/CUSTOM_PREFIX/cgi-bin">
       SSLOptions +StdEnvVars
   </Directory>
   
@@ -1000,7 +1000,7 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/con
   #   Per-Server Logging:
   #   The home of a custom SSL log file. Use this when you want a
   #   compact non-error SSL logfile on a virtual host basis.
-! CustomLog "/REPLACEME/logs/ssl_request_log" \
+! CustomLog "/CUSTOM_PREFIX/logs/ssl_request_log" \
             "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
   
   </VirtualHost>                                  
@@ -1012,15 +1012,15 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-ssl.conf foo/REPLACEME/con
             "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
   
   </VirtualHost>                                  
-diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-vhosts.conf foo/REPLACEME/conf/original/extra/httpd-vhosts.conf
-*** foo_orig/REPLACEME/conf/original/extra/httpd-vhosts.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/original/extra/httpd-vhosts.conf	2016-01-11 18:22:45.084138829 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-vhosts.conf foo/REPLACEME/conf/original/extra/httpd-vhosts.conf
+*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-vhosts.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/original/extra/httpd-vhosts.conf	2016-01-11 18:22:45.084138829 +0000
 ***************
 *** 22,28 ****
   #
   <VirtualHost *:80>
       ServerAdmin webmaster@dummy-host.example.com
-!     DocumentRoot "/REPLACEME/docs/dummy-host.example.com"
+!     DocumentRoot "/CUSTOM_PREFIX/docs/dummy-host.example.com"
       ServerName dummy-host.example.com
       ServerAlias www.dummy-host.example.com
       ErrorLog "logs/dummy-host.example.com-error_log"
@@ -1037,7 +1037,7 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-vhosts.conf foo/REPLACEME/
   
   <VirtualHost *:80>
       ServerAdmin webmaster@dummy-host2.example.com
-!     DocumentRoot "/REPLACEME/docs/dummy-host2.example.com"
+!     DocumentRoot "/CUSTOM_PREFIX/docs/dummy-host2.example.com"
       ServerName dummy-host2.example.com
       ErrorLog "logs/dummy-host2.example.com-error_log"
       CustomLog "logs/dummy-host2.example.com-access_log" common
@@ -1049,15 +1049,15 @@ diff -rc foo_orig/REPLACEME/conf/original/extra/httpd-vhosts.conf foo/REPLACEME/
       ServerName dummy-host2.example.com
       ErrorLog "logs/dummy-host2.example.com-error_log"
       CustomLog "logs/dummy-host2.example.com-access_log" common
-diff -rc foo_orig/REPLACEME/conf/original/httpd.conf foo/REPLACEME/conf/original/httpd.conf
-*** foo_orig/REPLACEME/conf/original/httpd.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/REPLACEME/conf/original/httpd.conf	2016-01-11 18:22:45.072138830 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/conf/original/httpd.conf foo/REPLACEME/conf/original/httpd.conf
+*** foo_orig/CUSTOM_PREFIX/conf/original/httpd.conf	2016-01-11 18:02:58.940185219 +0000
+--- foo/CUSTOM_PREFIX/conf/original/httpd.conf	2016-01-11 18:22:45.072138830 +0000
 ***************
 *** 28,34 ****
   # same ServerRoot for multiple httpd daemons, you will need to change at
   # least PidFile.
   #
-! ServerRoot "/REPLACEME"
+! ServerRoot "/CUSTOM_PREFIX"
   
   #
   # Mutex: Allows you to set the mutex mechanism and mutex file directory
@@ -1074,8 +1074,8 @@ diff -rc foo_orig/REPLACEME/conf/original/httpd.conf foo/REPLACEME/conf/original
   # documents. By default, all requests are taken from this directory, but
   # symbolic links and aliases may be used to point to other locations.
   #
-! DocumentRoot "/REPLACEME/htdocs"
-! <Directory "/REPLACEME/htdocs">
+! DocumentRoot "/CUSTOM_PREFIX/htdocs"
+! <Directory "/CUSTOM_PREFIX/htdocs">
       #
       # Possible values for the Options directive are "None", "All",
       # or any combination of:
@@ -1093,7 +1093,7 @@ diff -rc foo_orig/REPLACEME/conf/original/httpd.conf foo/REPLACEME/conf/original
       # client.  The same rules about trailing "/" apply to ScriptAlias
       # directives as to Alias.
       #
-!     ScriptAlias /cgi-bin/ "/REPLACEME/cgi-bin/"
+!     ScriptAlias /cgi-bin/ "/CUSTOM_PREFIX/cgi-bin/"
   
   </IfModule>
   
@@ -1110,10 +1110,10 @@ diff -rc foo_orig/REPLACEME/conf/original/httpd.conf foo/REPLACEME/conf/original
   </IfModule>
   
   #
-! # "/REPLACEME/cgi-bin" should be changed to whatever your ScriptAliased
+! # "/CUSTOM_PREFIX/cgi-bin" should be changed to whatever your ScriptAliased
   # CGI directory exists, if you have that configured.
   #
-! <Directory "/REPLACEME/cgi-bin">
+! <Directory "/CUSTOM_PREFIX/cgi-bin">
       AllowOverride None
       Options None
       Require all granted
@@ -1128,15 +1128,15 @@ diff -rc foo_orig/REPLACEME/conf/original/httpd.conf foo/REPLACEME/conf/original
       AllowOverride None
       Options None
       Require all granted
-diff -rc foo_orig/REPLACEME/include/ap_config_auto.h foo/REPLACEME/include/ap_config_auto.h
-*** foo_orig/REPLACEME/include/ap_config_auto.h	2016-01-11 18:02:58.964185218 +0000
---- foo/REPLACEME/include/ap_config_auto.h	2016-01-11 18:22:45.320138820 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/include/ap_config_auto.h foo/REPLACEME/include/ap_config_auto.h
+*** foo_orig/CUSTOM_PREFIX/include/ap_config_auto.h	2016-01-11 18:02:58.964185218 +0000
+--- foo/CUSTOM_PREFIX/include/ap_config_auto.h	2016-01-11 18:22:45.320138820 +0000
 ***************
 *** 223,229 ****
   #define HAVE_UNISTD_H 1
   
   /* Root directory of the Apache install area */
-! #define HTTPD_ROOT "/REPLACEME"
+! #define HTTPD_ROOT "/CUSTOM_PREFIX"
   
   /* Define to the address where bug reports for this package should be sent. */
   #define PACKAGE_BUGREPORT ""
@@ -1148,50 +1148,50 @@ diff -rc foo_orig/REPLACEME/include/ap_config_auto.h foo/REPLACEME/include/ap_co
   
   /* Define to the address where bug reports for this package should be sent. */
   #define PACKAGE_BUGREPORT ""
-diff -rc foo_orig/REPLACEME/include/ap_config_layout.h foo/REPLACEME/include/ap_config_layout.h
-*** foo_orig/REPLACEME/include/ap_config_layout.h	2016-01-11 18:02:58.964185218 +0000
---- foo/REPLACEME/include/ap_config_layout.h	2016-01-11 18:22:45.420138816 +0000
+diff -rc foo_orig/CUSTOM_PREFIX/include/ap_config_layout.h foo/REPLACEME/include/ap_config_layout.h
+*** foo_orig/CUSTOM_PREFIX/include/ap_config_layout.h	2016-01-11 18:02:58.964185218 +0000
+--- foo/CUSTOM_PREFIX/include/ap_config_layout.h	2016-01-11 18:22:45.420138816 +0000
 ***************
 *** 23,64 ****
   #define AP_CONFIG_LAYOUT_H
   
   /* Configured Apache directory layout */
-! #define DEFAULT_PREFIX "/REPLACEME"
-! #define DEFAULT_EXP_EXEC_PREFIX "/REPLACEME"
+! #define DEFAULT_PREFIX "/CUSTOM_PREFIX"
+! #define DEFAULT_EXP_EXEC_PREFIX "/CUSTOM_PREFIX"
   #define DEFAULT_REL_EXEC_PREFIX ""
-! #define DEFAULT_EXP_BINDIR "/REPLACEME/bin"
+! #define DEFAULT_EXP_BINDIR "/CUSTOM_PREFIX/bin"
   #define DEFAULT_REL_BINDIR "bin"
-! #define DEFAULT_EXP_SBINDIR "/REPLACEME/bin"
+! #define DEFAULT_EXP_SBINDIR "/CUSTOM_PREFIX/bin"
   #define DEFAULT_REL_SBINDIR "bin"
-! #define DEFAULT_EXP_LIBEXECDIR "/REPLACEME/modules"
+! #define DEFAULT_EXP_LIBEXECDIR "/CUSTOM_PREFIX/modules"
   #define DEFAULT_REL_LIBEXECDIR "modules"
-! #define DEFAULT_EXP_MANDIR "/REPLACEME/man"
+! #define DEFAULT_EXP_MANDIR "/CUSTOM_PREFIX/man"
   #define DEFAULT_REL_MANDIR "man"
-! #define DEFAULT_EXP_SYSCONFDIR "/REPLACEME/conf"
+! #define DEFAULT_EXP_SYSCONFDIR "/CUSTOM_PREFIX/conf"
   #define DEFAULT_REL_SYSCONFDIR "conf"
-! #define DEFAULT_EXP_DATADIR "/REPLACEME"
+! #define DEFAULT_EXP_DATADIR "/CUSTOM_PREFIX"
   #define DEFAULT_REL_DATADIR ""
-! #define DEFAULT_EXP_INSTALLBUILDDIR "/REPLACEME/build"
+! #define DEFAULT_EXP_INSTALLBUILDDIR "/CUSTOM_PREFIX/build"
   #define DEFAULT_REL_INSTALLBUILDDIR "build"
-! #define DEFAULT_EXP_ERRORDIR "/REPLACEME/error"
+! #define DEFAULT_EXP_ERRORDIR "/CUSTOM_PREFIX/error"
   #define DEFAULT_REL_ERRORDIR "error"
-! #define DEFAULT_EXP_ICONSDIR "/REPLACEME/icons"
+! #define DEFAULT_EXP_ICONSDIR "/CUSTOM_PREFIX/icons"
   #define DEFAULT_REL_ICONSDIR "icons"
-! #define DEFAULT_EXP_HTDOCSDIR "/REPLACEME/htdocs"
+! #define DEFAULT_EXP_HTDOCSDIR "/CUSTOM_PREFIX/htdocs"
   #define DEFAULT_REL_HTDOCSDIR "htdocs"
-! #define DEFAULT_EXP_MANUALDIR "/REPLACEME/manual"
+! #define DEFAULT_EXP_MANUALDIR "/CUSTOM_PREFIX/manual"
   #define DEFAULT_REL_MANUALDIR "manual"
-! #define DEFAULT_EXP_CGIDIR "/REPLACEME/cgi-bin"
+! #define DEFAULT_EXP_CGIDIR "/CUSTOM_PREFIX/cgi-bin"
   #define DEFAULT_REL_CGIDIR "cgi-bin"
-! #define DEFAULT_EXP_INCLUDEDIR "/REPLACEME/include"
+! #define DEFAULT_EXP_INCLUDEDIR "/CUSTOM_PREFIX/include"
   #define DEFAULT_REL_INCLUDEDIR "include"
-! #define DEFAULT_EXP_LOCALSTATEDIR "/REPLACEME"
+! #define DEFAULT_EXP_LOCALSTATEDIR "/CUSTOM_PREFIX"
   #define DEFAULT_REL_LOCALSTATEDIR ""
-! #define DEFAULT_EXP_RUNTIMEDIR "/REPLACEME/logs"
+! #define DEFAULT_EXP_RUNTIMEDIR "/CUSTOM_PREFIX/logs"
   #define DEFAULT_REL_RUNTIMEDIR "logs"
-! #define DEFAULT_EXP_LOGFILEDIR "/REPLACEME/logs"
+! #define DEFAULT_EXP_LOGFILEDIR "/CUSTOM_PREFIX/logs"
   #define DEFAULT_REL_LOGFILEDIR "logs"
-! #define DEFAULT_EXP_PROXYCACHEDIR "/REPLACEME/proxy"
+! #define DEFAULT_EXP_PROXYCACHEDIR "/CUSTOM_PREFIX/proxy"
   #define DEFAULT_REL_PROXYCACHEDIR "proxy"
   
   #endif /* AP_CONFIG_LAYOUT_H */
@@ -1238,5 +1238,5 @@ diff -rc foo_orig/REPLACEME/include/ap_config_layout.h foo/REPLACEME/include/ap_
   #define DEFAULT_REL_PROXYCACHEDIR "proxy"
   
   #endif /* AP_CONFIG_LAYOUT_H */
-Binary files foo_orig/REPLACEME/modules/mod_info.so and foo/REPLACEME/modules/mod_info.so differ
-Binary files foo_orig/REPLACEME/modules/mod_unixd.so and foo/REPLACEME/modules/mod_unixd.so differ
+Binary files foo_orig/CUSTOM_PREFIX/modules/mod_info.so and foo/REPLACEME/modules/mod_info.so differ
+Binary files foo_orig/CUSTOM_PREFIX/modules/mod_unixd.so and foo/REPLACEME/modules/mod_unixd.so differ
