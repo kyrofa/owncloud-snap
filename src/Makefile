@@ -28,7 +28,7 @@ install_apache: apache
 	@$(MAKE) -C httpd*/ install
 	@mv $(DESTDIR)/CUSTOM_PREFIX/* $(DESTDIR)/
 	@rmdir $(DESTDIR)/CUSTOM_PREFIX/
-	@patch -p2 -d $(DESTDIR) < installation.patch
+	@patch -p1 -d $(DESTDIR) < apache.patch
 	@sed -i 's|/CUSTOM_PREFIX|$(DESTDIR)|' $(DESTDIR)/bin/apxs
 	@find $(DESTDIR)/build -type f -print0 | xargs -0 sed -i 's|/CUSTOM_PREFIX|$(DESTDIR)|'
 	@touch install_apache
@@ -41,6 +41,7 @@ php: extract_php install_apache
 
 install_php: php
 	@$(MAKE) -C php*/ install DESTDIR=
+	@cp php*/php.ini-production $(DESTDIR)/lib/php.ini
 	@touch install_php
 
 install: install_apache install_php
@@ -49,4 +50,4 @@ install: install_apache install_php
 	@touch install
 
 clean:
-	@rm -rf http* extract_apache php* extract_php apache install_apache install
+	@rm -rf http* extract_apache php* extract_php apache install_apache php install_php install

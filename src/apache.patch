@@ -1,6 +1,6 @@
-diff -rc foo_orig/CUSTOM_PREFIX/bin/apachectl foo/REPLACEME/bin/apachectl
-*** foo_orig/CUSTOM_PREFIX/bin/apachectl	2016-01-11 18:02:58.936185219 +0000
---- foo/CUSTOM_PREFIX/bin/apachectl	2016-01-11 19:04:06.304041789 +0000
+diff -rc snap_install_old/bin/apachectl snap_install/bin/apachectl
+*** snap_install_old/bin/apachectl	2016-01-14 14:07:33.450452957 +0000
+--- snap_install/bin/apachectl	2016-01-14 14:07:53.962452677 +0000
 ***************
 *** 42,52 ****
   # --------------------                              --------------------
@@ -77,9 +77,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/bin/apachectl foo/REPLACEME/bin/apachectl
       ERROR=$?
   esac
   
-diff -rc foo_orig/CUSTOM_PREFIX/bin/envvars foo/REPLACEME/bin/envvars
-*** foo_orig/CUSTOM_PREFIX/bin/envvars	2016-01-11 18:02:58.936185219 +0000
---- foo/CUSTOM_PREFIX/bin/envvars	2016-01-11 18:22:45.280138821 +0000
+diff -rc snap_install_old/bin/envvars snap_install/bin/envvars
+*** snap_install_old/bin/envvars	2016-01-14 14:07:33.450452957 +0000
+--- snap_install/bin/envvars	2016-01-14 14:07:53.962452677 +0000
 ***************
 *** 19,27 ****
   # This file is generated from envvars-std.in
@@ -101,9 +101,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/bin/envvars foo/REPLACEME/bin/envvars
   fi
   export LD_LIBRARY_PATH
   #
-diff -rc foo_orig/CUSTOM_PREFIX/bin/envvars-std foo/REPLACEME/bin/envvars-std
-*** foo_orig/CUSTOM_PREFIX/bin/envvars-std	2016-01-11 18:02:58.936185219 +0000
---- foo/CUSTOM_PREFIX/bin/envvars-std	2016-01-11 18:22:45.304138821 +0000
+diff -rc snap_install_old/bin/envvars-std snap_install/bin/envvars-std
+*** snap_install_old/bin/envvars-std	2016-01-14 14:07:33.450452957 +0000
+--- snap_install/bin/envvars-std	2016-01-14 14:07:53.962452677 +0000
 ***************
 *** 19,27 ****
   # This file is generated from envvars-std.in
@@ -125,10 +125,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/bin/envvars-std foo/REPLACEME/bin/envvars-std
   fi
   export LD_LIBRARY_PATH
   #
-Binary files foo_orig/CUSTOM_PREFIX/bin/httpd and foo/REPLACEME/bin/httpd differ
-diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-autoindex.conf foo/REPLACEME/conf/extra/httpd-autoindex.conf
-*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-autoindex.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/extra/httpd-autoindex.conf	2016-01-11 18:22:45.096138829 +0000
+diff -rc snap_install_old/conf/extra/httpd-autoindex.conf snap_install/conf/extra/httpd-autoindex.conf
+*** snap_install_old/conf/extra/httpd-autoindex.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/extra/httpd-autoindex.conf	2016-01-14 14:07:53.962452677 +0000
 ***************
 *** 18,26 ****
   # We include the /icons/ alias for FancyIndexed directory listings.  If
@@ -150,9 +149,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-autoindex.conf foo/REPLACEME/co
       Options Indexes MultiViews
       AllowOverride None
       Require all granted
-diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-dav.conf foo/REPLACEME/conf/extra/httpd-dav.conf
-*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-dav.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/extra/httpd-dav.conf	2016-01-11 18:22:45.096138829 +0000
+diff -rc snap_install_old/conf/extra/httpd-dav.conf snap_install/conf/extra/httpd-dav.conf
+*** snap_install_old/conf/extra/httpd-dav.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/extra/httpd-dav.conf	2016-01-14 14:07:53.962452677 +0000
 ***************
 *** 12,29 ****
   # on the directory where the DavLockDB is placed and on any directory where
@@ -192,9 +191,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-dav.conf foo/REPLACEME/conf/ext
       AuthDigestProvider file
   
       # Allow universal read-access, but writes are restricted
-diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-manual.conf foo/REPLACEME/conf/extra/httpd-manual.conf
-*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-manual.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/extra/httpd-manual.conf	2016-01-11 18:22:45.100138829 +0000
+diff -rc snap_install_old/conf/extra/httpd-manual.conf snap_install/conf/extra/httpd-manual.conf
+*** snap_install_old/conf/extra/httpd-manual.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/extra/httpd-manual.conf	2016-01-14 14:07:53.962452677 +0000
 ***************
 *** 8,16 ****
   #                   mod_setenvif, mod_negotiation
@@ -216,9 +215,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-manual.conf foo/REPLACEME/conf/
       Options Indexes
       AllowOverride None
       Require all granted
-diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-mpm.conf foo/REPLACEME/conf/extra/httpd-mpm.conf
-*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-mpm.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/extra/httpd-mpm.conf	2016-01-11 19:16:36.832012436 +0000
+diff -rc snap_install_old/conf/extra/httpd-mpm.conf snap_install/conf/extra/httpd-mpm.conf
+*** snap_install_old/conf/extra/httpd-mpm.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/extra/httpd-mpm.conf	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 9,15 ****
   # Note that this is the default PidFile for most MPMs.
@@ -236,9 +235,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-mpm.conf foo/REPLACEME/conf/ext
   </IfModule>
   
   #
-diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-multilang-errordoc.conf foo/REPLACEME/conf/extra/httpd-multilang-errordoc.conf
-*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-multilang-errordoc.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/extra/httpd-multilang-errordoc.conf	2016-01-11 18:22:45.096138829 +0000
+diff -rc snap_install_old/conf/extra/httpd-multilang-errordoc.conf snap_install/conf/extra/httpd-multilang-errordoc.conf
+*** snap_install_old/conf/extra/httpd-multilang-errordoc.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/extra/httpd-multilang-errordoc.conf	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 15,28 ****
   #   Alias /error/include/ "/your/include/path/"
@@ -270,9 +269,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-multilang-errordoc.conf foo/REP
       AllowOverride None
       Options IncludesNoExec
       AddOutputFilter Includes html
-diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/extra/httpd-ssl.conf
-*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-ssl.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/extra/httpd-ssl.conf	2016-01-11 19:16:19.556013112 +0000
+diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/httpd-ssl.conf
+*** snap_install_old/conf/extra/httpd-ssl.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/extra/httpd-ssl.conf	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 88,95 ****
   #   Inter-Process Session Cache:
@@ -484,9 +483,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-ssl.conf foo/REPLACEME/conf/ext
             "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
   
   </VirtualHost>                                  
-diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-vhosts.conf foo/REPLACEME/conf/extra/httpd-vhosts.conf
-*** foo_orig/CUSTOM_PREFIX/conf/extra/httpd-vhosts.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/extra/httpd-vhosts.conf	2016-01-11 19:17:06.616011271 +0000
+diff -rc snap_install_old/conf/extra/httpd-vhosts.conf snap_install/conf/extra/httpd-vhosts.conf
+*** snap_install_old/conf/extra/httpd-vhosts.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/extra/httpd-vhosts.conf	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 22,40 ****
   #
@@ -528,9 +527,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/extra/httpd-vhosts.conf foo/REPLACEME/conf/
   </VirtualHost>
   
   
-diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
-*** foo_orig/CUSTOM_PREFIX/conf/httpd.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/httpd.conf	2016-01-11 20:59:42.259770524 +0000
+diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
+*** snap_install_old/conf/httpd.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/httpd.conf	2016-01-14 14:09:25.498451428 +0000
 ***************
 *** 28,34 ****
   # same ServerRoot for multiple httpd daemons, you will need to change at
@@ -540,7 +539,7 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
   
   #
   # Mutex: Allows you to set the mutex mechanism and mutex file directory
---- 28,38 ----
+--- 28,42 ----
   # same ServerRoot for multiple httpd daemons, you will need to change at
   # least PidFile.
   #
@@ -548,7 +547,11 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
 ! 
 ! PidFile "${SNAP_APP_DATA_PATH}/httpd.pid"
 ! 
-! AddType application/x-httpd-php .php
+! <FilesMatch \.php$>
+!    SetHandler application/x-httpd-php
+! </FilesMatch>
+! 
+! PHPIniDir "${SNAP_APP_PATH}/lib/php.ini"
   
   #
   # Mutex: Allows you to set the mutex mechanism and mutex file directory
@@ -562,7 +565,7 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
   
   </IfModule>
   
---- 159,166 ----
+--- 165,172 ----
   # It is usually good practice to create a dedicated user and group for
   # running httpd, as with most system services.
   #
@@ -581,7 +584,7 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
       #
       # Possible values for the Options directive are "None", "All",
       # or any combination of:
---- 214,221 ----
+--- 220,227 ----
   # documents. By default, all requests are taken from this directory, but
   # symbolic links and aliases may be used to point to other locations.
   #
@@ -591,6 +594,40 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
       # Possible values for the Options directive are "None", "All",
       # or any combination of:
 ***************
+*** 226,232 ****
+      # http://httpd.apache.org/docs/2.4/mod/core.html#options
+      # for more information.
+      #
+!     Options Indexes FollowSymLinks
+  
+      #
+      # AllowOverride controls what directives may be placed in .htaccess files.
+--- 234,240 ----
+      # http://httpd.apache.org/docs/2.4/mod/core.html#options
+      # for more information.
+      #
+!     Options FollowSymLinks
+  
+      #
+      # AllowOverride controls what directives may be placed in .htaccess files.
+***************
+*** 246,252 ****
+  # is requested.
+  #
+  <IfModule dir_module>
+!     DirectoryIndex index.html
+  </IfModule>
+  
+  #
+--- 254,260 ----
+  # is requested.
+  #
+  <IfModule dir_module>
+!     DirectoryIndex index.html index.php
+  </IfModule>
+  
+  #
+***************
 *** 264,270 ****
   # logged here.  If you *do* define an error logfile for a <VirtualHost>
   # container, that host's errors will be logged there and not here.
@@ -599,7 +636,7 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
   
   #
   # LogLevel: Control the number of messages logged to the error_log.
---- 266,272 ----
+--- 272,278 ----
   # logged here.  If you *do* define an error logfile for a <VirtualHost>
   # container, that host's errors will be logged there and not here.
   #
@@ -622,7 +659,7 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
   </IfModule>
   
   <IfModule alias_module>
---- 295,307 ----
+--- 301,313 ----
       # define per-<VirtualHost> access logfiles, transactions will be
       # logged therein and *not* in this file.
       #
@@ -645,7 +682,7 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
   
   </IfModule>
   
---- 331,337 ----
+--- 337,343 ----
       # client.  The same rules about trailing "/" apply to ScriptAlias
       # directives as to Alias.
       #
@@ -665,7 +702,7 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
       AllowOverride None
       Options None
       Require all granted
---- 344,353 ----
+--- 350,359 ----
   </IfModule>
   
   #
@@ -676,9 +713,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/httpd.conf foo/REPLACEME/conf/httpd.conf
       AllowOverride None
       Options None
       Require all granted
-diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-autoindex.conf foo/REPLACEME/conf/original/extra/httpd-autoindex.conf
-*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-autoindex.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/original/extra/httpd-autoindex.conf	2016-01-11 18:22:45.084138829 +0000
+diff -rc snap_install_old/conf/original/extra/httpd-autoindex.conf snap_install/conf/original/extra/httpd-autoindex.conf
+*** snap_install_old/conf/original/extra/httpd-autoindex.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/original/extra/httpd-autoindex.conf	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 18,26 ****
   # We include the /icons/ alias for FancyIndexed directory listings.  If
@@ -700,9 +737,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-autoindex.conf foo/REP
       Options Indexes MultiViews
       AllowOverride None
       Require all granted
-diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-dav.conf foo/REPLACEME/conf/original/extra/httpd-dav.conf
-*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-dav.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/original/extra/httpd-dav.conf	2016-01-11 18:22:45.084138829 +0000
+diff -rc snap_install_old/conf/original/extra/httpd-dav.conf snap_install/conf/original/extra/httpd-dav.conf
+*** snap_install_old/conf/original/extra/httpd-dav.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/original/extra/httpd-dav.conf	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 12,29 ****
   # on the directory where the DavLockDB is placed and on any directory where
@@ -742,9 +779,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-dav.conf foo/REPLACEME
       AuthDigestProvider file
   
       # Allow universal read-access, but writes are restricted
-diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-manual.conf foo/REPLACEME/conf/original/extra/httpd-manual.conf
-*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-manual.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/original/extra/httpd-manual.conf	2016-01-11 18:22:45.084138829 +0000
+diff -rc snap_install_old/conf/original/extra/httpd-manual.conf snap_install/conf/original/extra/httpd-manual.conf
+*** snap_install_old/conf/original/extra/httpd-manual.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/original/extra/httpd-manual.conf	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 8,16 ****
   #                   mod_setenvif, mod_negotiation
@@ -766,9 +803,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-manual.conf foo/REPLAC
       Options Indexes
       AllowOverride None
       Require all granted
-diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-multilang-errordoc.conf foo/REPLACEME/conf/original/extra/httpd-multilang-errordoc.conf
-*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-multilang-errordoc.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/original/extra/httpd-multilang-errordoc.conf	2016-01-11 18:22:45.080138829 +0000
+diff -rc snap_install_old/conf/original/extra/httpd-multilang-errordoc.conf snap_install/conf/original/extra/httpd-multilang-errordoc.conf
+*** snap_install_old/conf/original/extra/httpd-multilang-errordoc.conf	2016-01-14 14:07:33.462452957 +0000
+--- snap_install/conf/original/extra/httpd-multilang-errordoc.conf	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 15,28 ****
   #   Alias /error/include/ "/your/include/path/"
@@ -800,9 +837,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-multilang-errordoc.con
       AllowOverride None
       Options IncludesNoExec
       AddOutputFilter Includes html
-diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-ssl.conf foo/REPLACEME/conf/original/extra/httpd-ssl.conf
-*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-ssl.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/original/extra/httpd-ssl.conf	2016-01-11 18:22:45.080138829 +0000
+diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/original/extra/httpd-ssl.conf
+*** snap_install_old/conf/original/extra/httpd-ssl.conf	2016-01-14 14:07:33.462452957 +0000
+--- snap_install/conf/original/extra/httpd-ssl.conf	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 88,95 ****
   #   Inter-Process Session Cache:
@@ -1014,9 +1051,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-ssl.conf foo/REPLACEME
             "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
   
   </VirtualHost>                                  
-diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-vhosts.conf foo/REPLACEME/conf/original/extra/httpd-vhosts.conf
-*** foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-vhosts.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/original/extra/httpd-vhosts.conf	2016-01-11 18:22:45.084138829 +0000
+diff -rc snap_install_old/conf/original/extra/httpd-vhosts.conf snap_install/conf/original/extra/httpd-vhosts.conf
+*** snap_install_old/conf/original/extra/httpd-vhosts.conf	2016-01-14 14:07:33.462452957 +0000
+--- snap_install/conf/original/extra/httpd-vhosts.conf	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 22,28 ****
   #
@@ -1051,9 +1088,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/original/extra/httpd-vhosts.conf foo/REPLAC
       ServerName dummy-host2.example.com
       ErrorLog "logs/dummy-host2.example.com-error_log"
       CustomLog "logs/dummy-host2.example.com-access_log" common
-diff -rc foo_orig/CUSTOM_PREFIX/conf/original/httpd.conf foo/REPLACEME/conf/original/httpd.conf
-*** foo_orig/CUSTOM_PREFIX/conf/original/httpd.conf	2016-01-11 18:02:58.940185219 +0000
---- foo/CUSTOM_PREFIX/conf/original/httpd.conf	2016-01-11 18:22:45.072138830 +0000
+diff -rc snap_install_old/conf/original/httpd.conf snap_install/conf/original/httpd.conf
+*** snap_install_old/conf/original/httpd.conf	2016-01-14 14:07:33.458452957 +0000
+--- snap_install/conf/original/httpd.conf	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 28,34 ****
   # same ServerRoot for multiple httpd daemons, you will need to change at
@@ -1130,9 +1167,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/conf/original/httpd.conf foo/REPLACEME/conf/orig
       AllowOverride None
       Options None
       Require all granted
-diff -rc foo_orig/CUSTOM_PREFIX/include/ap_config_auto.h foo/REPLACEME/include/ap_config_auto.h
-*** foo_orig/CUSTOM_PREFIX/include/ap_config_auto.h	2016-01-11 18:02:58.964185218 +0000
---- foo/CUSTOM_PREFIX/include/ap_config_auto.h	2016-01-11 18:22:45.320138820 +0000
+diff -rc snap_install_old/include/ap_config_auto.h snap_install/include/ap_config_auto.h
+*** snap_install_old/include/ap_config_auto.h	2016-01-14 14:07:33.494452956 +0000
+--- snap_install/include/ap_config_auto.h	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 223,229 ****
   #define HAVE_UNISTD_H 1
@@ -1150,9 +1187,9 @@ diff -rc foo_orig/CUSTOM_PREFIX/include/ap_config_auto.h foo/REPLACEME/include/a
   
   /* Define to the address where bug reports for this package should be sent. */
   #define PACKAGE_BUGREPORT ""
-diff -rc foo_orig/CUSTOM_PREFIX/include/ap_config_layout.h foo/REPLACEME/include/ap_config_layout.h
-*** foo_orig/CUSTOM_PREFIX/include/ap_config_layout.h	2016-01-11 18:02:58.964185218 +0000
---- foo/CUSTOM_PREFIX/include/ap_config_layout.h	2016-01-11 18:22:45.420138816 +0000
+diff -rc snap_install_old/include/ap_config_layout.h snap_install/include/ap_config_layout.h
+*** snap_install_old/include/ap_config_layout.h	2016-01-14 14:07:33.494452956 +0000
+--- snap_install/include/ap_config_layout.h	2016-01-14 14:07:53.966452677 +0000
 ***************
 *** 23,64 ****
   #define AP_CONFIG_LAYOUT_H
@@ -1240,5 +1277,3 @@ diff -rc foo_orig/CUSTOM_PREFIX/include/ap_config_layout.h foo/REPLACEME/include
   #define DEFAULT_REL_PROXYCACHEDIR "proxy"
   
   #endif /* AP_CONFIG_LAYOUT_H */
-Binary files foo_orig/CUSTOM_PREFIX/modules/mod_info.so and foo/REPLACEME/modules/mod_info.so differ
-Binary files foo_orig/CUSTOM_PREFIX/modules/mod_unixd.so and foo/REPLACEME/modules/mod_unixd.so differ
