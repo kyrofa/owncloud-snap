@@ -1,0 +1,56 @@
+diff -rc snap_old/support-files/mysql.server snap/support-files/mysql.server
+*** snap_old/support-files/mysql.server	2016-01-14 17:03:19.586309086 +0000
+--- snap/support-files/mysql.server	2016-01-14 17:02:36.814309669 +0000
+***************
+*** 43,50 ****
+  # If you change base dir, you must also change datadir. These may get
+  # overwritten by settings in the MySQL configuration files.
+  
+! basedir=
+! datadir=
+  
+  # Default value, in seconds, afterwhich the script should timeout waiting
+  # for server start. 
+--- 43,50 ----
+  # If you change base dir, you must also change datadir. These may get
+  # overwritten by settings in the MySQL configuration files.
+  
+! basedir=$SNAP_APP_PATH
+! datadir=$SNAP_APP_DATA_PATH/mysql
+  
+  # Default value, in seconds, afterwhich the script should timeout waiting
+  # for server start. 
+***************
+*** 54,60 ****
+  service_startup_timeout=900
+  
+  # Lock directory for RedHat / SuSE.
+! lockdir='/var/lock/subsys'
+  lock_file_path="$lockdir/mysql"
+  
+  # The following variables are only set for letting mysql.server find things.
+--- 54,60 ----
+  service_startup_timeout=900
+  
+  # Lock directory for RedHat / SuSE.
+! lockdir="$SNAP_APP_DATA_PATH/mysql/lock"
+  lock_file_path="$lockdir/mysql"
+  
+  # The following variables are only set for letting mysql.server find things.
+***************
+*** 280,286 ****
+      then
+        # Give extra arguments to mysqld with the my.cnf file. This script
+        # may be overwritten at next upgrade.
+!       $bindir/mysqld_safe --datadir="$datadir" --pid-file="$mysqld_pid_file_path" $other_args >/dev/null 2>&1 &
+        wait_for_pid created "$!" "$mysqld_pid_file_path"; return_value=$?
+
+        # Make lock for RedHat / SuSE
+--- 280,286 ----
+      then
+        # Give extra arguments to mysqld with the my.cnf file. This script
+        # may be overwritten at next upgrade.
+!       $bindir/mysqld_safe --datadir="$datadir" --pid-file="$mysqld_pid_file_path" --lc-messages-dir="$SNAP_APP_PATH/share" --socket="$SNAP_APP_DATA_PATH/mysql/mysql.sock" $other_args >/dev/null 2>&1 &
+        wait_for_pid created "$!" "$mysqld_pid_file_path"; return_value=$?
+
+        # Make lock for RedHat / SuSE

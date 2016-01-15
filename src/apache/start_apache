@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Make sure apache directory exists
+mkdir -p $SNAP_APP_DATA_PATH/apache
+
+# Run apache in the foreground (a simple daemon)
+apachectl start -DFOREGROUND

@@ -231,7 +231,7 @@ diff -rc snap_install_old/conf/extra/httpd-mpm.conf snap_install/conf/extra/http
   # Note that this is the default PidFile for most MPMs.
   #
   <IfModule !mpm_netware_module>
-!     PidFile "${SNAP_APP_DATA_PATH}/httpd.pid"
+!     PidFile "${SNAP_APP_DATA_PATH}/apache/httpd.pid"
   </IfModule>
   
   #
@@ -286,8 +286,8 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   Inter-Process Session Cache:
   #   Configure the SSL Session Cache: First the mechanism 
   #   to use and second the expiring timeout (in seconds).
-! #SSLSessionCache         "dbm:${SNAP_APP_DATA_PATH}/ssl_scache"
-! SSLSessionCache        "shmcb:${SNAP_APP_DATA_PATH}/ssl_scache(512000)"
+! #SSLSessionCache         "dbm:${SNAP_APP_DATA_PATH}/apache/ssl_scache"
+! SSLSessionCache        "shmcb:${SNAP_APP_DATA_PATH}/apache/ssl_scache(512000)"
   SSLSessionCacheTimeout  300
   
   #   OCSP Stapling (requires OpenSSL 0.9.8h or later)
@@ -304,7 +304,7 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   the same mechanism that is used for the SSL session cache
   #   above.  If stapling is used with more than a few certificates,
   #   the size may need to be increased.  (AH01929 will be logged.)
-! #SSLStaplingCache "shmcb:${SNAP_APP_DATA_PATH}/ssl_stapling(32768)"
+! #SSLStaplingCache "shmcb:${SNAP_APP_DATA_PATH}/apache/ssl_stapling(32768)"
   
   #   Seconds before valid OCSP responses are expired from the cache
   #SSLStaplingStandardCacheTimeout 3600
@@ -328,8 +328,8 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
 ! DocumentRoot "${SNAP_APP_PATH}/htdocs"
   ServerName www.example.com:443
   ServerAdmin you@example.com
-! ErrorLog "${SNAP_APP_DATA_PATH}/error_log"
-! TransferLog "${SNAP_APP_DATA_PATH}/access_log"
+! ErrorLog "${SNAP_APP_DATA_PATH}/apache/error_log"
+! TransferLog "${SNAP_APP_DATA_PATH}/apache/access_log"
   
   #   SSL Engine Switch:
   #   Enable/Disable SSL for this virtual host.
@@ -479,7 +479,7 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   Per-Server Logging:
   #   The home of a custom SSL log file. Use this when you want a
   #   compact non-error SSL logfile on a virtual host basis.
-! CustomLog "${SNAP_APP_DATA_PATH}/ssl_request_log" \
+! CustomLog "${SNAP_APP_DATA_PATH}/apache/ssl_request_log" \
             "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
   
   </VirtualHost>                                  
@@ -514,16 +514,16 @@ diff -rc snap_install_old/conf/extra/httpd-vhosts.conf snap_install/conf/extra/h
 !     DocumentRoot "${SNAP_APP_PATH}/docs/dummy-host.example.com"
       ServerName dummy-host.example.com
       ServerAlias www.dummy-host.example.com
-!     ErrorLog "${SNAP_APP_DATA_PATH}/dummy-host.example.com-error_log"
-!     CustomLog "${SNAP_APP_DATA_PATH}/dummy-host.example.com-access_log" common
+!     ErrorLog "${SNAP_APP_DATA_PATH}/apache/dummy-host.example.com-error_log"
+!     CustomLog "${SNAP_APP_DATA_PATH}/apache/dummy-host.example.com-access_log" common
   </VirtualHost>
   
   <VirtualHost *:80>
       ServerAdmin webmaster@dummy-host2.example.com
 !     DocumentRoot "${SNAP_APP_PATH}/docs/dummy-host2.example.com"
       ServerName dummy-host2.example.com
-!     ErrorLog "${SNAP_APP_DATA_PATH}/dummy-host2.example.com-error_log"
-!     CustomLog "${SNAP_APP_DATA_PATH}/dummy-host2.example.com-access_log" common
+!     ErrorLog "${SNAP_APP_DATA_PATH}/apache/dummy-host2.example.com-error_log"
+!     CustomLog "${SNAP_APP_DATA_PATH}/apache/dummy-host2.example.com-access_log" common
   </VirtualHost>
   
   
@@ -545,7 +545,7 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
   #
 ! ServerRoot "${SNAP_APP_PATH}"
 ! 
-! PidFile "${SNAP_APP_DATA_PATH}/httpd.pid"
+! PidFile "${SNAP_APP_DATA_PATH}/apache/httpd.pid"
 ! 
 ! <FilesMatch \.php$>
 !    SetHandler application/x-httpd-php
@@ -640,7 +640,7 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
   # logged here.  If you *do* define an error logfile for a <VirtualHost>
   # container, that host's errors will be logged there and not here.
   #
-! ErrorLog "${SNAP_APP_DATA_PATH}/error_log"
+! ErrorLog "${SNAP_APP_DATA_PATH}/apache/error_log"
   
   #
   # LogLevel: Control the number of messages logged to the error_log.
@@ -663,13 +663,13 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
       # define per-<VirtualHost> access logfiles, transactions will be
       # logged therein and *not* in this file.
       #
-!     CustomLog "${SNAP_APP_DATA_PATH}/access_log" common
+!     CustomLog "${SNAP_APP_DATA_PATH}/apache/access_log" common
   
       #
       # If you prefer a logfile with access, agent, and referer information
       # (Combined Logfile Format) you can use the following directive.
       #
-!     #CustomLog "${SNAP_APP_DATA_PATH}/access_log" combined
+!     #CustomLog "${SNAP_APP_DATA_PATH}/apache/access_log" combined
   </IfModule>
   
   <IfModule alias_module>

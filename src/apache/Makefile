@@ -21,7 +21,7 @@ extract_php: php.tar.gz
 # Build apache
 apache: extract_apache
 	@cd httpd*/ && ./configure --prefix=/CUSTOM_PREFIX
-	@$(MAKE) -C httpd*/
+	@$(MAKE) -C httpd*/ -j8
 	@touch apache
 
 install_apache: apache
@@ -31,12 +31,13 @@ install_apache: apache
 	@patch -p1 -d $(DESTDIR) < apache.patch
 	@sed -i 's|/CUSTOM_PREFIX|$(DESTDIR)|' $(DESTDIR)/bin/apxs
 	@find $(DESTDIR)/build -type f -print0 | xargs -0 sed -i 's|/CUSTOM_PREFIX|$(DESTDIR)|'
+	@cp start_apache $(DESTDIR)/
 	@touch install_apache
 
 # Build php
 php: extract_php install_apache
 	@cd php*/ && ./configure --with-apxs2=$(DESTDIR)/bin/apxs --prefix=$(DESTDIR)
-	@$(MAKE) -C php*/
+	@$(MAKE) -C php*/ -j8
 	@touch php
 
 install_php: php

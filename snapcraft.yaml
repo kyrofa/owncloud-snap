@@ -7,13 +7,16 @@ icon: icon.svg
 
 services:
   apache:
-    start: apachectl start -DFOREGROUND
+    start: start_apache
     stop: apachectl stop
+  mysql:
+    start: start_mysql
+    stop: support-files/mysql.server stop
 
 parts:
   apache:
     plugin: make
-    source: src
+    source: src/apache
     stage-packages:
       # Apache dependencies
       - libapr1
@@ -30,3 +33,12 @@ parts:
 
       # PHP dependencies
       - libxml2-dev
+
+  mysql:
+    plugin: make
+    source: src/mysql
+    stage-packages:
+      - libncurses5
+    build-packages:
+      - cmake
+      - libncurses5-dev
