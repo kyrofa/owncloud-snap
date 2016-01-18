@@ -36,7 +36,7 @@ install_apache: apache
 
 # Build php
 php: extract_php install_apache
-	@cd php*/ && ./configure --with-apxs2=$(DESTDIR)/bin/apxs --prefix=$(DESTDIR)
+	@cd php*/ && ./configure --with-apxs2=$(DESTDIR)/bin/apxs --with-pdo-mysql --enable-zip --with-gd --with-zlib --with-curl --disable-rpath --prefix=$(DESTDIR)
 	@$(MAKE) -C php*/ -j8
 	@touch php
 
@@ -47,7 +47,6 @@ install_php: php
 
 install: install_apache install_php
 	@rm $(DESTDIR)/htdocs/index.html
-	@cp index.php $(DESTDIR)/htdocs/
 	@touch install
 
 clean:

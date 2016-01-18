@@ -25,6 +25,8 @@ parts:
 
       # PHP dependencies
       - libxml2
+      - libcurl3-gnutls
+      - libpng12-0
     build-packages:
       # Apache dependencies
       - libapr1-dev
@@ -33,6 +35,8 @@ parts:
 
       # PHP dependencies
       - libxml2-dev
+      - libcurl4-gnutls-dev
+      - libpng12-dev
 
   mysql:
     plugin: make
@@ -42,3 +46,7 @@ parts:
     build-packages:
       - cmake
       - libncurses5-dev
+
+  owncloud:
+    plugin: make
+    source: src/owncloud

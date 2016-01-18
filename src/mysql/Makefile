@@ -14,7 +14,7 @@ extract_mysql: mysql.tar.gz
 # Build mysql
 mysql: extract_mysql
 	@mkdir mysql/build
-	@cd mysql/build && cmake .. -DCMAKE_INSTALL_PREFIX=/ -DWITH_BOOST=../boost/boost_1_59_0 -DWITH_UNIT_TESTS=OFF
+	@cd mysql/build && cmake .. -DCMAKE_INSTALL_PREFIX=/ -DWITH_BOOST=../boost/boost_1_59_0 -DWITH_UNIT_TESTS=OFF -DWITH_EMBEDDED_SERVER=OFF
 	@$(MAKE) -C mysql/build/ -j8
 	@touch mysql
 
