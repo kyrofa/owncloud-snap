@@ -12,6 +12,8 @@ services:
   mysql:
     start: start_mysql
     stop: support-files/mysql.server stop
+  mdns-publisher:
+    start: mdns-publisher owncloud
 
 parts:
   apache:
@@ -50,3 +52,9 @@ parts:
   owncloud:
     plugin: make
     source: src/owncloud
+
+  mdns-publisher:
+    # Requires Go 1.3 or later. If you're on trusty, use
+    # ppa:ubuntu-lxc/lxd-stable
+    plugin: go
+    go-packages: [github.com/kyrofa/mdns-publisher]
