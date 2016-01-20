@@ -1,5 +1,5 @@
 all: owncloud
-OCVERSION:owncloud-8.2.2
+OCVERSION: owncloud-8.2.2
 
 # Fetch owncloud
 owncloud.tar.bz2:
