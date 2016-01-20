@@ -1,9 +1,9 @@
 all: owncloud
-OCVERSION: owncloud-8.2.2
+OCVERSION=owncloud-8.2.2
 
 # Fetch owncloud
 owncloud.tar.bz2:
-	@wget https://download.owncloud.org/community/${OCVERSION}.tar.bz2 -O owncloud.tar.bz2
+	@wget https://download.owncloud.org/community/$(OCVERSION).tar.bz2 -O owncloud.tar.bz2
 
 # Extract owncloud
 extract_owncloud: owncloud.tar.bz2
