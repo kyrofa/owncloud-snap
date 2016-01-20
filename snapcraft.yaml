@@ -2,17 +2,20 @@ name: owncloud
 version: 8.2.2
 vendor: Kyle Fazzari <kyle@canonical.com>
 summary: Owncloud
-description: Owncloud running on Apache.
+description: Owncloud running on Apache with mysql. This is currently in beta.
 icon: icon.svg
 
 services:
   apache:
+    description: ownCloud Apache2.4 daemon.
     start: start_apache
     stop: apachectl stop
   mysql:
+    description: ownCloud mysql 5.7.10 daemon.
     start: start_mysql
     stop: support-files/mysql.server stop
   mdns-publisher:
+    description: ownCloud mDNS daemon to publish hostname.local address
     start: mdns-publisher owncloud
 
 parts:
