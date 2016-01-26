@@ -20,7 +20,7 @@ extract_php: php.tar.gz
 
 # Build apache
 apache: extract_apache
-	@cd httpd*/ && ./configure --prefix=/CUSTOM_PREFIX
+	@cd httpd*/ && ./configure --prefix=/CUSTOM_PREFIX --enable-modules=none --enable-mods-shared='headers fcgid setenvif env rewrite mime dir authz_core unixd' ENABLED_DSO_MODULES=rewrite
 	@$(MAKE) -C httpd*/ -j8
 	@touch apache
 

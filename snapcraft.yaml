@@ -1,5 +1,5 @@
 name: owncloud
-version: 8.2.2kyrofa1
+version: 8.2.2kyrofa3
 vendor: Kyle Fazzari <kyle@canonical.com>
 summary: ownCloud
 description: ownCloud running on Apache with MySQL. This is currently in beta.
@@ -42,15 +42,45 @@ parts:
       - libxml2-dev
       - libcurl4-gnutls-dev
       - libpng12-dev
+    snap:
+      - -manual # No need to include the documentation in the .snap
 
   mysql:
     plugin: make
     source: src/mysql
     stage-packages:
       - libncurses5
+      - libaio1
     build-packages:
       - cmake
       - libncurses5-dev
+      - libaio-dev
+    snap:
+      # Remove unused binaries that waste space
+      - -bin/innochecksum
+      - -bin/lz4_decompress
+      - -bin/myisam*
+      - -bin/mysqladmin
+      - -bin/mysqlbinlog
+      - -bin/mysql_client_test
+      - -bin/mysql_config*
+      - -bin/mysqld_multi
+      - -bin/mysqldump*
+      - -bin/mysqlimport
+      - -bin/mysql_install_db
+      - -bin/mysql_plugin
+      - -bin/mysqlpump
+      - -bin/mysql_secure_installation
+      - -bin/mysqlshow
+      - -bin/mysqlslap
+      - -bin/mysql_ssl_rsa_setup
+      - -bin/mysqltest
+      - -bin/mysql_tzinfo_to_sql
+      - -bin/perror
+      - -bin/replace
+      - -bin/resolveip
+      - -bin/resolve_stack_dump
+      - -bin/zlib_decompress
 
   owncloud:
     plugin: make

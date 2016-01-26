@@ -11,15 +11,28 @@ ownCloud 8.2.2 packaged as a .snap for Ubuntu Core. It consists of:
 
 ## How to install
 
-Install the .snap in Ubuntu Core 15.04 with `snappy install owncloud.kyrofa`.
+Note that there's currently a limitation in the Snappy store that prevents
+multiple uploads of the same package, even if they support different
+architectures. This will be resolved soon, but until then, the package names
+need to be different. So the command to install ownCloud depends on your
+architecture:
+
+- armhf (e.g. the Raspberry Pi 2):
+
+    `sudo snappy install owncloud.kyrofa`
+
+- amd64:
+
+     `sudo snappy install owncloud-amd64.kyrofa`
+
+
+## How to use
+
 After install, assuming the Ubuntu Core device is on the same network as you,
 you should be able to reach the ownCloud installation by using `hostname.local`.
 For example, if your hostname is `foo`, you can reach ownCloud by visiting
 `foo.local` in your browser. If you're using a standard Ubuntu Core image and
 you haven't messed with the hostname, try `owncloud.local` (the default).
-
-
-## How to use
 
 Upon visiting the ownCloud installation for the first time, you'll be prompted
 for an admin username and password. After you provide that information you'll be
