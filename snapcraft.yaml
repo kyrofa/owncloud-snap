@@ -1,5 +1,5 @@
 name: owncloud
-version: 8.2.2kyrofa4
+version: 8.2.2kyrofa5
 vendor: Kyle Fazzari <kyle@canonical.com>
 summary: ownCloud
 description: ownCloud running on Apache with MySQL. This is currently in beta.

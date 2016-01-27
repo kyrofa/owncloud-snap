@@ -16,7 +16,6 @@ fi
 
 # Start mysql
 support-files/mysql.server start
-mysql --socket="$SNAP_APP_DATA_PATH/mysql/mysql.sock" -u root -p
 
 # Initialize new installation if necessary.
 if [ $new_install = true ]; then
@@ -25,10 +24,9 @@ if [ $new_install = true ]; then
 	root_password=$(cat /dev/urandom | tr -dc _A-Z-a-z-0-9 | head -c64)
 	echo "done."
 
-	# Generate and record a password for the owncloud mysql user.
+	# Generate a password for the owncloud mysql user.
 	echo -n "Generating owncloud mysql password... "
 	owncloud_password=$(cat /dev/urandom | tr -dc _A-Z-a-z-0-9 | head -c64)
-	echo "$owncloud_password" > $owncloud_password_file
 	echo "done."
 
 	# Save root user information
@@ -61,16 +59,24 @@ SQL
 	echo "password=$root_password" >> $root_option_file
 fi
 
-# Check and upgrade mysql tables if necessary. There doesn't seem to be a good
-# way to determine if the upgrade was necessary, but we're supposed to restart
-# the server if it was, so we'll just restart it here anyway. It doesn't take
-# long.
+# Check and upgrade mysql tables if necessary. This will return 0 if the upgrade
+# succeeded, in which case we need to restart mysql.
 echo "Checking/upgrading mysql tables if necessary..."
 mysql_upgrade --defaults-file=$root_option_file
-echo "Restarting server after potential upgrade..."
-support-files/mysql.server restart
+if [ $? -eq 0 ]; then
+	echo "Restarting mysql server after upgrade..."
+	support-files/mysql.server restart
+fi
 
-# Wait here until mysql exits (turn a forking service into simple).
+# If this was a new installation, wait until the server is all up and running
+# before saving off the owncloud user's password. This way the presence of the
+# file can be used as a signal that mysql is ready to be used.
+if [ $new_install = true ]; then
+	echo "$owncloud_password" > $owncloud_password_file
+fi
+
+# Wait here until mysql exits (turn a forking service into simple). This is
+# only needed for Ubuntu Core 15.04, as 16.04 supports forking services.
 mysqld_pid=$(cat "$mysqld_pid_file_path")
 while kill -0 $mysqld_pid 2>/dev/null; do
 	sleep 1
