@@ -556,6 +556,26 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
   #
   # Mutex: Allows you to set the mutex mechanism and mutex file directory
 ***************
+*** 38,44 ****
+  # mutex file directory is not on a local disk or is not appropriate for some
+  # other reason.
+  #
+! # Mutex default:logs
+
+  #
+  # Listen: Allows you to bind Apache to specific IP addresses and/or
+--- 38,47 ----
+  # mutex file directory is not on a local disk or is not appropriate for some
+  # other reason.
+  #
+! # Using pthread here, since Apache tries to chown the file-based mutex which
+! # isn't allowed in Snappy, and Ubuntu supports robust pthread mutexes that
+! # can be recovered if the child process terminates abnormally.
+! Mutex pthread
+
+  #
+  # Listen: Allows you to bind Apache to specific IP addresses and/or
+***************
 *** 157,164 ****
   # It is usually good practice to create a dedicated user and group for
   # running httpd, as with most system services.
