@@ -11,11 +11,10 @@ ownCloud 8.2.2 packaged as a .snap for Ubuntu Core. It consists of:
 
 ## How to install
 
-This ownCloud .snap is only available on Ubuntu Core 15.04 (it'll be available
-on rolling/all-snaps once that's a bit more stable). It's also only available
-on the amd64 or armhf (e.g. a raspberry pi 2) architectures. Install via:
+This ownCloud .snap is only available on Ubuntu Core 16.04, for the amd64 and
+armhf (e.g. a raspberry pi 2) architectures. Install via:
 
-    $ sudo snappy install owncloud-server.kyrofa
+    $ sudo snappy install owncloud.canonical
 
 
 ## How to use
@@ -35,9 +34,8 @@ logged in and able to create users, install apps, and upload files.
 
 Ideally ownCloud would be able to store its raw data outside of the Snappy data
 directories (e.g. on an external hard drive while installed on a raspberry pi).
-However, .snaps on Ubuntu Core 15.04 do not have the ability to access the
-filesystem outside of the Snappy data directories (Ubuntu Core 16.04 will
-include this). As a result, the ownCloud data directory is contained within the
-`$SNAP_APP_DATA_PATH`, which means it's migrated upon upgrade, which can waste
-quite a bit of hard drive space. A better version will be available for Ubuntu
-Core 16.04.
+However, .snaps currently do not have the ability to access the filesystem
+outside of the Snappy data directories (Ubuntu Core 16.04 will include this,
+it's just not done yet). As a result, the ownCloud data directory is contained
+within `$SNAP_DATA`, which means it's migrated upon upgrade, which can waste
+quite a bit of hard drive space. This will be improved soon.

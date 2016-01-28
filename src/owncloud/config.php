@@ -11,7 +11,7 @@ $CONFIG = array(
  */
 'apps_paths' => array(
 	array(
-		'path'=> '/var/lib/apps/'.getenv('SNAP_FULLNAME').'/current/owncloud/apps',
+		'path'=> '/var/lib/snaps/'.getenv('SNAP_FULLNAME').'/current/owncloud/apps',
 		'url' => '/apps',
 		'writable' => true,
 	),

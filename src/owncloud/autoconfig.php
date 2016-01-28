@@ -1,6 +1,6 @@
 <?php
 
-$data_path = '/var/lib/apps/'.getenv('SNAP_FULLNAME').'/current';
+$data_path = '/var/lib/snaps/'.getenv('SNAP_FULLNAME').'/current';
 
 $AUTOCONFIG = array(
 'directory' => $data_path.'/owncloud/data',
