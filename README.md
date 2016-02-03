@@ -11,19 +11,11 @@ ownCloud 8.2.2 packaged as a .snap for Ubuntu Core. It consists of:
 
 ## How to install
 
-Note that there's currently a limitation in the Snappy store that prevents
-multiple uploads of the same package, even if they support different
-architectures. This will be resolved soon, but until then, the package names
-need to be different. So the command to install ownCloud depends on your
-architecture:
+This ownCloud .snap is only available on Ubuntu Core 15.04 (it'll be available
+on rolling/all-snaps once that's a bit more stable). It's also only available
+on the amd64 or armhf (e.g. a raspberry pi 2) architectures. Install via:
 
-- armhf (e.g. the Raspberry Pi 2):
-
-    `sudo snappy install owncloud.kyrofa`
-
-- amd64:
-
-     `sudo snappy install owncloud-amd64.kyrofa`
+    $ sudo snappy install owncloud.kyrofa
 
 
 ## How to use
