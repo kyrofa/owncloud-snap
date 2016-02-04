@@ -20,7 +20,7 @@ extract_php: php.tar.gz
 
 # Build apache
 apache: extract_apache
-	@cd httpd*/ && ./configure --prefix=/CUSTOM_PREFIX --enable-modules=none --enable-mods-shared='headers fcgid setenvif env rewrite mime dir authz_core unixd' ENABLED_DSO_MODULES=rewrite
+	@cd httpd*/ && ./configure --prefix=/CUSTOM_PREFIX --enable-modules=none --enable-mods-shared='headers fcgid setenvif env rewrite mime dir authz_core unixd alias' ENABLED_DSO_MODULES=rewrite
 	@$(MAKE) -C httpd*/ -j8
 	@touch apache
 
@@ -36,7 +36,18 @@ install_apache: apache
 
 # Build php
 php: extract_php install_apache
-	@cd php*/ && ./configure --with-apxs2=$(DESTDIR)/bin/apxs --with-pdo-mysql --enable-zip --with-gd --with-zlib --with-curl --disable-rpath --prefix=$(DESTDIR)
+	@cd php*/ && ./configure --with-apxs2=$(DESTDIR)/bin/apxs --disable-rpath --prefix=$(DESTDIR) \
+		--enable-ctype \
+		--enable-mbstring \
+		--enable-zip \
+		--with-pdo-mysql \
+		--with-zlib \
+		--with-gd \
+		--with-curl \
+		--with-openssl \
+		--with-bz2 \
+		--with-mcrypt \
+		--enable-exif
 	@$(MAKE) -C php*/ -j8
 	@touch php
 

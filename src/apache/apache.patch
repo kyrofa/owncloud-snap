@@ -539,7 +539,7 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
   
   #
   # Mutex: Allows you to set the mutex mechanism and mutex file directory
---- 28,42 ----
+--- 28,49 ----
   # same ServerRoot for multiple httpd daemons, you will need to change at
   # least PidFile.
   #
@@ -552,6 +552,13 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
 ! </FilesMatch>
 ! 
 ! PHPIniDir "${SNAP_APP_PATH}/lib/php.ini"
+! 
+! # Serve static assets for apps in a writable location.
+! Alias "/apps" "${SNAP_APP_DATA_PATH}/owncloud/apps"
+! <Directory "${SNAP_APP_DATA_PATH}/owncloud/apps">
+! 	AllowOverride None
+! 	Require all granted
+! </Directory>
   
   #
   # Mutex: Allows you to set the mutex mechanism and mutex file directory

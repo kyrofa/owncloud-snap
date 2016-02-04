@@ -1,5 +1,5 @@
 name: owncloud
-version: 8.2.2kyrofa5
+version: 8.2.2kyrofa6
 vendor: Kyle Fazzari <kyle@canonical.com>
 summary: ownCloud
 description: ownCloud running on Apache with MySQL. This is currently in beta.
@@ -30,8 +30,10 @@ parts:
 
       # PHP dependencies
       - libxml2
-      - libcurl3-gnutls
+      - libcurl3
       - libpng12-0
+      - libbz2-1.0
+      - libmcrypt4
     build-packages:
       # Apache dependencies
       - libapr1-dev
@@ -40,8 +42,10 @@ parts:
 
       # PHP dependencies
       - libxml2-dev
-      - libcurl4-gnutls-dev
+      - libcurl4-openssl-dev
       - libpng12-dev
+      - libbz2-dev
+      - libmcrypt-dev
     snap:
       - -manual # No need to include the documentation in the .snap
 
