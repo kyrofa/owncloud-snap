@@ -15,7 +15,7 @@ This ownCloud .snap is only available on Ubuntu Core 15.04 (it'll be available
 on rolling/all-snaps once that's a bit more stable). It's also only available
 on the amd64 or armhf (e.g. a raspberry pi 2) architectures. Install via:
 
-    $ sudo snappy install owncloud.kyrofa
+    $ sudo snappy install owncloud-server.kyrofa
 
 
 ## How to use
