@@ -1,5 +1,5 @@
 name: owncloud
-version: 8.2.2ubuntu1
+version: 8.2.2ubuntu2
 summary: ownCloud
 description: ownCloud running on Apache with MySQL. This is currently in beta.
 icon: icon.svg
@@ -10,24 +10,24 @@ apps:
     command: start_apache
     stop-command: apachectl stop
     daemon: simple
-    uses: [listener]
+    plugs: [listener]
 
   # MySQL daemon
   mysql:
     command: start_mysql
     stop-command: support-files/mysql.server stop
     daemon: simple
-    uses: [listener]
+    plugs: [listener]
 
   # mDNS daemon
   mdns-publisher:
     command: mdns-publisher owncloud
     daemon: simple
-    uses: [listener]
+    plugs: [listener]
 
-uses:
+plugs:
   listener:
-    type: migration-skill
+    interface: old-security
     caps: [network-listener]
 
 parts:
