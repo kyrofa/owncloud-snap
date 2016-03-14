@@ -1,0 +1,56 @@
+#!/bin/sh
+
+mysqld_pid_file_path=$SNAP_DATA/mysql/`hostname`.pid
+# Wait for mysql to be up and running, since we need to make sure
+# we run the upgrade process.
+echo "Waiting for mysql..."
+while [ ! -f "$mysqld_pid_file_path" ]; do
+	sleep 1
+done
+
+# Wait until we have an owncloud mysql password
+echo "Obtaining owncloud mysql credentials..."
+owncloud_password_path=$SNAP_DATA/mysql/owncloud_password
+timeout=10
+while [ $timeout -gt 0 -a ! -e $owncloud_password_path ]; do
+	timeout=$((timeout-1))
+	sleep 1
+done
+if [ -e $owncloud_password_path ]; then
+	echo "owncloud mysql credentials successfully obtained"
+	export OWNCLOUD_DATABASE_PASSWORD=$(cat $owncloud_password_path)
+else
+	echo -n "Timed out while attempting to obtain owncloud mysql password. "
+	echo -n "This isn't unusual when starting up for the first time after "
+	echo "an install or an upgrade. Will try again."
+	exit 1
+fi
+
+# Make sure owncloud directory exists
+mkdir -p $SNAP_DATA/owncloud
+
+# Make sure apps are up to date
+echo "Ensuring ownCloud apps are up-to-date..."
+OWNCLOUD_APPS_DIR=$SNAP_DATA/owncloud/apps
+mkdir -p $OWNCLOUD_APPS_DIR
+cp -r $SNAP/htdocs/apps/. $OWNCLOUD_APPS_DIR
+
+# If this is a new install, make sure it's configured correctly
+export OWNCLOUD_CONFIG_DIR=$SNAP_DATA/owncloud/config
+if [ ! -d "$OWNCLOUD_CONFIG_DIR" ]; then
+	echo "Configuring ownCloud..."
+	cp -r $SNAP/htdocs/config $OWNCLOUD_CONFIG_DIR
+else
+	# This is not a new installation, so we don't want to override
+	# the config. We do, however, want to make sure we incorporate
+	# the new options for ownCloud 9-- namely, disabling code
+	# signing. Only set that option if it hasn't already been set.
+	occ config:system:get integrity.check.disabled
+	if [ $? -eq 1 ]; then
+		occ config:system:set integrity.check.disabled --value=true --type=boolean
+	fi
+fi
+
+# Finally, make sure ownCloud is up to date
+echo "Upgrading ownCloud..."
+php -c $SNAP/lib $SNAP/htdocs/occ upgrade --no-interaction

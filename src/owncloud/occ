@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export OWNCLOUD_CONFIG_DIR=$SNAP_DATA/owncloud/config 
+
+php -c $SNAP/lib $SNAP/htdocs/occ $*

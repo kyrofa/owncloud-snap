@@ -1,5 +1,5 @@
 name: owncloud
-version: 8.2.2ubuntu3
+version: 9.0.0ubuntu1
 summary: ownCloud
 description: ownCloud running on Apache with MySQL. This is currently in beta.
 icon: icon.svg
@@ -23,6 +23,10 @@ apps:
   mdns-publisher:
     command: delay-on-failure mdns-publisher owncloud
     daemon: simple
+    plugs: [listener]
+
+  occ:
+    command: occ
     plugs: [listener]
 
 plugs:
@@ -65,7 +69,10 @@ parts:
       - libssl-dev
       - pkg-config
     snap:
-      - -manual # No need to include the documentation in the .snap
+      # No need to include the documentation in the .snap
+      - -manual/
+      - -man/
+      - -php/
 
   mysql:
     plugin: make

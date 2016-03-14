@@ -29,4 +29,11 @@ $CONFIG = array(
 'supportedDatabases' => array(
 	'mysql',
 ),
+
+/**
+ * ownCloud doesn't support hosting the config file out of the application, so
+ * this version of ownCloud has been patched slightly to allow for it. As a
+ * result, we fail the integrity check, so we'll just disable it.
+ */
+'integrity.check.disabled' => true,
 );

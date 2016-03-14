@@ -36,7 +36,8 @@ install_mysql: mysql
 
 install: install_mysql
 	@cp my.cnf $(DESTDIR)/
-	@cp start_mysql $(DESTDIR)/
+	@mkdir -p $(DESTDIR)/bin
+	@cp start_mysql $(DESTDIR)/bin/
 	@touch install
 
 clean:

@@ -1,36 +1,9 @@
 #!/bin/sh
 
 # Make sure apache directory exists
-mkdir -p $SNAP_APP_DATA_PATH/apache
+mkdir -p $SNAP_DATA/apache
 
-# Make sure owncloud directory exists
-mkdir -p $SNAP_APP_DATA_PATH/owncloud
-
-export OWNCLOUD_CONFIG_DIR=$SNAP_APP_DATA_PATH/owncloud/config
-if [ ! -d "$OWNCLOUD_CONFIG_DIR" ]; then
-	cp -r $SNAP_APP_PATH/htdocs/config $OWNCLOUD_CONFIG_DIR
-fi
-
-OWNCLOUD_APPS_DIR=$SNAP_APP_DATA_PATH/owncloud/apps
-if [ ! -d "$OWNCLOUD_APPS_DIR" ]; then
-	cp -r $SNAP_APP_PATH/htdocs/apps $OWNCLOUD_APPS_DIR
-fi
-
-# Now wait until we have an owncloud mysql password
-echo "Obtaining owncloud mysql credentials..."
-owncloud_password_path=$SNAP_APP_DATA_PATH/mysql/owncloud_password
-timeout=10
-while [ $timeout -gt 0 -a ! -e $owncloud_password_path ]; do
-	timeout=$((timeout-1))
-	sleep 1
-done
-if [ -e $owncloud_password_path ]; then
-	echo "owncloud mysql credentials successfully obtained"
-	export OWNCLOUD_DATABASE_PASSWORD=$(cat $owncloud_password_path)
-else
-	echo "Timed out while attempting to obtain owncloud mysql password"
-	exit 1
-fi
+. $SNAP/bin/setup_owncloud
 
 # Run apache in the foreground (a simple daemon)
 apachectl start -DFOREGROUND

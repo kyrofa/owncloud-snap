@@ -31,7 +31,8 @@ install_apache: apache
 	@patch -p1 -d $(DESTDIR) < apache.patch
 	@sed -i 's|/CUSTOM_PREFIX|$(DESTDIR)|' $(DESTDIR)/bin/apxs
 	@find $(DESTDIR)/build -type f -print0 | xargs -0 sed -i 's|/CUSTOM_PREFIX|$(DESTDIR)|'
-	@cp start_apache $(DESTDIR)/
+	@mkdir -p $(DESTDIR)/bin
+	@cp start_apache $(DESTDIR)/bin/
 	@touch install_apache
 
 # Build php

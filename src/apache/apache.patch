@@ -18,11 +18,11 @@ diff -rc snap_install_old/bin/apachectl snap_install/bin/apachectl
   # --------------------                              --------------------
   # 
   # the path to your httpd binary, including options if necessary
-! HTTPD=${SNAP_APP_PATH}/bin/httpd
+! HTTPD=${SNAP}/bin/httpd
   #
   # pick up any necessary environment variables
-! if test -f ${SNAP_APP_PATH}/bin/envvars; then
-!   . ${SNAP_APP_PATH}/bin/envvars
+! if test -f ${SNAP}/bin/envvars; then
+!   . ${SNAP}/bin/envvars
   fi
   #
   # a command that outputs a formatted text version of the HTML at the
@@ -39,7 +39,7 @@ diff -rc snap_install_old/bin/apachectl snap_install/bin/apachectl
   
   case $ACMD in
   start|stop|restart|graceful|graceful-stop)
-!     $HTTPD -d ${SNAP_APP_PATH} -k $ARGV
+!     $HTTPD -d ${SNAP} -k $ARGV
       ERROR=$?
       ;;
   startssl|sslstart|start-SSL)
@@ -56,7 +56,7 @@ diff -rc snap_install_old/bin/apachectl snap_install/bin/apachectl
       ERROR=2
       ;;
   configtest)
-!     $HTTPD -d ${SNAP_APP_PATH} -t
+!     $HTTPD -d ${SNAP} -t
       ERROR=$?
       ;;
   status)
@@ -73,7 +73,7 @@ diff -rc snap_install_old/bin/apachectl snap_install/bin/apachectl
       $LYNX $STATUSURL
       ;;
   *)
-!     $HTTPD -d ${SNAP_APP_PATH} "$@"
+!     $HTTPD -d ${SNAP} "$@"
       ERROR=$?
   esac
   
@@ -95,9 +95,9 @@ diff -rc snap_install_old/bin/envvars snap_install/bin/envvars
   # This file is generated from envvars-std.in
   #
   if test "x$LD_LIBRARY_PATH" != "x" ; then
-!   LD_LIBRARY_PATH="${SNAP_APP_PATH}/lib:$LD_LIBRARY_PATH"
+!   LD_LIBRARY_PATH="${SNAP}/lib:$LD_LIBRARY_PATH"
   else
-!   LD_LIBRARY_PATH="${SNAP_APP_PATH}/lib"
+!   LD_LIBRARY_PATH="${SNAP}/lib"
   fi
   export LD_LIBRARY_PATH
   #
@@ -119,9 +119,9 @@ diff -rc snap_install_old/bin/envvars-std snap_install/bin/envvars-std
   # This file is generated from envvars-std.in
   #
   if test "x$LD_LIBRARY_PATH" != "x" ; then
-!   LD_LIBRARY_PATH="${SNAP_APP_PATH}/lib:$LD_LIBRARY_PATH"
+!   LD_LIBRARY_PATH="${SNAP}/lib:$LD_LIBRARY_PATH"
   else
-!   LD_LIBRARY_PATH="${SNAP_APP_PATH}/lib"
+!   LD_LIBRARY_PATH="${SNAP}/lib"
   fi
   export LD_LIBRARY_PATH
   #
@@ -143,9 +143,9 @@ diff -rc snap_install_old/conf/extra/httpd-autoindex.conf snap_install/conf/extr
   # We include the /icons/ alias for FancyIndexed directory listings.  If
   # you do not use FancyIndexing, you may comment this out.
   #
-! Alias /icons/ "${SNAP_APP_PATH}/icons/"
+! Alias /icons/ "${SNAP}/icons/"
   
-! <Directory "${SNAP_APP_PATH}/icons">
+! <Directory "${SNAP}/icons">
       Options Indexes MultiViews
       AllowOverride None
       Require all granted
@@ -176,18 +176,18 @@ diff -rc snap_install_old/conf/extra/httpd-dav.conf snap_install/conf/extra/http
   # on the directory where the DavLockDB is placed and on any directory where
   # "Dav On" is specified.
   
-! DavLockDB "${SNAP_APP_PATH}/var/DavLock"
+! DavLockDB "${SNAP}/var/DavLock"
   
-! Alias /uploads "${SNAP_APP_PATH}/uploads"
+! Alias /uploads "${SNAP}/uploads"
   
-! <Directory "${SNAP_APP_PATH}/uploads">
+! <Directory "${SNAP}/uploads">
       Dav On
   
       AuthType Digest
       AuthName DAV-upload
       # You can use the htdigest program to create the password database:
-!     #   htdigest -c "${SNAP_APP_PATH}/user.passwd" DAV-upload admin
-!     AuthUserFile "${SNAP_APP_PATH}/user.passwd"
+!     #   htdigest -c "${SNAP}/user.passwd" DAV-upload admin
+!     AuthUserFile "${SNAP}/user.passwd"
       AuthDigestProvider file
   
       # Allow universal read-access, but writes are restricted
@@ -209,9 +209,9 @@ diff -rc snap_install_old/conf/extra/httpd-manual.conf snap_install/conf/extra/h
   #                   mod_setenvif, mod_negotiation
   #
   
-! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "${SNAP_APP_PATH}/manual$1"
+! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "${SNAP}/manual$1"
   
-! <Directory "${SNAP_APP_PATH}/manual">
+! <Directory "${SNAP}/manual">
       Options Indexes
       AllowOverride None
       Require all granted
@@ -231,7 +231,7 @@ diff -rc snap_install_old/conf/extra/httpd-mpm.conf snap_install/conf/extra/http
   # Note that this is the default PidFile for most MPMs.
   #
   <IfModule !mpm_netware_module>
-!     PidFile "${SNAP_APP_DATA_PATH}/apache/httpd.pid"
+!     PidFile "${SNAP_DATA}/apache/httpd.pid"
   </IfModule>
   
   #
@@ -258,14 +258,14 @@ diff -rc snap_install_old/conf/extra/httpd-multilang-errordoc.conf snap_install/
   #   Alias /error/include/ "/your/include/path/"
   #
   # which allows you to create your own set of files by starting with the
-! # ${SNAP_APP_PATH}/error/include/ files and copying them to /your/include/path/, 
+! # ${SNAP}/error/include/ files and copying them to /your/include/path/, 
   # even on a per-VirtualHost basis.  The default include files will display
   # your Apache version number and your ServerAdmin email address regardless
   # of the setting of ServerSignature.
   
-! Alias /error/ "${SNAP_APP_PATH}/error/"
+! Alias /error/ "${SNAP}/error/"
   
-! <Directory "${SNAP_APP_PATH}/error">
+! <Directory "${SNAP}/error">
       AllowOverride None
       Options IncludesNoExec
       AddOutputFilter Includes html
@@ -286,8 +286,8 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   Inter-Process Session Cache:
   #   Configure the SSL Session Cache: First the mechanism 
   #   to use and second the expiring timeout (in seconds).
-! #SSLSessionCache         "dbm:${SNAP_APP_DATA_PATH}/apache/ssl_scache"
-! SSLSessionCache        "shmcb:${SNAP_APP_DATA_PATH}/apache/ssl_scache(512000)"
+! #SSLSessionCache         "dbm:${SNAP_DATA}/apache/ssl_scache"
+! SSLSessionCache        "shmcb:${SNAP_DATA}/apache/ssl_scache(512000)"
   SSLSessionCacheTimeout  300
   
   #   OCSP Stapling (requires OpenSSL 0.9.8h or later)
@@ -304,7 +304,7 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   the same mechanism that is used for the SSL session cache
   #   above.  If stapling is used with more than a few certificates,
   #   the size may need to be increased.  (AH01929 will be logged.)
-! #SSLStaplingCache "shmcb:${SNAP_APP_DATA_PATH}/apache/ssl_stapling(32768)"
+! #SSLStaplingCache "shmcb:${SNAP_DATA}/apache/ssl_stapling(32768)"
   
   #   Seconds before valid OCSP responses are expired from the cache
   #SSLStaplingStandardCacheTimeout 3600
@@ -325,11 +325,11 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   <VirtualHost _default_:443>
   
   #   General setup for the virtual host
-! DocumentRoot "${SNAP_APP_PATH}/htdocs"
+! DocumentRoot "${SNAP}/htdocs"
   ServerName www.example.com:443
   ServerAdmin you@example.com
-! ErrorLog "${SNAP_APP_DATA_PATH}/apache/error_log"
-! TransferLog "${SNAP_APP_DATA_PATH}/apache/access_log"
+! ErrorLog "${SNAP_DATA}/apache/error_log"
+! TransferLog "${SNAP_DATA}/apache/access_log"
   
   #   SSL Engine Switch:
   #   Enable/Disable SSL for this virtual host.
@@ -348,9 +348,9 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   Some ECC cipher suites (http://www.ietf.org/rfc/rfc4492.txt)
   #   require an ECC certificate which can also be configured in
   #   parallel.
-! SSLCertificateFile "${SNAP_APP_PATH}/conf/server.crt"
-! #SSLCertificateFile "${SNAP_APP_PATH}/conf/server-dsa.crt"
-! #SSLCertificateFile "${SNAP_APP_PATH}/conf/server-ecc.crt"
+! SSLCertificateFile "${SNAP}/conf/server.crt"
+! #SSLCertificateFile "${SNAP}/conf/server-dsa.crt"
+! #SSLCertificateFile "${SNAP}/conf/server-ecc.crt"
   
   #   Server Private Key:
   #   If the key is not combined with the certificate, use this
@@ -369,9 +369,9 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   you've both a RSA and a DSA private key you can configure
   #   both in parallel (to also allow the use of DSA ciphers, etc.)
   #   ECC keys, when in use, can also be configured in parallel
-! SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server.key"
-! #SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server-dsa.key"
-! #SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server-ecc.key"
+! SSLCertificateKeyFile "${SNAP}/conf/server.key"
+! #SSLCertificateKeyFile "${SNAP}/conf/server-dsa.key"
+! #SSLCertificateKeyFile "${SNAP}/conf/server-ecc.key"
   
   #   Server Certificate Chain:
   #   Point SSLCertificateChainFile at a file containing the
@@ -388,7 +388,7 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   the referenced file can be the same as SSLCertificateFile
   #   when the CA certificates are directly appended to the server
   #   certificate for convenience.
-! #SSLCertificateChainFile "${SNAP_APP_PATH}/conf/server-ca.crt"
+! #SSLCertificateChainFile "${SNAP}/conf/server-ca.crt"
   
   #   Certificate Authority (CA):
   #   Set the CA certificate verification path where to find CA
@@ -406,8 +406,8 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   Note: Inside SSLCACertificatePath you need hash symlinks
   #         to point to the certificate files. Use the provided
   #         Makefile to update the hash symlinks after changes.
-! #SSLCACertificatePath "${SNAP_APP_PATH}/conf/ssl.crt"
-! #SSLCACertificateFile "${SNAP_APP_PATH}/conf/ssl.crt/ca-bundle.crt"
+! #SSLCACertificatePath "${SNAP}/conf/ssl.crt"
+! #SSLCACertificateFile "${SNAP}/conf/ssl.crt/ca-bundle.crt"
   
   #   Certificate Revocation Lists (CRL):
   #   Set the CA revocation path where to find CA CRLs for client
@@ -425,8 +425,8 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   Note: Inside SSLCARevocationPath you need hash symlinks
   #         to point to the certificate files. Use the provided
   #         Makefile to update the hash symlinks after changes.
-! #SSLCARevocationPath "${SNAP_APP_PATH}/conf/ssl.crl"
-! #SSLCARevocationFile "${SNAP_APP_PATH}/conf/ssl.crl/ca-bundle.crl"
+! #SSLCARevocationPath "${SNAP}/conf/ssl.crl"
+! #SSLCARevocationFile "${SNAP}/conf/ssl.crl/ca-bundle.crl"
   #SSLCARevocationCheck chain
   
   #   Client Authentication (Type):
@@ -444,8 +444,8 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   file (containing login information for SRP user accounts). 
   #   Requires OpenSSL 1.0.1 or newer. See the mod_ssl FAQ for
   #   detailed instructions on creating this file. Example:
-! #   "openssl srp -srpvfile ${SNAP_APP_PATH}/conf/passwd.srpv -add username"
-! #SSLSRPVerifierFile "${SNAP_APP_PATH}/conf/passwd.srpv"
+! #   "openssl srp -srpvfile ${SNAP}/conf/passwd.srpv -add username"
+! #SSLSRPVerifierFile "${SNAP}/conf/passwd.srpv"
   
   #   Access Control:
   #   With SSLRequire you can do per-directory access control based
@@ -462,7 +462,7 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   <FilesMatch "\.(cgi|shtml|phtml|php)$">
       SSLOptions +StdEnvVars
   </FilesMatch>
-! <Directory "${SNAP_APP_PATH}/cgi-bin">
+! <Directory "${SNAP}/cgi-bin">
       SSLOptions +StdEnvVars
   </Directory>
   
@@ -479,7 +479,7 @@ diff -rc snap_install_old/conf/extra/httpd-ssl.conf snap_install/conf/extra/http
   #   Per-Server Logging:
   #   The home of a custom SSL log file. Use this when you want a
   #   compact non-error SSL logfile on a virtual host basis.
-! CustomLog "${SNAP_APP_DATA_PATH}/apache/ssl_request_log" \
+! CustomLog "${SNAP_DATA}/apache/ssl_request_log" \
             "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
   
   </VirtualHost>                                  
@@ -511,19 +511,19 @@ diff -rc snap_install_old/conf/extra/httpd-vhosts.conf snap_install/conf/extra/h
   #
   <VirtualHost *:80>
       ServerAdmin webmaster@dummy-host.example.com
-!     DocumentRoot "${SNAP_APP_PATH}/docs/dummy-host.example.com"
+!     DocumentRoot "${SNAP}/docs/dummy-host.example.com"
       ServerName dummy-host.example.com
       ServerAlias www.dummy-host.example.com
-!     ErrorLog "${SNAP_APP_DATA_PATH}/apache/dummy-host.example.com-error_log"
-!     CustomLog "${SNAP_APP_DATA_PATH}/apache/dummy-host.example.com-access_log" common
+!     ErrorLog "${SNAP_DATA}/apache/dummy-host.example.com-error_log"
+!     CustomLog "${SNAP_DATA}/apache/dummy-host.example.com-access_log" common
   </VirtualHost>
   
   <VirtualHost *:80>
       ServerAdmin webmaster@dummy-host2.example.com
-!     DocumentRoot "${SNAP_APP_PATH}/docs/dummy-host2.example.com"
+!     DocumentRoot "${SNAP}/docs/dummy-host2.example.com"
       ServerName dummy-host2.example.com
-!     ErrorLog "${SNAP_APP_DATA_PATH}/apache/dummy-host2.example.com-error_log"
-!     CustomLog "${SNAP_APP_DATA_PATH}/apache/dummy-host2.example.com-access_log" common
+!     ErrorLog "${SNAP_DATA}/apache/dummy-host2.example.com-error_log"
+!     CustomLog "${SNAP_DATA}/apache/dummy-host2.example.com-access_log" common
   </VirtualHost>
   
   
@@ -543,19 +543,19 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
   # same ServerRoot for multiple httpd daemons, you will need to change at
   # least PidFile.
   #
-! ServerRoot "${SNAP_APP_PATH}"
+! ServerRoot "${SNAP}"
 ! 
-! PidFile "${SNAP_APP_DATA_PATH}/apache/httpd.pid"
+! PidFile "${SNAP_DATA}/apache/httpd.pid"
 ! 
 ! <FilesMatch \.php$>
 !    SetHandler application/x-httpd-php
 ! </FilesMatch>
 ! 
-! PHPIniDir "${SNAP_APP_PATH}/lib/php.ini"
+! PHPIniDir "${SNAP}/lib/php.ini"
 ! 
 ! # Serve static assets for apps in a writable location.
-! Alias "/apps" "${SNAP_APP_DATA_PATH}/owncloud/apps"
-! <Directory "${SNAP_APP_DATA_PATH}/owncloud/apps">
+! Alias "/apps" "${SNAP_DATA}/owncloud/apps"
+! <Directory "${SNAP_DATA}/owncloud/apps">
 ! 	AllowOverride None
 ! 	Require all granted
 ! </Directory>
@@ -615,8 +615,8 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
   # documents. By default, all requests are taken from this directory, but
   # symbolic links and aliases may be used to point to other locations.
   #
-! DocumentRoot "${SNAP_APP_PATH}/htdocs"
-! <Directory "${SNAP_APP_PATH}/htdocs">
+! DocumentRoot "${SNAP}/htdocs"
+! <Directory "${SNAP}/htdocs">
       #
       # Possible values for the Options directive are "None", "All",
       # or any combination of:
@@ -667,7 +667,7 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
   # logged here.  If you *do* define an error logfile for a <VirtualHost>
   # container, that host's errors will be logged there and not here.
   #
-! ErrorLog "${SNAP_APP_DATA_PATH}/apache/error_log"
+! ErrorLog "${SNAP_DATA}/apache/error_log"
   
   #
   # LogLevel: Control the number of messages logged to the error_log.
@@ -690,13 +690,13 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
       # define per-<VirtualHost> access logfiles, transactions will be
       # logged therein and *not* in this file.
       #
-!     CustomLog "${SNAP_APP_DATA_PATH}/apache/access_log" common
+!     CustomLog "${SNAP_DATA}/apache/access_log" common
   
       #
       # If you prefer a logfile with access, agent, and referer information
       # (Combined Logfile Format) you can use the following directive.
       #
-!     #CustomLog "${SNAP_APP_DATA_PATH}/apache/access_log" combined
+!     #CustomLog "${SNAP_DATA}/apache/access_log" combined
   </IfModule>
   
   <IfModule alias_module>
@@ -713,7 +713,7 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
       # client.  The same rules about trailing "/" apply to ScriptAlias
       # directives as to Alias.
       #
-!     ScriptAlias /cgi-bin/ "${SNAP_APP_PATH}/cgi-bin/"
+!     ScriptAlias /cgi-bin/ "${SNAP}/cgi-bin/"
   
   </IfModule>
   
@@ -733,10 +733,10 @@ diff -rc snap_install_old/conf/httpd.conf snap_install/conf/httpd.conf
   </IfModule>
   
   #
-! # "${SNAP_APP_PATH}/cgi-bin" should be changed to whatever your ScriptAliased
+! # "${SNAP}/cgi-bin" should be changed to whatever your ScriptAliased
   # CGI directory exists, if you have that configured.
   #
-! <Directory "${SNAP_APP_PATH}/cgi-bin">
+! <Directory "${SNAP}/cgi-bin">
       AllowOverride None
       Options None
       Require all granted
@@ -758,9 +758,9 @@ diff -rc snap_install_old/conf/original/extra/httpd-autoindex.conf snap_install/
   # We include the /icons/ alias for FancyIndexed directory listings.  If
   # you do not use FancyIndexing, you may comment this out.
   #
-! Alias /icons/ "${SNAP_APP_PATH}/icons/"
+! Alias /icons/ "${SNAP}/icons/"
   
-! <Directory "${SNAP_APP_PATH}/icons">
+! <Directory "${SNAP}/icons">
       Options Indexes MultiViews
       AllowOverride None
       Require all granted
@@ -791,18 +791,18 @@ diff -rc snap_install_old/conf/original/extra/httpd-dav.conf snap_install/conf/o
   # on the directory where the DavLockDB is placed and on any directory where
   # "Dav On" is specified.
   
-! DavLockDB "${SNAP_APP_PATH}/var/DavLock"
+! DavLockDB "${SNAP}/var/DavLock"
   
-! Alias /uploads "${SNAP_APP_PATH}/uploads"
+! Alias /uploads "${SNAP}/uploads"
   
-! <Directory "${SNAP_APP_PATH}/uploads">
+! <Directory "${SNAP}/uploads">
       Dav On
   
       AuthType Digest
       AuthName DAV-upload
       # You can use the htdigest program to create the password database:
-!     #   htdigest -c "${SNAP_APP_PATH}/user.passwd" DAV-upload admin
-!     AuthUserFile "${SNAP_APP_PATH}/user.passwd"
+!     #   htdigest -c "${SNAP}/user.passwd" DAV-upload admin
+!     AuthUserFile "${SNAP}/user.passwd"
       AuthDigestProvider file
   
       # Allow universal read-access, but writes are restricted
@@ -824,9 +824,9 @@ diff -rc snap_install_old/conf/original/extra/httpd-manual.conf snap_install/con
   #                   mod_setenvif, mod_negotiation
   #
   
-! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "${SNAP_APP_PATH}/manual$1"
+! AliasMatch ^/manual(?:/(?:da|de|en|es|fr|ja|ko|pt-br|ru|tr|zh-cn))?(/.*)?$ "${SNAP}/manual$1"
   
-! <Directory "${SNAP_APP_PATH}/manual">
+! <Directory "${SNAP}/manual">
       Options Indexes
       AllowOverride None
       Require all granted
@@ -853,14 +853,14 @@ diff -rc snap_install_old/conf/original/extra/httpd-multilang-errordoc.conf snap
   #   Alias /error/include/ "/your/include/path/"
   #
   # which allows you to create your own set of files by starting with the
-! # ${SNAP_APP_PATH}/error/include/ files and copying them to /your/include/path/, 
+! # ${SNAP}/error/include/ files and copying them to /your/include/path/, 
   # even on a per-VirtualHost basis.  The default include files will display
   # your Apache version number and your ServerAdmin email address regardless
   # of the setting of ServerSignature.
   
-! Alias /error/ "${SNAP_APP_PATH}/error/"
+! Alias /error/ "${SNAP}/error/"
   
-! <Directory "${SNAP_APP_PATH}/error">
+! <Directory "${SNAP}/error">
       AllowOverride None
       Options IncludesNoExec
       AddOutputFilter Includes html
@@ -881,8 +881,8 @@ diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/o
   #   Inter-Process Session Cache:
   #   Configure the SSL Session Cache: First the mechanism 
   #   to use and second the expiring timeout (in seconds).
-! #SSLSessionCache         "dbm:${SNAP_APP_PATH}/logs/ssl_scache"
-! SSLSessionCache        "shmcb:${SNAP_APP_PATH}/logs/ssl_scache(512000)"
+! #SSLSessionCache         "dbm:${SNAP}/logs/ssl_scache"
+! SSLSessionCache        "shmcb:${SNAP}/logs/ssl_scache(512000)"
   SSLSessionCacheTimeout  300
   
   #   OCSP Stapling (requires OpenSSL 0.9.8h or later)
@@ -899,7 +899,7 @@ diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/o
   #   the same mechanism that is used for the SSL session cache
   #   above.  If stapling is used with more than a few certificates,
   #   the size may need to be increased.  (AH01929 will be logged.)
-! #SSLStaplingCache "shmcb:${SNAP_APP_PATH}/logs/ssl_stapling(32768)"
+! #SSLStaplingCache "shmcb:${SNAP}/logs/ssl_stapling(32768)"
   
   #   Seconds before valid OCSP responses are expired from the cache
   #SSLStaplingStandardCacheTimeout 3600
@@ -920,11 +920,11 @@ diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/o
   <VirtualHost _default_:443>
   
   #   General setup for the virtual host
-! DocumentRoot "${SNAP_APP_PATH}/htdocs"
+! DocumentRoot "${SNAP}/htdocs"
   ServerName www.example.com:443
   ServerAdmin you@example.com
-! ErrorLog "${SNAP_APP_PATH}/logs/error_log"
-! TransferLog "${SNAP_APP_PATH}/logs/access_log"
+! ErrorLog "${SNAP}/logs/error_log"
+! TransferLog "${SNAP}/logs/access_log"
   
   #   SSL Engine Switch:
   #   Enable/Disable SSL for this virtual host.
@@ -943,9 +943,9 @@ diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/o
   #   Some ECC cipher suites (http://www.ietf.org/rfc/rfc4492.txt)
   #   require an ECC certificate which can also be configured in
   #   parallel.
-! SSLCertificateFile "${SNAP_APP_PATH}/conf/server.crt"
-! #SSLCertificateFile "${SNAP_APP_PATH}/conf/server-dsa.crt"
-! #SSLCertificateFile "${SNAP_APP_PATH}/conf/server-ecc.crt"
+! SSLCertificateFile "${SNAP}/conf/server.crt"
+! #SSLCertificateFile "${SNAP}/conf/server-dsa.crt"
+! #SSLCertificateFile "${SNAP}/conf/server-ecc.crt"
   
   #   Server Private Key:
   #   If the key is not combined with the certificate, use this
@@ -964,9 +964,9 @@ diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/o
   #   you've both a RSA and a DSA private key you can configure
   #   both in parallel (to also allow the use of DSA ciphers, etc.)
   #   ECC keys, when in use, can also be configured in parallel
-! SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server.key"
-! #SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server-dsa.key"
-! #SSLCertificateKeyFile "${SNAP_APP_PATH}/conf/server-ecc.key"
+! SSLCertificateKeyFile "${SNAP}/conf/server.key"
+! #SSLCertificateKeyFile "${SNAP}/conf/server-dsa.key"
+! #SSLCertificateKeyFile "${SNAP}/conf/server-ecc.key"
   
   #   Server Certificate Chain:
   #   Point SSLCertificateChainFile at a file containing the
@@ -983,7 +983,7 @@ diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/o
   #   the referenced file can be the same as SSLCertificateFile
   #   when the CA certificates are directly appended to the server
   #   certificate for convenience.
-! #SSLCertificateChainFile "${SNAP_APP_PATH}/conf/server-ca.crt"
+! #SSLCertificateChainFile "${SNAP}/conf/server-ca.crt"
   
   #   Certificate Authority (CA):
   #   Set the CA certificate verification path where to find CA
@@ -1001,8 +1001,8 @@ diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/o
   #   Note: Inside SSLCACertificatePath you need hash symlinks
   #         to point to the certificate files. Use the provided
   #         Makefile to update the hash symlinks after changes.
-! #SSLCACertificatePath "${SNAP_APP_PATH}/conf/ssl.crt"
-! #SSLCACertificateFile "${SNAP_APP_PATH}/conf/ssl.crt/ca-bundle.crt"
+! #SSLCACertificatePath "${SNAP}/conf/ssl.crt"
+! #SSLCACertificateFile "${SNAP}/conf/ssl.crt/ca-bundle.crt"
   
   #   Certificate Revocation Lists (CRL):
   #   Set the CA revocation path where to find CA CRLs for client
@@ -1020,8 +1020,8 @@ diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/o
   #   Note: Inside SSLCARevocationPath you need hash symlinks
   #         to point to the certificate files. Use the provided
   #         Makefile to update the hash symlinks after changes.
-! #SSLCARevocationPath "${SNAP_APP_PATH}/conf/ssl.crl"
-! #SSLCARevocationFile "${SNAP_APP_PATH}/conf/ssl.crl/ca-bundle.crl"
+! #SSLCARevocationPath "${SNAP}/conf/ssl.crl"
+! #SSLCARevocationFile "${SNAP}/conf/ssl.crl/ca-bundle.crl"
   #SSLCARevocationCheck chain
   
   #   Client Authentication (Type):
@@ -1039,8 +1039,8 @@ diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/o
   #   file (containing login information for SRP user accounts). 
   #   Requires OpenSSL 1.0.1 or newer. See the mod_ssl FAQ for
   #   detailed instructions on creating this file. Example:
-! #   "openssl srp -srpvfile ${SNAP_APP_PATH}/conf/passwd.srpv -add username"
-! #SSLSRPVerifierFile "${SNAP_APP_PATH}/conf/passwd.srpv"
+! #   "openssl srp -srpvfile ${SNAP}/conf/passwd.srpv -add username"
+! #SSLSRPVerifierFile "${SNAP}/conf/passwd.srpv"
   
   #   Access Control:
   #   With SSLRequire you can do per-directory access control based
@@ -1057,7 +1057,7 @@ diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/o
   <FilesMatch "\.(cgi|shtml|phtml|php)$">
       SSLOptions +StdEnvVars
   </FilesMatch>
-! <Directory "${SNAP_APP_PATH}/cgi-bin">
+! <Directory "${SNAP}/cgi-bin">
       SSLOptions +StdEnvVars
   </Directory>
   
@@ -1074,7 +1074,7 @@ diff -rc snap_install_old/conf/original/extra/httpd-ssl.conf snap_install/conf/o
   #   Per-Server Logging:
   #   The home of a custom SSL log file. Use this when you want a
   #   compact non-error SSL logfile on a virtual host basis.
-! CustomLog "${SNAP_APP_PATH}/logs/ssl_request_log" \
+! CustomLog "${SNAP}/logs/ssl_request_log" \
             "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
   
   </VirtualHost>                                  
@@ -1094,7 +1094,7 @@ diff -rc snap_install_old/conf/original/extra/httpd-vhosts.conf snap_install/con
   #
   <VirtualHost *:80>
       ServerAdmin webmaster@dummy-host.example.com
-!     DocumentRoot "${SNAP_APP_PATH}/docs/dummy-host.example.com"
+!     DocumentRoot "${SNAP}/docs/dummy-host.example.com"
       ServerName dummy-host.example.com
       ServerAlias www.dummy-host.example.com
       ErrorLog "logs/dummy-host.example.com-error_log"
@@ -1111,7 +1111,7 @@ diff -rc snap_install_old/conf/original/extra/httpd-vhosts.conf snap_install/con
   
   <VirtualHost *:80>
       ServerAdmin webmaster@dummy-host2.example.com
-!     DocumentRoot "${SNAP_APP_PATH}/docs/dummy-host2.example.com"
+!     DocumentRoot "${SNAP}/docs/dummy-host2.example.com"
       ServerName dummy-host2.example.com
       ErrorLog "logs/dummy-host2.example.com-error_log"
       CustomLog "logs/dummy-host2.example.com-access_log" common
@@ -1131,7 +1131,7 @@ diff -rc snap_install_old/conf/original/httpd.conf snap_install/conf/original/ht
   # same ServerRoot for multiple httpd daemons, you will need to change at
   # least PidFile.
   #
-! ServerRoot "${SNAP_APP_PATH}"
+! ServerRoot "${SNAP}"
   
   #
   # Mutex: Allows you to set the mutex mechanism and mutex file directory
@@ -1149,8 +1149,8 @@ diff -rc snap_install_old/conf/original/httpd.conf snap_install/conf/original/ht
   # documents. By default, all requests are taken from this directory, but
   # symbolic links and aliases may be used to point to other locations.
   #
-! DocumentRoot "${SNAP_APP_PATH}/htdocs"
-! <Directory "${SNAP_APP_PATH}/htdocs">
+! DocumentRoot "${SNAP}/htdocs"
+! <Directory "${SNAP}/htdocs">
       #
       # Possible values for the Options directive are "None", "All",
       # or any combination of:
@@ -1167,7 +1167,7 @@ diff -rc snap_install_old/conf/original/httpd.conf snap_install/conf/original/ht
       # client.  The same rules about trailing "/" apply to ScriptAlias
       # directives as to Alias.
       #
-!     ScriptAlias /cgi-bin/ "${SNAP_APP_PATH}/cgi-bin/"
+!     ScriptAlias /cgi-bin/ "${SNAP}/cgi-bin/"
   
   </IfModule>
   
@@ -1187,10 +1187,10 @@ diff -rc snap_install_old/conf/original/httpd.conf snap_install/conf/original/ht
   </IfModule>
   
   #
-! # "${SNAP_APP_PATH}/cgi-bin" should be changed to whatever your ScriptAliased
+! # "${SNAP}/cgi-bin" should be changed to whatever your ScriptAliased
   # CGI directory exists, if you have that configured.
   #
-! <Directory "${SNAP_APP_PATH}/cgi-bin">
+! <Directory "${SNAP}/cgi-bin">
       AllowOverride None
       Options None
       Require all granted
@@ -1210,7 +1210,7 @@ diff -rc snap_install_old/include/ap_config_auto.h snap_install/include/ap_confi
   #define HAVE_UNISTD_H 1
   
   /* Root directory of the Apache install area */
-! #define HTTPD_ROOT "${SNAP_APP_PATH}"
+! #define HTTPD_ROOT "${SNAP}"
   
   /* Define to the address where bug reports for this package should be sent. */
   #define PACKAGE_BUGREPORT ""
@@ -1265,42 +1265,42 @@ diff -rc snap_install_old/include/ap_config_layout.h snap_install/include/ap_con
   #define AP_CONFIG_LAYOUT_H
   
   /* Configured Apache directory layout */
-! #define DEFAULT_PREFIX "${SNAP_APP_PATH}"
-! #define DEFAULT_EXP_EXEC_PREFIX "${SNAP_APP_PATH}"
+! #define DEFAULT_PREFIX "${SNAP}"
+! #define DEFAULT_EXP_EXEC_PREFIX "${SNAP}"
   #define DEFAULT_REL_EXEC_PREFIX ""
-! #define DEFAULT_EXP_BINDIR "${SNAP_APP_PATH}/bin"
+! #define DEFAULT_EXP_BINDIR "${SNAP}/bin"
   #define DEFAULT_REL_BINDIR "bin"
-! #define DEFAULT_EXP_SBINDIR "${SNAP_APP_PATH}/bin"
+! #define DEFAULT_EXP_SBINDIR "${SNAP}/bin"
   #define DEFAULT_REL_SBINDIR "bin"
-! #define DEFAULT_EXP_LIBEXECDIR "${SNAP_APP_PATH}/modules"
+! #define DEFAULT_EXP_LIBEXECDIR "${SNAP}/modules"
   #define DEFAULT_REL_LIBEXECDIR "modules"
-! #define DEFAULT_EXP_MANDIR "${SNAP_APP_PATH}/man"
+! #define DEFAULT_EXP_MANDIR "${SNAP}/man"
   #define DEFAULT_REL_MANDIR "man"
-! #define DEFAULT_EXP_SYSCONFDIR "${SNAP_APP_PATH}/conf"
+! #define DEFAULT_EXP_SYSCONFDIR "${SNAP}/conf"
   #define DEFAULT_REL_SYSCONFDIR "conf"
-! #define DEFAULT_EXP_DATADIR "${SNAP_APP_PATH}"
+! #define DEFAULT_EXP_DATADIR "${SNAP}"
   #define DEFAULT_REL_DATADIR ""
-! #define DEFAULT_EXP_INSTALLBUILDDIR "${SNAP_APP_PATH}/build"
+! #define DEFAULT_EXP_INSTALLBUILDDIR "${SNAP}/build"
   #define DEFAULT_REL_INSTALLBUILDDIR "build"
-! #define DEFAULT_EXP_ERRORDIR "${SNAP_APP_PATH}/error"
+! #define DEFAULT_EXP_ERRORDIR "${SNAP}/error"
   #define DEFAULT_REL_ERRORDIR "error"
-! #define DEFAULT_EXP_ICONSDIR "${SNAP_APP_PATH}/icons"
+! #define DEFAULT_EXP_ICONSDIR "${SNAP}/icons"
   #define DEFAULT_REL_ICONSDIR "icons"
-! #define DEFAULT_EXP_HTDOCSDIR "${SNAP_APP_PATH}/htdocs"
+! #define DEFAULT_EXP_HTDOCSDIR "${SNAP}/htdocs"
   #define DEFAULT_REL_HTDOCSDIR "htdocs"
-! #define DEFAULT_EXP_MANUALDIR "${SNAP_APP_PATH}/manual"
+! #define DEFAULT_EXP_MANUALDIR "${SNAP}/manual"
   #define DEFAULT_REL_MANUALDIR "manual"
-! #define DEFAULT_EXP_CGIDIR "${SNAP_APP_PATH}/cgi-bin"
+! #define DEFAULT_EXP_CGIDIR "${SNAP}/cgi-bin"
   #define DEFAULT_REL_CGIDIR "cgi-bin"
-! #define DEFAULT_EXP_INCLUDEDIR "${SNAP_APP_PATH}/include"
+! #define DEFAULT_EXP_INCLUDEDIR "${SNAP}/include"
   #define DEFAULT_REL_INCLUDEDIR "include"
-! #define DEFAULT_EXP_LOCALSTATEDIR "${SNAP_APP_PATH}"
+! #define DEFAULT_EXP_LOCALSTATEDIR "${SNAP}"
   #define DEFAULT_REL_LOCALSTATEDIR ""
-! #define DEFAULT_EXP_RUNTIMEDIR "${SNAP_APP_PATH}/logs"
+! #define DEFAULT_EXP_RUNTIMEDIR "${SNAP}/logs"
   #define DEFAULT_REL_RUNTIMEDIR "logs"
-! #define DEFAULT_EXP_LOGFILEDIR "${SNAP_APP_PATH}/logs"
+! #define DEFAULT_EXP_LOGFILEDIR "${SNAP}/logs"
   #define DEFAULT_REL_LOGFILEDIR "logs"
-! #define DEFAULT_EXP_PROXYCACHEDIR "${SNAP_APP_PATH}/proxy"
+! #define DEFAULT_EXP_PROXYCACHEDIR "${SNAP}/proxy"
   #define DEFAULT_REL_PROXYCACHEDIR "proxy"
   
   #endif /* AP_CONFIG_LAYOUT_H */
