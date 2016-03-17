@@ -1,5 +1,5 @@
 name: owncloud
-version: 8.2.2ubuntu2
+version: 8.2.2ubuntu3
 summary: ownCloud
 description: ownCloud running on Apache with MySQL. This is currently in beta.
 icon: icon.svg
@@ -21,7 +21,7 @@ apps:
 
   # mDNS daemon
   mdns-publisher:
-    command: mdns-publisher owncloud
+    command: delay-on-failure mdns-publisher owncloud
     daemon: simple
     plugs: [listener]
 
@@ -115,3 +115,8 @@ parts:
   mdns-publisher:
     plugin: go
     go-packages: [github.com/kyrofa/mdns-publisher]
+
+  delay-on-failure:
+    plugin: copy
+    files:
+      src/delay-on-failure/delay-on-failure: bin/delay-on-failure
