@@ -16,7 +16,7 @@ if [ $? -eq 0 ]; then
 fi
 
 # Start mysql
-support-files/mysql.server start
+$SNAP/support-files/mysql.server start
 
 # Initialize new installation if necessary.
 if [ $new_install = true ]; then
@@ -52,7 +52,7 @@ SQL
 		echo "done."
 	else
 		echo "Failed to initialize-- reverting..."
-		support-files/mysql.server stop
+		$SNAP/support-files/mysql.server stop
 		rm -rf $SNAP_DATA/mysql/*
 	fi
 
@@ -72,7 +72,7 @@ echo "Checking/upgrading mysql tables if necessary..."
 mysql_upgrade --defaults-file=$root_option_file
 if [ $? -eq 0 ]; then
 	echo "Restarting mysql server after upgrade..."
-	support-files/mysql.server restart
+	$SNAP/support-files/mysql.server restart
 
 	echo "Waiting for server to come back after upgrade..."
 	while [ ! -f "$mysqld_pid_file_path" -o ! -S "$mysql_socket_file_path" ]; do
