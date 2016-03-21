@@ -1,5 +1,13 @@
 <?php
 
+$snap_name = getenv('SNAP_NAME');
+$snap_developer = getenv('SNAP_DEVELOPER');
+if ($snap_developer == '') {
+	$snap_developer = getenv('SNAP_ORIGIN');
+}
+
+$snap_fullname = $snap_name . '.' . $snap_developer;
+
 $CONFIG = array(
 /**
  * Use the ``apps_paths`` parameter to set the location of the Apps directory,
@@ -11,7 +19,7 @@ $CONFIG = array(
  */
 'apps_paths' => array(
 	array(
-		'path'=> '/var/lib/snaps/'.getenv('SNAP_FULLNAME').'/current/owncloud/apps',
+		'path'=> '/var/lib/snaps/'.$snap_fullname.'/current/owncloud/apps',
 		'url' => '/apps',
 		'writable' => true,
 	),
