@@ -1,0 +1,16 @@
+<FilesMatch \.php$>
+    SetHandler application/x-httpd-php
+</FilesMatch>
+
+PHPIniDir "${SNAP}/php.ini"
+
+# Serve static assets for apps in a writable location.
+Alias "/apps" "${SNAP_DATA}/owncloud/apps"
+<Directory "${SNAP_DATA}/owncloud/apps">
+    AllowOverride None
+    Require all granted
+</Directory>
+
+<IfModule dir_module>
+    DirectoryIndex index.html index.php
+</IfModule>

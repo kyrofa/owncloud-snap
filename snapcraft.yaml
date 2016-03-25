@@ -7,7 +7,7 @@ icon: icon.svg
 apps:
   # Apache daemon
   apache:
-    command: start_apache
+    command: apachectl start -DFOREGROUND
     stop-command: apachectl stop
     daemon: simple
     plugs: [listener]
@@ -25,6 +25,7 @@ apps:
     daemon: simple
     plugs: [listener]
 
+  # ownCloud occ command
   occ:
     command: occ
     plugs: [listener]
@@ -36,47 +37,97 @@ plugs:
 
 parts:
   apache:
-    plugin: make
-    source: src/apache
-    stage-packages:
-      # Apache dependencies
-      - libapr1
-      - libaprutil1
-      - libpcre3
+    plugin: apache
+    source: https://github.com/kyrofa/owncloud.git
+    source-type: git
+    source-tag: 9.0.0
 
-      # PHP dependencies
+    # The built-in Apache modules to enable
+    modules:
+      - headers
+      - fcgid
+      - setenvif
+      - env
+      - rewrite
+      - mime
+      - dir
+      - authz_core
+      - unixd
+      - alias
+
+    # Extra Apache configuration for ownCloud (and PHP)
+    extra-configuration: src/owncloud/apache_config
+
+    # Script to run before bringing up Apache
+    startup-script: src/owncloud/setup_owncloud
+
+    third-party-modules:
+      # Build PHP
+      - source: http://us1.php.net/get/php-7.0.2.tar.gz/from/this/mirror
+        source-type: tar
+        configflags:
+          - --enable-ctype
+          - --enable-mbstring
+          - --enable-zip
+          - --with-pdo-mysql
+          - --with-zlib
+          - --with-gd
+          - --with-curl
+          - --with-openssl
+          - --with-bz2
+          - --with-mcrypt
+          - --enable-exif
+    stage:
+      - -htdocs/.git*
+    snap:
+      - -manual # No need to include the documentation in the .snap
+      - -htdocs/.git*
+    stage-packages:
       - libxml2
       - libcurl3
       - libpng12-0
       - libbz2-1.0
       - libmcrypt4
-      - libssl1.0.0
     build-packages:
-      - wget
-      - gcc
-
-      # Apache dependencies
-      - libapr1-dev
-      - libaprutil1-dev
-      - libpcre3-dev
-
-      # PHP dependencies
       - libxml2-dev
       - libcurl4-openssl-dev
       - libpng12-dev
       - libbz2-dev
       - libmcrypt-dev
-      - libssl-dev
-      - pkg-config
-    snap:
-      # No need to include the documentation in the .snap
-      - -manual/
-      - -man/
-      - -php/
+
+  # Copy over our PHP configuration file.
+  php-config:
+    plugin: copy
+    files:
+      src/php/php.ini: php.ini
+
+  # Copy over our ownCloud configuration files
+  owncloud-config:
+    plugin: copy
+    files:
+      src/owncloud/config.php: htdocs/config/config.php
+      src/owncloud/autoconfig.php: htdocs/config/autoconfig.php
+      src/owncloud/occ: bin/occ
 
   mysql:
-    plugin: make
-    source: src/mysql
+    plugin: cmake
+    source: https://github.com/kyrofa/mysql-server.git
+    source-type: git
+    source-branch: feature/support_no_setpriority
+    configflags:
+      - -DDOWNLOAD_BOOST=1
+      - -DWITH_BOOST=boost
+      - -DWITH_INNODB_PAGE_CLEANER_PRIORITY=OFF
+      - -DCMAKE_INSTALL_PREFIX=/
+      - -DBUILD_CONFIG=mysql_release
+      - -DWITH_UNIT_TESTS=OFF
+      - -DWITH_EMBEDDED_SERVER=OFF
+      - -DWITH_EMBEDDED_SHARED_LIBRARY=OFF
+      - -DWITH_ARCHIVE_STORAGE_ENGINE=OFF
+      - -DWITH_BLACKHOLE_STORAGE_ENGINE=OFF
+      - -DWITH_FEDERATED_STORAGE_ENGINE=OFF
+      - -DWITH_PARTITION_STORAGE_ENGINE=OFF
+      - -DINSTALL_MYSQLTESTDIR=
     stage-packages:
       - libncurses5
       - libaio1
@@ -85,10 +136,17 @@ parts:
       - wget
       - g++
       - cmake
+      - bison
       - libncurses5-dev
       - libaio-dev
       - libnuma-dev
+    stage:
+      # Remove scripts that we'll be replacing with our own
+      - -support-files/mysql.server
     snap:
+      # Remove scripts that we'll be replacing with our own
+      - -support-files/mysql.server
+
       # Remove unused binaries that waste space
       - -bin/innochecksum
       - -bin/lz4_decompress
@@ -115,9 +173,14 @@ parts:
       - -bin/resolve_stack_dump
       - -bin/zlib_decompress
 
-  owncloud:
-    plugin: make
-    source: src/owncloud
+  # Copy over our MySQL scripts
+  mysql-customizations:
+    plugin: copy
+    files:
+      # This one is what creates the initial database and account for ownCloud.
+      src/mysql/start_mysql: bin/start_mysql
+      src/mysql/my.cnf: my.cnf
+      src/mysql/mysql.server: support-files/mysql.server
 
   mdns-publisher:
     plugin: go
