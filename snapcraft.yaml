@@ -109,14 +109,23 @@ parts:
       src/owncloud/autoconfig.php: htdocs/config/autoconfig.php
       src/owncloud/occ: bin/occ
 
+  # Download the boost headers for MySQL. Note that the version used may need to
+  # be updated if the version of MySQL changes.
+  boost:
+    plugin: tar-content
+    source: http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz
+    destination: boost
+    snap:
+      - -*
+
   mysql:
     plugin: cmake
     source: https://github.com/kyrofa/mysql-server.git
     source-type: git
     source-branch: feature/support_no_setpriority
+    after: [boost]
     configflags:
-      - -DDOWNLOAD_BOOST=1
-      - -DWITH_BOOST=boost
+      - -DWITH_BOOST=$SNAPCRAFT_STAGE/boost
       - -DWITH_INNODB_PAGE_CLEANER_PRIORITY=OFF
       - -DCMAKE_INSTALL_PREFIX=/
       - -DBUILD_CONFIG=mysql_release
