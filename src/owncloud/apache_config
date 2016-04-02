@@ -15,6 +15,7 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
     DirectoryIndex index.html index.php
 </IfModule>
 
+# add fpm
 <IfModule proxy_fcgi_module>
 	<Proxy "unix:/var/run/php.socket|fcgi://php-fpm" timeout=300>
 	</Proxy>
@@ -27,3 +28,7 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
 		</FilesMatch>
 	</IfModule>
 </Directory>
+
+# this should route all php files though fpm - note that fpm has to run with the same rights as apache (to own the files)
+ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/srv/www/htdocs/owncloud/$1
+DirectoryIndex /index.php index.php
