@@ -14,3 +14,11 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
 <IfModule dir_module>
     DirectoryIndex index.html index.php
 </IfModule>
+
+# tune for performance on the Pi
+StartServers 1
+MinSpareServers 1
+MaxSpareServers 5
+ServerLimit 50
+MaxClients 50
+MaxRequestsPerChild 5000
