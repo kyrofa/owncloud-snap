@@ -14,3 +14,16 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
 <IfModule dir_module>
     DirectoryIndex index.html index.php
 </IfModule>
+
+<IfModule proxy_fcgi_module>
+	<Proxy "unix:/var/run/php.socket|fcgi://php-fpm" timeout=300>
+	</Proxy>
+</IfModule>
+
+<Directory "${SNAP}">
+	<IfModule proxy_fcgi_module>
+		<FilesMatch \.php$>
+			SetHandler "proxy:fcgi://php-fpm/"
+		</FilesMatch>
+	</IfModule>
+</Directory>

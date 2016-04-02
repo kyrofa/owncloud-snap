@@ -12,6 +12,13 @@ apps:
     daemon: simple
     plugs: [listener]
 
+  # php-fpm - this certainly needs work
+  php-fpm:
+    command: php-fpm
+    stop-command: php-fpm stop
+    daemon: simple
+    plugs: [listener]
+    
   # MySQL daemon
   mysql:
     command: start_mysql
@@ -77,6 +84,7 @@ parts:
           - --with-bz2
           - --with-mcrypt
           - --enable-exif
+          - --enable-fpm
     stage:
       - -htdocs/.git*
     snap:
@@ -100,6 +108,7 @@ parts:
     plugin: copy
     files:
       src/php/php.ini: php.ini
+      src/php/php-fpm.conf: php-fpm.conf
 
   # Copy over our ownCloud configuration files
   owncloud-config:
