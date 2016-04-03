@@ -15,10 +15,17 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
     DirectoryIndex index.html index.php
 </IfModule>
 
-# tune for performance on the Pi
-StartServers 1
-MinSpareServers 1
-MaxSpareServers 5
-ServerLimit 50
-MaxClients 50
-MaxRequestsPerChild 5000
+
+
+# MPM Event
+<IfModule event.c>
+    StartServers            2
+    MinSpareThreads         4
+    MaxSpareThreads         32
+    ThreadsPerChild         16
+    ServerLimit             4
+    MaxRequestWorkers       64
+    MaxConnectionsPerChild  0
+</IfModule>
+
+
