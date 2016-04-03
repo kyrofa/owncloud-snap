@@ -18,14 +18,15 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
 
 
 # MPM Event
-<IfModule event.c>
-    StartServers            2
-    MinSpareThreads         4
-    MaxSpareThreads         32
-    ThreadsPerChild         16
-    ServerLimit             4
-    MaxRequestWorkers       64
-    MaxConnectionsPerChild  0
-</IfModule>
-
+<If "${SNAP_ARCH} == 'armhf'"">
+	<IfModule event.c>
+		StartServers            2
+		MinSpareThreads         4
+		MaxSpareThreads         32
+		ThreadsPerChild         16
+		ServerLimit             4
+		MaxRequestWorkers       64
+		MaxConnectionsPerChild  0
+	</IfModule>
+</If>
 
