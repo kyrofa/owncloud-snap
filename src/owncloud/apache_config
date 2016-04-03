@@ -14,3 +14,19 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
 <IfModule dir_module>
     DirectoryIndex index.html index.php
 </IfModule>
+
+
+
+# MPM Event
+<If "${SNAP_ARCH} == 'armhf'"">
+	<IfModule event.c>
+		StartServers            2
+		MinSpareThreads         4
+		MaxSpareThreads         32
+		ThreadsPerChild         16
+		ServerLimit             4
+		MaxRequestWorkers       64
+		MaxConnectionsPerChild  0
+	</IfModule>
+</If>
+
