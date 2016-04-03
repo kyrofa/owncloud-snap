@@ -140,7 +140,6 @@ parts:
     stage-packages:
       - libncurses5
       - libaio1
-      - libnuma1
     build-packages:
       - wget
       - g++
@@ -148,7 +147,6 @@ parts:
       - bison
       - libncurses5-dev
       - libaio-dev
-      - libnuma-dev
     stage:
       # Remove scripts that we'll be replacing with our own
       - -support-files/mysql.server
