@@ -54,6 +54,8 @@ parts:
       - authz_core
       - unixd
       - alias
+      - proxy
+      - proxy_fcgi
 
     # Extra Apache configuration for ownCloud (and PHP)
     extra-configuration: src/owncloud/apache_config
