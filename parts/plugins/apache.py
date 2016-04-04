@@ -183,7 +183,7 @@ class ApachePlugin(snapcraft.BasePlugin):
 
         shutil.copytree(apache_source_directory, apache_build_directory)
 
-        subprocess.check_call("./configure --prefix={} --enable-modules=none --enable-mods-shared='{}' ENABLED_DSO_MODULES='{}'".format(self.installdir, ' '.join(self.options.modules), ','.join(self.options.modules)),
+        subprocess.check_call("./configure --prefix={} --with-mpm=worker --enable-modules=none --enable-mods-shared='{}' ENABLED_DSO_MODULES='{}'".format(self.installdir, ' '.join(self.options.modules), ','.join(self.options.modules)),
                               cwd=apache_build_directory, shell=True)
 
         self.run(

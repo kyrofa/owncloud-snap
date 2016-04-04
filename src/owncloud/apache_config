@@ -15,18 +15,33 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
     DirectoryIndex index.html index.php
 </IfModule>
 
-
-
 # MPM Event
-<If "${SNAP_ARCH} == 'armhf'"">
-	<IfModule event.c>
-		StartServers            2
-		MinSpareThreads         4
-		MaxSpareThreads         32
-		ThreadsPerChild         16
+<IfModule event.c>
+	<If "${SNAP_ARCH} == 'armhf'"">
+		# optimized for low memory usage
+		# one process for each core (4)
 		ServerLimit             4
+		# max nr clients to serve at once. More = more memory usage. 50 is plenty for low volume server.
+		MaxClients              50
+		# StartServers: initial number of server processes to start
+		StartServers            2 
+		# MinSpareThreads: minimum number of worker threads which are kept spare
+		MinSpareThreads         4
+		# MaxSpareThreads: maximum number of worker threads which are kept spare
+		MaxSpareThreads         32
+		# ThreadsPerChild: constant number of worker threads in each server process
+		ThreadsPerChild         16
+		# MaxRequestWorkers: maximum number of worker threads
 		MaxRequestWorkers       64
-		MaxConnectionsPerChild  0
-	</IfModule>
-</If>
+		# MaxConnectionsPerChild: maximum number of requests a server process serves (0 is unlimited. Restarts process after X connections, helpful in case of memory leaks)
+		MaxConnectionsPerChild  1000
+		# stop a process from waiting too long for a next request - max 5 seconds.
+		KeepAliveTimeout 5
+	</If>
+</IfModule>
 
+
+LoadModule deflate_module modules/mod_deflate.so
+<Location />
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/x-javascript
+</Location>
