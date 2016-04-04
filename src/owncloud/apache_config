@@ -62,7 +62,7 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
 </IfModule>
 
 
-LoadModule deflate_module modules/mod_deflate.so
-<Location />
-    AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/x-javascript
-</Location>
+# LoadModule deflate_module modules/mod_deflate.so
+# <Location />
+#    AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/x-javascript
+# </Location>
