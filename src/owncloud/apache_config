@@ -17,7 +17,7 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
 
 # MPM Event
 <IfModule event.c>
-	<If "${SNAP_ARCH} == 'armhf'"">
+#	<If "${SNAP_ARCH} == 'armhf'"">
 		# optimized for low memory usage
 		# one process for each core (4)
 		ServerLimit             4
@@ -37,7 +37,28 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
 		MaxConnectionsPerChild  1000
 		# stop a process from waiting too long for a next request - max 5 seconds.
 		KeepAliveTimeout 5
-	</If>
+#	</If>
+</IfModule>
+
+
+# MPM Worker
+<IfModule wworker.c>
+#	 <If "${SNAP_ARCH} == 'armhf'"">
+		# StartServers: initial number of server processes to start
+		StartServers          2
+		# max nr clients to serve at once. More = more memory usage. 50 is plenty for low volume server.
+		MaxClients          50
+		# MinSpareThreads: minimum number of worker threads which are kept spare
+		MinSpareThreads      4
+		# MaxSpareThreads: maximum number of worker threads which are kept spare
+		MaxSpareThreads      32
+		# ThreadsPerChild: constant number of worker threads in each server process
+		ThreadsPerChild      16
+		# MaxConnectionsPerChild: maximum number of requests a server process serves (0 is unlimited. Restarts process after X connections, helpful in case of memory leaks)
+		MaxConnectionsPerChild  1000
+		# stop a process from waiting too long for a next request - max 5 seconds.
+		KeepAliveTimeout 5
+#		</If>
 </IfModule>
 
 
