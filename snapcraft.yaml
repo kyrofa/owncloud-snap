@@ -2,7 +2,6 @@ name: owncloud
 version: 9.0.0ubuntu1
 summary: ownCloud
 description: ownCloud running on Apache with MySQL. This is currently in beta.
-icon: icon.svg
 
 apps:
   # Apache daemon
@@ -83,11 +82,7 @@ parts:
       - -manual # No need to include the documentation in the .snap
       - -htdocs/.git*
     stage-packages:
-      - libxml2
-      - libcurl3
-      - libpng12-0
-      - libbz2-1.0
-      - libmcrypt4
+      - libxml2 # Only included here until the OS snap stabilizes
     build-packages:
       - libxml2-dev
       - libcurl4-openssl-dev
@@ -102,19 +97,19 @@ parts:
       src/php/php.ini: php.ini
 
   # Copy over our ownCloud configuration files
-  owncloud-config:
+  owncloud-customizations:
     plugin: copy
     files:
-      src/owncloud/config.php: htdocs/config/config.php
-      src/owncloud/autoconfig.php: htdocs/config/autoconfig.php
-      src/owncloud/occ: bin/occ
+      src/owncloud/*config.php: htdocs/config/
+      src/owncloud/occ: bin/
 
   # Download the boost headers for MySQL. Note that the version used may need to
   # be updated if the version of MySQL changes.
   boost:
-    plugin: tar-content
+    plugin: copy
     source: http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz
-    destination: boost
+    files:
+      '*': boost/
     snap:
       - -*
 
@@ -137,9 +132,6 @@ parts:
       - -DWITH_FEDERATED_STORAGE_ENGINE=OFF
       - -DWITH_PARTITION_STORAGE_ENGINE=OFF
       - -DINSTALL_MYSQLTESTDIR=
-    stage-packages:
-      - libncurses5
-      - libaio1
     build-packages:
       - wget
       - g++
@@ -185,9 +177,9 @@ parts:
     plugin: copy
     files:
       # This one is what creates the initial database and account for ownCloud.
-      src/mysql/start_mysql: bin/start_mysql
+      src/mysql/start_mysql: bin/
       src/mysql/my.cnf: my.cnf
-      src/mysql/mysql.server: support-files/mysql.server
+      src/mysql/mysql.server: support-files/
 
   mdns-publisher:
     plugin: go
@@ -196,4 +188,4 @@ parts:
   delay-on-failure:
     plugin: copy
     files:
-      src/delay-on-failure/delay-on-failure: bin/delay-on-failure
+      src/delay-on-failure/delay-on-failure: bin/
