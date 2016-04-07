@@ -6,7 +6,9 @@ if ($snap_developer == '') {
 	$snap_developer = getenv('SNAP_ORIGIN');
 }
 
-$snap_fullname = $snap_name . '.' . $snap_developer;
+if ($snap_developer != '') {
+	$snap_name = $snap_name . '.' . $snap_developer;
+}
 
 $CONFIG = array(
 /**
@@ -19,7 +21,7 @@ $CONFIG = array(
  */
 'apps_paths' => array(
 	array(
-		'path'=> '/var/lib/snaps/'.$snap_fullname.'/current/owncloud/apps',
+		'path'=> '/var/lib/snaps/'.$snap_name.'/current/owncloud/apps',
 		'url' => '/apps',
 		'writable' => true,
 	),

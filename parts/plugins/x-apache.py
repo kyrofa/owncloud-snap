@@ -105,8 +105,6 @@ class ApachePlugin(snapcraft.BasePlugin):
         self.build_packages.extend(
             ['pkg-config', 'libapr1-dev', 'libaprutil1-dev', 'libpcre3-dev',
              'libssl-dev'])
-        self.stage_packages.extend(
-            ['libapr1', 'libaprutil1', 'libpcre3', 'libssl1.0.0', 'zlib1g'])
 
         self.apache_directory = os.path.join(self.partdir, 'apache')
         self.third_party_modules_directory = os.path.join(

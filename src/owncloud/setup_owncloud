@@ -53,4 +53,4 @@ fi
 
 # Finally, make sure ownCloud is up to date
 echo "Upgrading ownCloud..."
-php -c $SNAP/lib $SNAP/htdocs/occ upgrade --no-interaction
+occ upgrade --no-interaction
