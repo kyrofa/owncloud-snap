@@ -241,6 +241,10 @@ class ApachePlugin(snapcraft.BasePlugin):
             if os.path.exists(module_build_directory):
                 shutil.rmtree(module_build_directory)
 
+            source_subdir = getattr(module, 'source_subdir', None)
+            if source_subdir:
+                module_source_directory = os.path.join(module_source_directory, source_subdir)
+
             shutil.copytree(module_source_directory, module_build_directory)
 
             configure_command = [
