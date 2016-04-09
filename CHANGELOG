@@ -1,0 +1,13 @@
+v 9.0.0ubuntu1
+  - Don't rely on cwd being $SNAP.
+  - Move from SNAP_FULLNAME to SNAP_NAME.SNAP_DEVELOPER.
+  - Upgrade to ownCloud 9.0.0
+
+v 8.2.2ubuntu3
+  - mdns: handle lack of network by continuing to retry.
+
+v 8.2.2ubuntu2
+  - Move from skills to interfaces.
+
+v 8.2.2ubuntu1
+  - Initial release.

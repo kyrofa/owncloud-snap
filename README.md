@@ -1,29 +1,27 @@
 # Snappy ownCloud
 
-ownCloud 8.2.2 packaged as a .snap for Ubuntu Core. It consists of:
+ownCloud 9.0.0 packaged as a .snap for Ubuntu Core. It consists of:
 
-- ownCloud 8.2.2
+- ownCloud 9.0.0
 - Apache 2.4
 - PHP 7
-- mysql 5.7.10
+- mysql 5.7.11
 - mDNS for network discovery
 
 
 ## How to install
 
-This ownCloud .snap is only available on Ubuntu Core 16.04, for the amd64 and
-armhf (e.g. a raspberry pi 2) architectures. Install via:
+This ownCloud .snap is only available on Snappy Ubuntu Core 16.04. Install via:
 
-    $ sudo snappy install owncloud.canonical
+    $ sudo snappy install owncloud
 
 
 ## How to use
 
 After install, assuming the Ubuntu Core device is on the same network as you,
-you should be able to reach the ownCloud installation by using `hostname.local`.
-For example, if your hostname is `foo`, you can reach ownCloud by visiting
-`foo.local` in your browser. If you're using a standard Ubuntu Core image and
-you haven't messed with the hostname, try `owncloud.local` (the default).
+you should be able to reach the ownCloud installation by visiting
+`owncloud.local` in your browser (note that if you change the hostname, it'll be
+`<hostname>.local`).
 
 Upon visiting the ownCloud installation for the first time, you'll be prompted
 for an admin username and password. After you provide that information you'll be
