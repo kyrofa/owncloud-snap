@@ -1,4 +1,9 @@
 #!/bin/sh
+############################################
+# This script is called by /bin/envvars
+############################################
+#
+. $SNAP/setup/filesystem.sh
 
 mysqld_pid_file_path=$SNAP_DATA/mysql/`hostname`.pid
 # Wait for mysql to be up and running, since we need to make sure
@@ -16,10 +21,7 @@ while [ $timeout -gt 0 -a ! -e $owncloud_password_path ]; do
 	timeout=$((timeout-1))
 	sleep 1
 done
-if [ -e $owncloud_password_path ]; then
-	echo "owncloud mysql credentials successfully obtained"
-	export OWNCLOUD_DATABASE_PASSWORD=$(cat $owncloud_password_path)
-else
+if [ ! -e $owncloud_password_path ]; then
 	echo -n "Timed out while attempting to obtain owncloud mysql password. "
 	echo -n "This isn't unusual when starting up for the first time after "
 	echo "an install or an upgrade. Will try again."
@@ -28,6 +30,9 @@ fi
 
 # Make sure owncloud directory exists
 mkdir -p $SNAP_DATA/owncloud
+
+# Make sure owncloud tmp directory exists
+mkdir -p $SNAP_DATA/owncloud/tmp
 
 # Make sure apps are up to date
 echo "Ensuring ownCloud apps are up-to-date..."

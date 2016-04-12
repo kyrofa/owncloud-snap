@@ -1,8 +1,9 @@
-<FilesMatch \.php$>
-    SetHandler application/x-httpd-php
+# PHP-FPM
+SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
+ProxyTimeout 900
+<FilesMatch "\.(inc|php)$">
+	SetHandler "proxy:unix:${SNAP_DATA}/var/tmp/php-fpm.sock|fcgi://localhost"
 </FilesMatch>
-
-PHPIniDir "${SNAP}/php.ini"
 
 # Serve static assets for apps in a writable location.
 Alias "/apps" "${SNAP_DATA}/owncloud/apps"
@@ -14,3 +15,6 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
 <IfModule dir_module>
     DirectoryIndex index.html index.php
 </IfModule>
+
+Include ${SNAP_DATA}/apache/conf/platform.conf
+Include ${SNAP_DATA}/apache/conf/custom.conf

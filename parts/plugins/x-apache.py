@@ -141,7 +141,7 @@ class ApachePlugin(snapcraft.BasePlugin):
                     self.options.extra_configuration))
 
         apache_source_directory = os.path.join(self.apache_directory, 'src')
-        apache_sources = snapcraft.sources.Tar('http://ftp.wayne.edu/apache/httpd/httpd-2.4.18.tar.gz', apache_source_directory)
+        apache_sources = snapcraft.sources.Tar('http://ftp.wayne.edu/apache/httpd/httpd-2.4.20.tar.gz', apache_source_directory)
 
         os.makedirs(apache_source_directory)
 
@@ -183,7 +183,7 @@ class ApachePlugin(snapcraft.BasePlugin):
 
         shutil.copytree(apache_source_directory, apache_build_directory)
 
-        subprocess.check_call("./configure --prefix={} --enable-modules=none --enable-mods-shared='{}' ENABLED_DSO_MODULES='{}'".format(self.installdir, ' '.join(self.options.modules), ','.join(self.options.modules)),
+        subprocess.check_call("./configure --prefix={} --with-mpm=event --enable-modules=none --enable-mods-shared='{}' ENABLED_DSO_MODULES='{}'".format(self.installdir, ' '.join(self.options.modules), ','.join(self.options.modules)),
                               cwd=apache_build_directory, shell=True)
 
         self.run(
@@ -245,7 +245,6 @@ class ApachePlugin(snapcraft.BasePlugin):
 
             configure_command = [
                 './configure', '--prefix=' + self.installdir,
-                '--with-apxs2={}/bin/apxs'.format(self.installdir),
                 '--disable-rpath']
 
             self.run(configure_command + module.configflags,
