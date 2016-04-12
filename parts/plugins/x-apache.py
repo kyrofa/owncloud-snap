@@ -141,7 +141,7 @@ class ApachePlugin(snapcraft.BasePlugin):
                     self.options.extra_configuration))
 
         apache_source_directory = os.path.join(self.apache_directory, 'src')
-        apache_sources = snapcraft.sources.Tar('http://ftp.wayne.edu/apache/httpd/httpd-2.4.18.tar.gz', apache_source_directory)
+        apache_sources = snapcraft.sources.Tar('http://ftp.wayne.edu/apache/httpd/httpd-2.4.20.tar.gz', apache_source_directory)
 
         os.makedirs(apache_source_directory)
 
