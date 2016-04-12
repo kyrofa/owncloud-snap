@@ -1,11 +1,9 @@
 #!/bin/sh
 
-export OWNCLOUD_CONFIG_DIR=$SNAP_DATA/owncloud/config
-
 # Tells PHP where to find its configuration files
 RO_PHP_FOLDER=$SNAP/php
 RW_PHP_FOLDER=$SNAP_DATA/php
 PHP_INI_SCAN_DIR=$RO_PHP_FOLDER/lib/php.conf.d:$RW_PHP_FOLDER/lib/php.conf.d
 export PHP_INI_SCAN_DIR
 
-php -c $RO_PHP_FOLDER/lib $SNAP/htdocs/occ $*
+php -c $RO_PHP_FOLDER/lib -i
