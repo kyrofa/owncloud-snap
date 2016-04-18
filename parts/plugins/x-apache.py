@@ -99,8 +99,8 @@ class ApachePlugin(snapcraft.BasePlugin):
 
         return schema
 
-    def __init__(self, name, options):
-        super().__init__(name, options)
+    def __init__(self, name, options, project):
+        super().__init__(name, options, project)
 
         self.build_packages.extend(
             ['pkg-config', 'libapr1-dev', 'libaprutil1-dev', 'libpcre3-dev',
@@ -188,7 +188,7 @@ class ApachePlugin(snapcraft.BasePlugin):
 
         self.run(
             ['make', '-j{}'.format(
-                snapcraft.common.get_parallel_build_count())],
+                self.project.parallel_build_count)],
             cwd=apache_build_directory)
         self.run(['make', 'install'], cwd=apache_build_directory)
 
@@ -251,7 +251,7 @@ class ApachePlugin(snapcraft.BasePlugin):
             self.run(configure_command + module.configflags,
                      cwd=module_build_directory)
             self.run(['make', '-j{}'.format(
-                snapcraft.common.get_parallel_build_count())],
+                self.project.parallel_build_count)],
                 cwd=module_build_directory)
             self.run(['make', 'install'], cwd=module_build_directory)
 
