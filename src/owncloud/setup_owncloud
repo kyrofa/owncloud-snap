@@ -27,31 +27,21 @@ else
 fi
 
 # Make sure owncloud directory exists
-mkdir -p $SNAP_DATA/owncloud
+# FIXME: Use common environment variable when it exists
+mkdir -p -m 750 $SNAP_DATA/../common/owncloud
 
 # Make sure owncloud tmp directory exists
-mkdir -p $SNAP_DATA/owncloud/tmp
+# FIXME: Use common environment variable when it exists
+mkdir -p -m 750 $SNAP_DATA/../common/owncloud/tmp
 
-# Make sure apps are up to date
-echo "Ensuring ownCloud apps are up-to-date..."
-OWNCLOUD_APPS_DIR=$SNAP_DATA/owncloud/apps
-mkdir -p $OWNCLOUD_APPS_DIR
-cp -r $SNAP/htdocs/apps/. $OWNCLOUD_APPS_DIR
+# Make sure owncloud extra-apps directory exists (for user apps)
+mkdir -p -m 750 $SNAP_DATA/owncloud/extra-apps
 
 # If this is a new install, make sure it's configured correctly
 export OWNCLOUD_CONFIG_DIR=$SNAP_DATA/owncloud/config
 if [ ! -d "$OWNCLOUD_CONFIG_DIR" ]; then
 	echo "Configuring ownCloud..."
 	cp -r $SNAP/htdocs/config $OWNCLOUD_CONFIG_DIR
-else
-	# This is not a new installation, so we don't want to override
-	# the config. We do, however, want to make sure we incorporate
-	# the new options for ownCloud 9-- namely, disabling code
-	# signing. Only set that option if it hasn't already been set.
-	occ config:system:get integrity.check.disabled
-	if [ $? -eq 1 ]; then
-		occ config:system:set integrity.check.disabled --value=true --type=boolean
-	fi
 fi
 
 # Finally, make sure ownCloud is up to date. The return code of the upgrade
