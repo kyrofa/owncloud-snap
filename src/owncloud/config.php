@@ -20,9 +20,21 @@ $CONFIG = array(
  * indicates if a web server can write files to that folder.
  */
 'apps_paths' => array(
+	/**
+	 * These are the default apps shipped with ownCloud. They are read-only.
+	 */
 	array(
-		'path'=> '/var/lib/snaps/'.$snap_name.'/current/owncloud/apps',
+		'path'=> '/snaps/'.$snap_name.'/current/htdocs/apps',
 		'url' => '/apps',
+		'writable' => false,
+	),
+
+	/**
+	 * This directory is writable, meant for apps installed by the user.
+	 */
+	array(
+		'path'=> '/var/lib/snaps/'.$snap_name.'/current/owncloud/extra-apps',
+		'url' => '/extra-apps',
 		'writable' => true,
 	),
 ),

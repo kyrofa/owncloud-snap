@@ -259,7 +259,8 @@ class ApachePlugin(snapcraft.BasePlugin):
         # Setup startup script (piggybacking on envvars)
         with open(os.path.join(self.installdir, 'bin', 'envvars'), 'w') as f:
             f.write('# Make sure log directory exists\n')
-            f.write('mkdir -p ${SNAP_DATA}/apache/logs')
+            f.write('mkdir -p -m 750 ${SNAP_DATA}/apache\n')
+            f.write('mkdir -p -m 750 ${SNAP_DATA}/apache/logs')
 
             if self.options.startup_script:
                 f.write('\n. ${{SNAP}}/{}'.format(self.startup_file_path))

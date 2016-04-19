@@ -5,8 +5,8 @@
 PHPIniDir "${SNAP}/php.ini"
 
 # Serve static assets for apps in a writable location.
-Alias "/apps" "${SNAP_DATA}/owncloud/apps"
-<Directory "${SNAP_DATA}/owncloud/apps">
+Alias "/extra-apps" "${SNAP_DATA}/owncloud/extra-apps"
+<Directory "${SNAP_DATA}/owncloud/extra-apps">
     AllowOverride None
     Require all granted
 </Directory>

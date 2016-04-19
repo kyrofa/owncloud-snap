@@ -27,16 +27,13 @@ else
 fi
 
 # Make sure owncloud directory exists
-mkdir -p $SNAP_DATA/owncloud
+mkdir -p -m 750 $SNAP_DATA/owncloud
 
 # Make sure owncloud tmp directory exists
-mkdir -p $SNAP_DATA/owncloud/tmp
+mkdir -p -m 750 $SNAP_DATA/owncloud/tmp
 
-# Make sure apps are up to date
-echo "Ensuring ownCloud apps are up-to-date..."
-OWNCLOUD_APPS_DIR=$SNAP_DATA/owncloud/apps
-mkdir -p $OWNCLOUD_APPS_DIR
-cp -r $SNAP/htdocs/apps/. $OWNCLOUD_APPS_DIR
+# Make sure owncloud extra-apps directory exists (for user apps)
+mkdir -p -m 750 $SNAP_DATA/owncloud/extra-apps
 
 # If this is a new install, make sure it's configured correctly
 export OWNCLOUD_CONFIG_DIR=$SNAP_DATA/owncloud/config
