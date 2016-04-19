@@ -18,6 +18,11 @@ apps:
     daemon: simple
     plugs: [listener]
 
+  # MySQL client
+  mysql-client:
+    command: mysql --defaults-file=$SNAP_DATA/mysql/root.ini
+    plugs: [listener]
+
   # mDNS daemon
   mdns-publisher:
     command: delay-on-failure mdns-publisher owncloud
