@@ -5,8 +5,8 @@
 PHPIniDir "${SNAP}/php.ini"
 
 # Serve static assets for apps in a writable location.
-Alias "/apps" "${SNAP_DATA}/owncloud/apps"
-<Directory "${SNAP_DATA}/owncloud/apps">
+Alias "/extra-apps" "${SNAP_DATA}/owncloud/extra-apps"
+<Directory "${SNAP_DATA}/owncloud/extra-apps">
     AllowOverride None
     Require all granted
 </Directory>
@@ -23,7 +23,8 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
     # try to use that much RAM.
     php_value upload_max_filesize 16G
     php_value post_max_size 16G
-    php_admin_value upload_tmp_dir ${SNAP_DATA}/owncloud/tmp
+    # FIXME: Use common environment variable when it exists.
+    php_admin_value upload_tmp_dir ${SNAP_DATA}/../common/owncloud/tmp
 
     # Note that nothing else is included here as this directive is merged with
     # the one in the main configuration file.
