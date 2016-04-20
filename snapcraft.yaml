@@ -1,5 +1,5 @@
 name: owncloud
-version: 9.0.0ubuntu1
+version: 9.0.1ubuntu1
 summary: ownCloud
 description: ownCloud running on Apache with MySQL. This is currently in beta.
 
@@ -44,7 +44,7 @@ parts:
     plugin: apache
     source: https://github.com/kyrofa/owncloud.git
     source-type: git
-    source-tag: 9.0.0
+    source-tag: 9.0.1
 
     # The built-in Apache modules to enable
     modules:
