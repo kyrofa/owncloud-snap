@@ -1,7 +1,7 @@
 name: owncloud
 version: 9.0.1ubuntu1
 summary: ownCloud
-description: ownCloud running on Apache with MySQL. This is currently in beta.
+description: ownCloud running on Apache using PHP-FPM with MySQL. This is currently in beta.
 
 apps:
   # Apache daemon
@@ -9,6 +9,13 @@ apps:
     command: apachectl start -DFOREGROUND
     stop-command: apachectl stop
     daemon: simple
+    plugs: [listener]
+
+  # PHP-FPM daemon
+  php-fpm:
+    command: php-fpm start
+    stop-command: php-fpm stop
+    daemon: forking
     plugs: [listener]
 
   # MySQL daemon
@@ -34,12 +41,24 @@ apps:
     command: occ
     plugs: [listener]
 
+  # phpinfo() command
+  phpinfo:
+    command: phpinfo
+    plugs: [listener]
+
 plugs:
   listener:
     interface: old-security
     caps: [network-listener]
 
 parts:
+  # Copy over some general setup scripts
+  setup-scripts:
+    plugin: copy
+    files:
+      src/setup/filesystem.sh: setup/
+      src/setup/hw_rating.sh: setup/
+
   apache:
     plugin: apache
     source: https://github.com/kyrofa/owncloud.git
@@ -49,7 +68,8 @@ parts:
     # The built-in Apache modules to enable
     modules:
       - headers
-      - fcgid
+      - proxy
+      - proxy_fcgi
       - setenvif
       - env
       - rewrite
@@ -60,46 +80,33 @@ parts:
       - alias
 
     # Extra Apache configuration for ownCloud (and PHP)
+    # Do not comment out as it places a call to the config in httpd.conf
     extra-configuration: src/owncloud/apache_config
 
     # Script to run before bringing up Apache
+    # Do not comment out as it places a call to the script in envvars
     startup-script: src/owncloud/setup_owncloud
 
-    third-party-modules:
-      # Build PHP
-      - source: http://us1.php.net/get/php-7.0.2.tar.gz/from/this/mirror
-        source-type: tar
-        configflags:
-          - --enable-ctype
-          - --enable-mbstring
-          - --enable-zip
-          - --with-pdo-mysql
-          - --with-zlib
-          - --with-gd
-          - --with-curl
-          - --with-openssl
-          - --with-bz2
-          - --with-mcrypt
-          - --enable-exif
     stage:
       - -htdocs/.git*
+      - -conf/extra_configuration
+      - -bin/startup_script
     snap:
       - -manual # No need to include the documentation in the .snap
       - -htdocs/.git*
-    stage-packages:
-      - libxml2 # Only included here until the OS snap stabilizes
-    build-packages:
-      - libxml2-dev
-      - libcurl4-openssl-dev
-      - libpng12-dev
-      - libbz2-dev
-      - libmcrypt-dev
+      - -htdocs/.user.ini
+      - -conf/extra_configuration
+      - -bin/startup_script
 
-  # Copy over our PHP configuration file.
-  php-config:
+  # Copy over our Apache configuration files
+  apache-customizations:
     plugin: copy
+    after: [apache]
     files:
-      src/php/php.ini: php.ini
+      src/owncloud/apache_config: conf/extra_configuration
+      src/owncloud/userconfigs/platform.conf: conf/userconfigs/
+      src/owncloud/userconfigs/custom.conf: conf/userconfigs/
+      src/owncloud/setup_owncloud: bin/startup_script
 
   # Copy over our ownCloud configuration files
   owncloud-customizations:
@@ -107,6 +114,58 @@ parts:
     files:
       src/owncloud/*config.php: htdocs/config/
       src/owncloud/occ: bin/
+
+  php:
+    plugin: autotools
+    source: http://us1.php.net/get/php-7.0.5.tar.gz/from/this/mirror
+    source-type: tar
+    install-via: prefix
+    configflags:
+      - --enable-fpm
+      - --disable-cgi
+      - --disable-phar
+      - --disable-phpdbg
+      - --enable-ctype
+      - --enable-mbstring
+      - --enable-zip
+      - --with-pdo-mysql
+      - --with-zlib
+      - --with-gd
+      - --enable-gd-native-ttf
+      - --with-jpeg-dir=/usr/lib
+      - --with-freetype-dir=/usr/lib
+      - --with-curl
+      - --with-openssl
+      - --with-bz2
+      - --with-mcrypt
+      - --enable-exif
+      - --enable-intl
+      - --enable-pcntl
+      - --disable-rpath
+    stage-packages:
+      - libxml2 # Only included here until the OS snap stabilizes
+    build-packages:
+      - libfontconfig1
+      - libfreetype6
+      - libjpeg8
+      - libxml2-dev
+      - libcurl4-openssl-dev
+      - libpng12-dev
+      - libbz2-dev
+      - libmcrypt-dev
+      - libgd-dev
+
+  # Copy over our PHP configuration file.
+  php-customizations:
+    plugin: copy
+    files:
+      src/php/php.ini: php/lib/
+      src/php/extensions.ini: php/lib/php.conf.d/
+      src/php/php-fpm.conf: php/etc/
+      src/php/userconfigs/platform.conf: php/userconfigs/
+      src/php/userconfigs/custom.conf: php/userconfigs/
+      src/php/php-fpm: bin/
+      src/php/phpinfo: bin/
 
   # Download the boost headers for MySQL. Note that the version used may need to
   # be updated if the version of MySQL changes.

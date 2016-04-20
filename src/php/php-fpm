@@ -1,0 +1,167 @@
+#!/bin/sh
+#
+# Startup script for PHP-FPM based on the directadmin.com script
+#
+# chkconfig: 345 85 15
+# description: PHP-FPM server
+# processname: php-fpm
+# config: $SNAP_DATA/php/php-fpm.conf
+. $SNAP/setup/filesystem.sh
+
+PID=$VAR_RUN/php-fpm.pid
+BIN=$SNAP/sbin/php-fpm
+
+RO_PHP_FOLDER=$SNAP/php
+RW_PHP_FOLDER=$SNAP_DATA/php
+PHP_CONF=$RO_PHP_FOLDER/lib/php.ini
+PHP_FPM_CONF=$RO_PHP_FOLDER/etc/php-fpm.conf
+PHP_USER_CONF=$RW_PHP_FOLDER/lib/php.conf.d
+
+# Tells PHP where to find its configuration files
+PHP_INI_SCAN_DIR=$RO_PHP_FOLDER/lib/php.conf.d:$PHP_USER_CONF
+export PHP_INI_SCAN_DIR
+
+OPTS="-R --daemonize --pid=${PID} --fpm-config $PHP_FPM_CONF -c $PHP_CONF -p $SNAP_DATA"
+
+status() {
+	local pid
+
+	# Test syntax.
+	if [ $# = 0 ] ; then
+			echo "Usage: status {program}"
+			return 1
+	fi
+
+	# First try "pidof"
+	pid=`$PID $1`
+	if [ "$pid" != "" ] ; then
+			echo "${1} (pid $pid) is running..."
+			return 0
+	fi
+
+	echo "${1} is stopped"
+	return 3
+}
+
+wait_for_pid () {
+	try=0
+
+	while test $try -lt 35 ; do
+		case "$1" in
+			'created')
+			if [ -f "$2" ] ; then
+				try=''
+				break
+			fi
+			;;
+
+			'removed')
+			if [ ! -f "$2" ] ; then
+				try=''
+				break
+			fi
+			;;
+		esac
+
+		echo -n .
+		try=`expr $try + 1`
+		sleep 1
+	done
+}
+
+
+case "$1" in
+	start)
+		echo -n "Starting php-fpm: "
+		$BIN $OPTS
+
+		if [ "$?" != 0 ] ; then
+			echo " failed"
+			exit 1
+		fi
+
+		wait_for_pid created $PID
+
+		if [ -n "$try" ] ; then
+			echo " failed"
+			exit 1
+		else
+			echo " done"
+		fi
+	;;
+
+ 	stop)
+		echo -n "Gracefully shutting down php-fpm: "
+
+		if [ ! -r $PID ] ; then
+			echo "warning, no pid file found - php-fpm is not running ?"
+			exit 1
+		fi
+
+		kill -QUIT `cat $PID`
+
+		wait_for_pid removed $PID
+
+		if [ -n "$try" ] ; then
+			echo " failed. Use force-quit"
+			exit 1
+		else
+			echo " done"
+		fi
+	;;
+
+	force-quit)
+		echo -n "Terminating php-fpm: "
+
+		if [ ! -r $PID ] ; then
+			echo "warning, no pid file found - php-fpm is not running ?"
+			exit 1
+		fi
+
+		kill -TERM `cat $PID`
+
+		wait_for_pid removed $PID
+
+		if [ -n "$try" ] ; then
+			echo " failed"
+			exit 1
+		else
+			echo " done"
+		fi
+	;;
+
+	restart)
+		$0 stop
+		$0 start
+	;;
+
+	reload)
+		echo -n "Reloading service php-fpm: "
+		if [ ! -r $PID ] ; then
+			echo "warning, no pid file found - php-fpm is not running ?"
+			exit 1
+		fi
+
+		kill -USR1 `cat $PID`
+
+		echo " done"
+	;;
+
+	graceful)
+		echo -n "Gracefully reloading service php-fpm: "
+		if [ ! -r $PID ] ; then
+			echo "warning, no pid file found - php-fpm is not running ?"
+			exit 1
+		fi
+
+		kill -USR2 `cat $PID`
+
+		echo " done"
+	;;
+
+	*)
+		echo -n "Usage: $0 {start|stop|restart|force-quit|reload|graceful}"
+		exit 1
+	;;
+esac
+exit 0;

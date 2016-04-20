@@ -12,16 +12,19 @@ if ($snap_developer != '') {
 
 $data_path = '/var/lib/snaps/'.$snap_name.'/current';
 
-$AUTOCONFIG = array(
-'directory' => $data_path.'/owncloud/data',
+$writable = getenv('SNAP_DATA');
+$owncloud_password = trim(file_get_contents($writable . '/mysql/owncloud_password'));
 
-'dbtype' => 'mysql',
+$AUTOCONFIG = [
+	'directory' => $data_path . '/owncloud/data',
 
-'dbhost' => 'localhost:'.$data_path.'/mysql/mysql.sock',
+	'dbtype' => 'mysql',
 
-'dbname' => 'owncloud',
+	'dbhost' => 'localhost:' . $data_path . '/mysql/mysql.sock',
 
-'dbuser' => 'owncloud',
+	'dbname' => 'owncloud',
 
-'dbpass' => getenv('OWNCLOUD_DATABASE_PASSWORD'),
-);
+	'dbuser' => 'owncloud',
+
+	'dbpass' => $owncloud_password,
+];
