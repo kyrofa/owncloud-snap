@@ -1,3 +1,15 @@
+v 9.0.1ubuntu1
+  - MySQL: Increase max allowed packet.
+  - PHP: Enable logging.
+  - Upgrade to ownCloud 9.0.1.
+  - MySQL: Expose client as an app.
+  - Make ownCloud upgrade failure fatal.
+  - Increase max upload to 16GB.
+  - Handle removal of $SNAP_DEVELOPER.
+  - Make occ look in $SNAP for php.ini
+  - MySQL: Remove libnuma as a dependency.
+  - Add Apache plugin
+
 v 9.0.0ubuntu1
   - Don't rely on cwd being $SNAP.
   - Move from SNAP_FULLNAME to SNAP_NAME.SNAP_DEVELOPER.
