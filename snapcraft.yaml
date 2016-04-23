@@ -1,5 +1,5 @@
 name: owncloud
-version: 9.0.0ubuntu1
+version: 9.0.1ubuntu1
 summary: ownCloud
 description: ownCloud running on Apache with MySQL. This is currently in beta.
 
@@ -16,6 +16,11 @@ apps:
     command: start_mysql
     stop-command: support-files/mysql.server stop
     daemon: simple
+    plugs: [listener]
+
+  # MySQL client
+  mysql-client:
+    command: mysql --defaults-file=$SNAP_DATA/mysql/root.ini
     plugs: [listener]
 
   # mDNS daemon
@@ -39,7 +44,7 @@ parts:
     plugin: apache
     source: https://github.com/kyrofa/owncloud.git
     source-type: git
-    source-tag: 9.0.0
+    source-tag: 9.0.1
 
     # The built-in Apache modules to enable
     modules:
@@ -82,7 +87,9 @@ parts:
       - -manual # No need to include the documentation in the .snap
       - -htdocs/.git*
     stage-packages:
-      - libxml2 # Only included here until the OS snap stabilizes
+      # These are only included here until the OS snap stabilizes
+      - libxml2
+      - libpng12-0
     build-packages:
       - libxml2-dev
       - libcurl4-openssl-dev

@@ -29,6 +29,9 @@ fi
 # Make sure owncloud directory exists
 mkdir -p $SNAP_DATA/owncloud
 
+# Make sure owncloud tmp directory exists
+mkdir -p $SNAP_DATA/owncloud/tmp
+
 # Make sure apps are up to date
 echo "Ensuring ownCloud apps are up-to-date..."
 OWNCLOUD_APPS_DIR=$SNAP_DATA/owncloud/apps
@@ -51,6 +54,25 @@ else
 	fi
 fi
 
-# Finally, make sure ownCloud is up to date
-echo "Upgrading ownCloud..."
+# Finally, make sure ownCloud is up to date. The return code of the upgrade
+# can be used to determine the outcome:
+#    succes = 0;
+#    not installed = 1;
+#    in maintenance mode = 2;
+#    already up to date = 3;
+#    invalid arguments  = 4;
+#    other failure = 5;
+echo "Making sure ownCloud is fully upgraded..."
 occ upgrade --no-interaction
+return_code=$?
+if [ $return_code -eq 1 ]; then
+	echo "ownCloud is not yet installed-- no upgrade necessary"
+elif [ $return_code -eq 3 ]; then
+	echo "ownCloud is fully upgraded"
+elif [ $return_code -ne 0 ]; then
+	echo "Unable to upgrade ownCloud. Will try again."
+	# occ may have left it in maintenance mode, so turn that off
+	occ maintenance:mode --off
+	sleep 10 # Delaying here so systemd doesn't throttle us
+	exit 1
+fi

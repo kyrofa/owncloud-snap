@@ -11,6 +11,20 @@ Alias "/apps" "${SNAP_DATA}/owncloud/apps"
     Require all granted
 </Directory>
 
-<IfModule dir_module>
-    DirectoryIndex index.html index.php
-</IfModule>
+<Directory "${SNAP}/htdocs">
+    # Include ownCloud's .htaccess file directly. In a typical setup this would
+    # be dangerous since it increases the capability of the .htaccess file in
+    # case an attacker was able to modify it, but that's not actually possible
+    # on Snappy (since the .htaccess file is read-only) so we'll do it here so
+    # as to avoid manually copying it in and needing to maintain it.
+    Include ${SNAP}/htdocs/.htaccess
+
+    # Increase the max upload size, and upload into a different tmp so we don't
+    # try to use that much RAM.
+    php_value upload_max_filesize 16G
+    php_value post_max_size 16G
+    php_admin_value upload_tmp_dir ${SNAP_DATA}/owncloud/tmp
+
+    # Note that nothing else is included here as this directive is merged with
+    # the one in the main configuration file.
+</Directory>
