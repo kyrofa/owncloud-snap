@@ -1,14 +1,6 @@
 <?php
 
 $snap_name = getenv('SNAP_NAME');
-$snap_developer = getenv('SNAP_DEVELOPER');
-if ($snap_developer == '') {
-	$snap_developer = getenv('SNAP_ORIGIN');
-}
-
-if ($snap_developer != '') {
-	$snap_name = $snap_name . '.' . $snap_developer;
-}
 
 $CONFIG = array(
 /**
@@ -20,9 +12,21 @@ $CONFIG = array(
  * indicates if a web server can write files to that folder.
  */
 'apps_paths' => array(
+	/**
+	 * These are the default apps shipped with ownCloud. They are read-only.
+	 */
 	array(
-		'path'=> '/var/lib/snaps/'.$snap_name.'/current/owncloud/apps',
+		'path'=> '/snap/'.$snap_name.'/current/htdocs/apps',
 		'url' => '/apps',
+		'writable' => false,
+	),
+
+	/**
+	 * This directory is writable, meant for apps installed by the user.
+	 */
+	array(
+		'path'=> '/var/snap/'.$snap_name.'/current/owncloud/extra-apps',
+		'url' => '/extra-apps',
 		'writable' => true,
 	),
 ),
