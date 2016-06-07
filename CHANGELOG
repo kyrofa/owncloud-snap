@@ -1,3 +1,11 @@
+v 9.0.1ubuntu2
+  - Update for series 16.
+  - Break backward compatibility with version on rolling.
+  - Use real interfaces.
+  - Use the common directory for ownCloud data.
+  - Use two app folders: the read-only in-snap apps, and user-installed ones in
+    $SNAP_DATA.
+
 v 9.0.1ubuntu1
   - MySQL: Increase max allowed packet.
   - PHP: Enable logging.
