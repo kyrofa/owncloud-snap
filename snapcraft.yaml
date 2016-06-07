@@ -63,7 +63,7 @@ parts:
 
     third-party-modules:
       # Build PHP
-      - source: http://us1.php.net/get/php-7.0.2.tar.gz/from/this/mirror
+      - source: http://us1.php.net/get/php-7.0.7.tar.gz/from/this/mirror
         source-type: tar
         configflags:
           - --enable-ctype
