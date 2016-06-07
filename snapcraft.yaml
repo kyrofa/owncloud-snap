@@ -1,5 +1,5 @@
 name: owncloud
-version: 9.0.1ubuntu1
+version: 9.0.1ubuntu2
 summary: ownCloud
 description: ownCloud running on Apache with MySQL. This is currently in beta.
 confinement: strict

@@ -11,29 +11,44 @@ ownCloud server packaged as a .snap for Ubuntu Core. It consists of:
 
 ## How to install
 
-This ownCloud .snap is only available on Snappy Ubuntu Core 16.04. Install via:
+This ownCloud .snap is available in the store for release series 16 (e.g. Ubuntu
+16.04). Install via:
 
-    $ sudo snappy install owncloud
+    $ sudo snap install owncloud
 
 
 ## How to use
 
 After install, assuming you and the Ubuntu Core device are on the same network,
 you should be able to reach the ownCloud installation by visiting
-`owncloud.local` in your browser (note that if you change the hostname, it'll be
-`<hostname>.local`).
+`<hostname>.local` in your browser. If your hostname is `localhost` or
+`localhost.localdomain`, like on an Ubuntu Core device, `owncloud.local` will be
+used instead.
 
 Upon visiting the ownCloud installation for the first time, you'll be prompted
 for an admin username and password. After you provide that information you'll be
 logged in and able to create users, install apps, and upload files.
 
 
-## Limitations
+### Included CLI utilities
 
-Ideally ownCloud would be able to store its raw data outside of the Snappy data
-directories (e.g. on an external hard drive while installed on a raspberry pi).
-However, .snaps currently do not have the ability to access the filesystem
-outside of the Snappy data directories (Ubuntu Core 16.04 will include this,
-it's just not done yet). As a result, the ownCloud data directory is contained
-within `$SNAP_DATA`, which means it's migrated upon upgrade, which can waste
-quite a bit of hard drive space. This will be improved soon.
+There are a few CLI utilities included:
+
+- `owncloud.occ`:
+    - ownCloud's `occ` configuration tool. Note that it requires `sudo`.
+- `owncloud.mysql-client`:
+    - MySQL client preconfigured to communicate with ownCloud MySQL server. This
+      may be useful in case you need to migrate ownCloud installations. Note
+      this it requires `sudo`.
+
+
+## Where is my stuff?
+
+- `$SNAP_DATA`:
+    - Apache and MySQL logs
+    - MySQL database
+    - ownCloud config
+    - Any ownCloud apps installed by the user
+- `$SNAP_DATA/../common` (unversioned directory):
+    - ownCloud data
+    - ownCloud logs
