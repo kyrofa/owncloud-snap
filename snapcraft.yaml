@@ -1,7 +1,8 @@
 name: owncloud
-version: 9.0.1ubuntu1
+version: 9.0.1ubuntu2
 summary: ownCloud
 description: ownCloud running on Apache with MySQL. This is currently in beta.
+confinement: strict
 
 apps:
   # Apache daemon
@@ -9,35 +10,30 @@ apps:
     command: apachectl start -DFOREGROUND
     stop-command: apachectl stop
     daemon: simple
-    plugs: [listener]
+    plugs: [network, network-bind]
 
   # MySQL daemon
   mysql:
     command: start_mysql
     stop-command: support-files/mysql.server stop
     daemon: simple
-    plugs: [listener]
+    plugs: [network, network-bind]
 
   # MySQL client
   mysql-client:
     command: mysql --defaults-file=$SNAP_DATA/mysql/root.ini
-    plugs: [listener]
+    plugs: [network, network-bind]
 
   # mDNS daemon
   mdns-publisher:
     command: delay-on-failure mdns-publisher owncloud
     daemon: simple
-    plugs: [listener]
+    plugs: [network, network-bind]
 
   # ownCloud occ command
   occ:
     command: occ
-    plugs: [listener]
-
-plugs:
-  listener:
-    interface: old-security
-    caps: [network-listener]
+    plugs: [network, network-bind]
 
 parts:
   apache:

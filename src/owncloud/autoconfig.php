@@ -1,19 +1,12 @@
 <?php
 
 $snap_name = getenv('SNAP_NAME');
-$snap_developer = getenv('SNAP_DEVELOPER');
-if ($snap_developer == '') {
-	$snap_developer = getenv('SNAP_ORIGIN');
-}
 
-if ($snap_developer != '') {
-	$snap_name = $snap_name . '.' . $snap_developer;
-}
-
-$data_path = '/var/lib/snaps/'.$snap_name.'/current';
+$data_path = '/var/snap/'.$snap_name.'/current';
+$common_data_path = '/var/snap/'.$snap_name.'/common';
 
 $AUTOCONFIG = array(
-'directory' => $data_path.'/owncloud/data',
+'directory' => $common_data_path.'/owncloud/data',
 
 'dbtype' => 'mysql',
 
