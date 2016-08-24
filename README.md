@@ -1,5 +1,7 @@
 # Snappy ownCloud
 
+**Note: This snap is no longer maintained. Please use the [Nextcloud snap][1] instead.**
+
 ownCloud server packaged as a .snap for Ubuntu Core. It consists of:
 
 - ownCloud 9.0.1
@@ -52,3 +54,5 @@ There are a few CLI utilities included:
 - `$SNAP_DATA/../common` (unversioned directory):
     - ownCloud data
     - ownCloud logs
+
+[1]: https://github.com/nextcloud/nextcloud-snap
